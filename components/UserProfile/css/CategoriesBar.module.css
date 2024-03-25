@@ -1,0 +1,25 @@
+.categoriesBarItemsContainer {
+  display: grid;
+  grid-template-columns: repeat(5, auto);
+  justify-content: center;
+  gap: 80px;
+
+  /* background-color: red; */
+}
+
+.categoriesBarItemContainer {
+
+}
+
+.categoriesBarItemTitle {
+  display: block;
+
+  padding: 20px;
+
+  font-weight: lighter;
+  font-size: 24px;
+
+  color: #6E6E6E;
+
+  /* background-color: blue; */
+}

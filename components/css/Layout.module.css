@@ -1,0 +1,10 @@
+
+.layoutContainer {
+  display: grid;
+  grid-template-columns: 20% auto;
+
+  margin-left: 60px;
+  margin-top:  80px;
+
+  /* background-color: rebeccapurple; */
+}

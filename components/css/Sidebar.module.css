@@ -1,0 +1,30 @@
+/* Sidebar.module.css */
+.sideBarContainer {
+}
+
+.sideBarItemsContainer {
+  font-size: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+
+  margin-top: 80px;
+  /* background-color: blue; */
+}
+
+.sideBarItemContainer {
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+
+  /* background-color: blue; */
+}
+
+.sideBarItemIcon {
+  font-size: 40px  !important;
+}
+
+.sideBarItemTitle {
+
+}
