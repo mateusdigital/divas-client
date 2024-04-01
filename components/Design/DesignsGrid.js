@@ -47,7 +47,6 @@ function DesignsGrid({ user })
           throw new Error("Failed to fetch design items");
         }
         const data = await response.json();
-        console.log(data);
         setDesignItems(data);
       } catch (error) {
         console.error("Error fetching design items:", error);

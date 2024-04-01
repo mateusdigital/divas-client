@@ -9,9 +9,9 @@
 //                 +                         +                                //
 //                      O      *        '       .                             //
 //                                                                            //
-//  File      : CategoriesBar.js                                              //
+//  File      : LikesGrid.js                                                  //
 //  Project   : divas-client                                                  //
-//  Date      : 2024-03-25                                                    //
+//  Date      : 2024-04-01                                                    //
 //  License   : See project's COPYING.TXT for full info.                      //
 //  Author    : mateus.digital <hello@mateus.digital>                         //
 //  Copyright : mateus.digital - 2024                                         //
@@ -20,46 +20,52 @@
 //                                                                            //
 //---------------------------------------------------------------------------~//
 
+// -----------------------------------------------------------------------------
+import { useEffect, useState } from 'react';
+//
+import NET from '@/app/NET';
+//
+import DesignItem from './DesignItem';
+//
+import styles from "./LikesGrid.module.css";
 
 // -----------------------------------------------------------------------------
-import { useEffect, useState } from "react";
-//
-import CategoriesBarNames from "./CategoriesBarNames";
-//
-import styles from "./CategoriesBar.module.css";
+function LikesGrid({ user })
+{
+  const [likeItems, setLikeItems] = useState([]);
 
-
-// -----------------------------------------------------------------------------
-function CategoriesBar({currentSelectedCategory, OnCategoryClickCallback}) {
   //
-  const [selectedCategory, setSelectedCategory] = useState(currentSelectedCategory);
+  useEffect(() => {
+    const fetchLikes = async () => {
+      try {
+        const api_url  = NET.Make_API_Url("like", user._id);
+        const response = await NET.GET(api_url);
 
-  const handle_category_click = (category) => {
-    console.log(category);
-    setSelectedCategory(category);
-    OnCategoryClickCallback(category);
-  };
+        if (!response.ok) {
+          throw new Error("Failed to fetch likes");
+        }
 
+        const likes_data = await response.json();
+        setLikeItems(likes_data);
+      } catch (error) {
+        console.error("Error fetching design items:", error);
+      }
+    };
+
+    fetchLikes();
+  }, []);
+
+  //
   return (
-    <div className={styles.categoriesBarItemsContainer}>
-      {CategoriesBarNames.map((category, index) => (
-        <div
-          key={index} className={styles.categoriesBarItemContainer}
-          onClick={() => handle_category_click(category)}
-        >
-          <span
-            className={`${styles.categoriesBarItemTitle} ${
-              selectedCategory === category
-                ? styles.selectedCategory
-                : styles.unselectedCategory
-            }`}
-          >
-            {category}</span>
-        </div>
-      ))}
+    <div className={styles.designsGridContainer}>
+      <div className={styles.designsGrid}>
+        {likeItems.map((likeItem) => (
+          <DesignItem key={likeItem._id} designItem={likeItem} />
+        ))}
+      </div>
     </div>
   );
 }
 
 // -----------------------------------------------------------------------------
-export default CategoriesBar;
+export default LikesGrid;

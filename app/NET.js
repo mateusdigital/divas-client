@@ -42,7 +42,7 @@ class NET
 
   static async GET(url)
   {
-
+    return fetch(url);
   }
 
   static async POST(url, options)

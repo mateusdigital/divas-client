@@ -9,7 +9,7 @@
 /*                 +                         +                                */
 /*                      O      *        '       .                             */
 /*                                                                            */
-/*  File      : CategoriesBar.module.css                                      */
+/*  File      : DesignsGrid.module.css                                        */
 /*  Project   : divas-client                                                  */
 /*  Date      : 2024-04-01                                                    */
 /*  License   : See project's COPYING.TXT for full info.                      */
@@ -20,41 +20,15 @@
 /*                                                                            */
 /*---------------------------------------------------------------------------~*/
 
-
-/* -------------------------------------------------------------------------- */
-.categoriesBarItemsContainer {
-  display: grid;
-  grid-template-columns: repeat(5, auto);
+/*----------------------------------------------------------------------------*/
+.designsGridContainer {
+  display: flex;
   justify-content: center;
-  gap: 80px;
-
-  /* background-color: red; */
 }
 
-/* -------------------------------------------------------------------------- */
-.categoriesBarItemContainer {
-
-}
-
-/* -------------------------------------------------------------------------- */
-.categoriesBarItemTitle {
-  display: block;
-
-  padding: 20px;
-
-  font-weight: lighter;
-  font-size: 24px;
-
-  color: #6E6E6E;
-
-  cursor: pointer;
-  /* background-color: blue; */
-}
-
-.selectedCategory {
-  color: #fa7b90 !important;
-  /* background-color: blue; */
-}
-
-.unselectedCategory {
+/*----------------------------------------------------------------------------*/
+.designsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
 }
