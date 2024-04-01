@@ -24,18 +24,16 @@
 // -----------------------------------------------------------------------------
 import { useEffect, useState } from 'react';
 //
-import DesignItem from './DesignItem';
-//
-import styles from "./DesignsGrid.module.css";
+import styles from "./DesignItem.module.css";
 
 // -----------------------------------------------------------------------------
-function DesignsItem({ user, children }) {
+function DesignItem({ designItem, children }) {
   return (
     <div >
-      <h1></h1>
+      <img src={designItem.imageUrl}></img>
     </div>
   );
 }
 
 // -----------------------------------------------------------------------------
-export default DesignsItem;
+export default DesignItem;

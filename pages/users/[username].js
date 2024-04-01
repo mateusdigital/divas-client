@@ -24,7 +24,7 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 //
-import Constants from "@/app/Constants";
+import NET from "@/app/NET";
 //
 import Layout        from "@/components/Layout";
 import UserInfo      from "@/components/User/Profile/UserInfo";
@@ -33,7 +33,8 @@ import DesignsGrid   from "@/components/Design/DesignsGrid";
 
 
 // -----------------------------------------------------------------------------
-function UserProfile() {
+function UserProfile()
+{
   //
   const router = useRouter();
   const { username } = router.query;
@@ -41,7 +42,7 @@ function UserProfile() {
 
   //
   useEffect(() => {
-    const apiUrl = Constants.Make_API_Url("users", username);
+    const apiUrl = NET.Make_API_Url("users", username);
     if (username) {
       fetch(apiUrl)
         .then((res) => {

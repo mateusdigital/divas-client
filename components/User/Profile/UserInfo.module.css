@@ -1,9 +1,33 @@
+/*~---------------------------------------------------------------------------*/
+/*                               *       +                                    */
+/*                         '                  |                               */
+/*                     ()    .-.,="``"=.    - o -                             */
+/*                           '=/_       \     |                               */
+/*                        *   |  '=._    |                                    */
+/*                             \     `=./`,        '                          */
+/*                          .   '=.__.=' `='      *                           */
+/*                 +                         +                                */
+/*                      O      *        '       .                             */
+/*                                                                            */
+/*  File      : UserInfo.module.css                                           */
+/*  Project   : divas-client                                                  */
+/*  Date      : 2024-04-01                                                    */
+/*  License   : See project's COPYING.TXT for full info.                      */
+/*  Author    : mateus.digital <hello@mateus.digital>                         */
+/*  Copyright : mateus.digital - 2024                                         */
+/*                                                                            */
+/*  Description :                                                             */
+/*                                                                            */
+/*---------------------------------------------------------------------------~*/
 
+
+/* -------------------------------------------------------------------------- */
 .profileContainer {
   background-color: rebeccapurple;
   display: flex;
 }
 
+/* -------------------------------------------------------------------------- */
 .profilePhotoSplit {
   margin-top:    28px;
   margin-bottom: 28px;
@@ -11,15 +35,18 @@
   margin-right:  18px;
 }
 
+/* -------------------------------------------------------------------------- */
 .profilePhoto {
   border-radius: 50%;
 }
 
 
+/* -------------------------------------------------------------------------- */
 .profileInfoSplit {
   margin-left: 80px;
 }
 
+/* -------------------------------------------------------------------------- */
 .profileHeader {
   margin-top: 0px;
   margin-bottom: 40px;
@@ -29,6 +56,7 @@
   color: #000000;
 }
 
+/* -------------------------------------------------------------------------- */
 .profileStatsContainer {
   display: flex;
   gap: 65px;
@@ -39,6 +67,7 @@
   background-color: rebeccapurple;
 }
 
+/* -------------------------------------------------------------------------- */
 .profileStatContainer {
   display: flex;
   flex-direction: column;
@@ -47,6 +76,7 @@
   /* background-color: red; */
 }
 
+/* -------------------------------------------------------------------------- */
 .profileStatValue {
   display: block;
 
@@ -57,6 +87,7 @@
   /* background-color: blue; */
 }
 
+/* -------------------------------------------------------------------------- */
 .profileStatDescription {
   display: block;
 
@@ -68,9 +99,8 @@
 }
 
 
+/* -------------------------------------------------------------------------- */
 .profileDescription
 {
   font-size: 1.5rem;
 }
-
-/* Add more styles as needed */

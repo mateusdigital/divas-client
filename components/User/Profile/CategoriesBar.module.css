@@ -1,3 +1,27 @@
+/*~---------------------------------------------------------------------------*/
+/*                               *       +                                    */
+/*                         '                  |                               */
+/*                     ()    .-.,="``"=.    - o -                             */
+/*                           '=/_       \     |                               */
+/*                        *   |  '=._    |                                    */
+/*                             \     `=./`,        '                          */
+/*                          .   '=.__.=' `='      *                           */
+/*                 +                         +                                */
+/*                      O      *        '       .                             */
+/*                                                                            */
+/*  File      : CategoriesBar.module.css                                      */
+/*  Project   : divas-client                                                  */
+/*  Date      : 2024-04-01                                                    */
+/*  License   : See project's COPYING.TXT for full info.                      */
+/*  Author    : mateus.digital <hello@mateus.digital>                         */
+/*  Copyright : mateus.digital - 2024                                         */
+/*                                                                            */
+/*  Description :                                                             */
+/*                                                                            */
+/*---------------------------------------------------------------------------~*/
+
+
+/* -------------------------------------------------------------------------- */
 .categoriesBarItemsContainer {
   display: grid;
   grid-template-columns: repeat(5, auto);
@@ -7,10 +31,12 @@
   /* background-color: red; */
 }
 
+/* -------------------------------------------------------------------------- */
 .categoriesBarItemContainer {
 
 }
 
+/* -------------------------------------------------------------------------- */
 .categoriesBarItemTitle {
   display: block;
 
