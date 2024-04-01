@@ -27,7 +27,7 @@ import { useEffect, useState } from 'react';
 //
 import Constants from '@/app/Constants';
 //
-import styles from './css/Sidebar.module.css';
+import styles from './Sidebar.module.css';
 
 
 // -----------------------------------------------------------------------------
@@ -42,32 +42,32 @@ function Sidebar() {
       <div className={styles.sideBarItemsContainer}>
 
         <div className={styles.sideBarItemContainer}>
-          <span class={`material-symbols-outlined ${styles.sideBarItemIcon}`}>favorite</span>
+          <span className={`material-symbols-outlined ${styles.sideBarItemIcon}`}>favorite</span>
           <span className={styles.sideBarItemTitle}>Profile</span>
         </div>
 
         <div className={styles.sideBarItemContainer}>
-          <span class={`material-symbols-outlined ${styles.sideBarItemIcon}`}>favorite</span>
+          <span className={`material-symbols-outlined ${styles.sideBarItemIcon}`}>favorite</span>
           <span className={styles.sideBarItemTitle}>Create</span>
         </div>
 
         <div className={styles.sideBarItemContainer}>
-          <span class={`material-symbols-outlined ${styles.sideBarItemIcon}`}>favorite</span>
+          <span className={`material-symbols-outlined ${styles.sideBarItemIcon}`}>favorite</span>
           <span className={styles.sideBarItemTitle}>Feed</span>
         </div>
 
         <div className={styles.sideBarItemContainer}>
-          <span class={`material-symbols-outlined ${styles.sideBarItemIcon}`}>favorite</span>
+          <span className={`material-symbols-outlined ${styles.sideBarItemIcon}`}>favorite</span>
           <span className={styles.sideBarItemTitle}>Discover</span>
         </div>
 
         <div className={styles.sideBarItemContainer}>
-          <span class={`material-symbols-outlined ${styles.sideBarItemIcon}`}>favorite</span>
+          <span className={`material-symbols-outlined ${styles.sideBarItemIcon}`}>favorite</span>
           <span className={styles.sideBarItemTitle}>Messages</span>
         </div>
 
         <div className={styles.sideBarItemContainer}>
-          <span class={`material-symbols-outlined ${styles.sideBarItemIcon}`}>favorite</span>
+          <span className={`material-symbols-outlined ${styles.sideBarItemIcon}`}>favorite</span>
           <span className={styles.sideBarItemTitle}>More</span>
         </div>
 

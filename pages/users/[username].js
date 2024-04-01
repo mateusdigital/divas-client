@@ -26,10 +26,10 @@ import { useEffect, useState } from "react";
 //
 import Constants from "@/app/Constants";
 //
-import Layout from "@/components/Layout";
-import UserInfo from "@/components/UserProfile/UserInfo";
-import CategoriesBar from "@/components/UserProfile/CategoriesBar";
-import DesignsGrid from "@/components/UserProfile/DesignsGrid";
+import Layout        from "@/components/Layout";
+import UserInfo      from "@/components/User/Profile/UserInfo";
+import CategoriesBar from "@/components/User/Profile/CategoriesBar";
+import DesignsGrid   from "@/components/Design/DesignsGrid";
 
 
 // -----------------------------------------------------------------------------
@@ -65,7 +65,7 @@ function UserProfile() {
     <Layout>
       <UserInfo user={user}></UserInfo>
       <CategoriesBar></CategoriesBar>
-      <DesignsGrid></DesignsGrid>
+      <DesignsGrid user={user}></DesignsGrid>
     </Layout>
   );
 }
