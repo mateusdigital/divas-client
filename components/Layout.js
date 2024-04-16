@@ -33,7 +33,9 @@ function Layout({ children }) {
   return (
     <div className={styles.layoutContainer}>
       <Sidebar />
-      <main>{children}</main>
+      <div className={styles.contentContainer}>
+        <main>{children}</main>
+      </div>
     </div>
   );
 }

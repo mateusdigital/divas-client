@@ -1,6 +1,6 @@
 
 const CategoriesBarNames = [
-  "Designs","Likes", "Uploads", "Collections", "Challenges"
+  "Designs", "Likes", "Collections", "Uploads",
 ];
 
 export default CategoriesBarNames;

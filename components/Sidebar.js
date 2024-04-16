@@ -42,32 +42,32 @@ function Sidebar() {
       <div className={styles.sideBarItemsContainer}>
 
         <div className={styles.sideBarItemContainer}>
-          <span className={`material-symbols-outlined ${styles.sideBarItemIcon}`}>favorite</span>
+          <span className={`material-symbols-outlined ${styles.sideBarItemIcon}`}></span>
           <span className={styles.sideBarItemTitle}>Profile</span>
         </div>
 
         <div className={styles.sideBarItemContainer}>
-          <span className={`material-symbols-outlined ${styles.sideBarItemIcon}`}>favorite</span>
+          <span className={`material-symbols-outlined ${styles.sideBarItemIcon}`}>add_box</span>
           <span className={styles.sideBarItemTitle}>Create</span>
         </div>
 
         <div className={styles.sideBarItemContainer}>
-          <span className={`material-symbols-outlined ${styles.sideBarItemIcon}`}>favorite</span>
+          <span className={`material-symbols-outlined ${styles.sideBarItemIcon}`}>rss_feed</span>
           <span className={styles.sideBarItemTitle}>Feed</span>
         </div>
 
         <div className={styles.sideBarItemContainer}>
-          <span className={`material-symbols-outlined ${styles.sideBarItemIcon}`}>favorite</span>
+          <span className={`material-symbols-outlined ${styles.sideBarItemIcon}`}>explore</span>
           <span className={styles.sideBarItemTitle}>Discover</span>
         </div>
 
         <div className={styles.sideBarItemContainer}>
-          <span className={`material-symbols-outlined ${styles.sideBarItemIcon}`}>favorite</span>
+          <span className={`material-symbols-outlined ${styles.sideBarItemIcon}`}>chat</span>
           <span className={styles.sideBarItemTitle}>Messages</span>
         </div>
 
         <div className={styles.sideBarItemContainer}>
-          <span className={`material-symbols-outlined ${styles.sideBarItemIcon}`}>favorite</span>
+          <span className={`material-symbols-outlined ${styles.sideBarItemIcon}`}>menu</span>
           <span className={styles.sideBarItemTitle}>More</span>
         </div>
 

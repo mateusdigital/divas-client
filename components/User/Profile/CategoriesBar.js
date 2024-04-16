@@ -34,12 +34,13 @@ function CategoriesBar({currentSelectedCategory, OnCategoryClickCallback}) {
   //
   const [selectedCategory, setSelectedCategory] = useState(currentSelectedCategory);
 
+  //
   const handle_category_click = (category) => {
-    console.log(category);
     setSelectedCategory(category);
     OnCategoryClickCallback(category);
   };
 
+  //
   return (
     <div className={styles.categoriesBarItemsContainer}>
       {CategoriesBarNames.map((category, index) => (
@@ -54,7 +55,8 @@ function CategoriesBar({currentSelectedCategory, OnCategoryClickCallback}) {
                 : styles.unselectedCategory
             }`}
           >
-            {category}</span>
+            {category}
+          </span>
         </div>
       ))}
     </div>

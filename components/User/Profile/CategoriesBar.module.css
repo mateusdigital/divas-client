@@ -24,9 +24,9 @@
 /* -------------------------------------------------------------------------- */
 .categoriesBarItemsContainer {
   display: grid;
-  grid-template-columns: repeat(5, auto);
+  grid-template-columns: repeat(4, auto);
   justify-content: center;
-  gap: 80px;
+  gap: 5rem;
 
   /* background-color: red; */
 }
@@ -40,19 +40,19 @@
 .categoriesBarItemTitle {
   display: block;
 
-  padding: 20px;
+  padding: 1rem;
 
   font-weight: lighter;
-  font-size: 24px;
+  font-size: 1.5rem;
 
   color: #6E6E6E;
-
   cursor: pointer;
   /* background-color: blue; */
 }
 
 .selectedCategory {
   color: #fa7b90 !important;
+  font-weight: normal;
   /* background-color: blue; */
 }
 
