@@ -9,9 +9,9 @@
 //                 +                         +                                //
 //                      O      *        '       .                             //
 //                                                                            //
-//  File      : DesignsGrid.js                                                //
+//  File      : DesignsItem.js                                                //
 //  Project   : divas-client                                                  //
-//  Date      : 2024-03-25                                                    //
+//  Date      : 2024-04-01                                                    //
 //  License   : See project's COPYING.TXT for full info.                      //
 //  Author    : mateus.digital <hello@mateus.digital>                         //
 //  Copyright : mateus.digital - 2024                                         //
@@ -20,54 +20,27 @@
 //                                                                            //
 //---------------------------------------------------------------------------~//
 
+
 // -----------------------------------------------------------------------------
 import { useEffect, useState } from 'react';
 //
+import styles from "./DesignItem.module.css";
+import Link from 'next/link';
 import NET from '@/app/NET';
-//
-import DesignGridItem from './DesignGridItem';
-//
-import styles from "./DesignsGrid.module.css";
-
 
 // -----------------------------------------------------------------------------
-function DesignsGrid({ user })
+function DesignItem({ designItem, children })
 {
-  //
-  const [designItems, setDesignItems] = useState([]);
 
-  //
-  useEffect(() => {
-    const fetchDesignItems = async () => {
-      try {
-        const api_url  = NET.Make_API_Url("designItem/getByIds");
-        const json     = JSON.stringify({ ids: user.designItems });
-        const response = await NET.POST(api_url, { body: json });
-
-        if (!response.ok) {
-          throw new Error("Failed to fetch design items");
-        }
-        const data = await response.json();
-        setDesignItems(data);
-      } catch (error) {
-        console.error("Error fetching design items:", error);
-      }
-    };
-
-    fetchDesignItems();
-  }, [user.designItems]);
-
-  //
+  const design_item_details_url = NET.Make_Navigation_Url("designItem", designItem._id);
   return (
-    <div className={styles.designsGridContainer}>
-      <div className={styles.designsGrid}>
-        {designItems.map((designItem) => (
-          <DesignGridItem key={designItem._id} designItem={designItem} />
-        ))}
-      </div>
+    <div>
+      <Link href={design_item_details_url}>
+        <img src={designItem.imageUrl}></img>
+      </Link>
     </div>
   );
 }
 
 // -----------------------------------------------------------------------------
-export default DesignsGrid;
+export default DesignItem;

@@ -24,7 +24,7 @@
 // -----------------------------------------------------------------------------
 import { useEffect, useState } from "react";
 //
-import CategoriesBarNames from "./CategoriesBarNames";
+import CATEGORIES_BAR_NAMES from "./CategoriesBarNames";
 //
 import styles from "./CategoriesBar.module.css";
 
@@ -43,7 +43,7 @@ function CategoriesBar({currentSelectedCategory, OnCategoryClickCallback}) {
   //
   return (
     <div className={styles.categoriesBarItemsContainer}>
-      {CategoriesBarNames.map((category, index) => (
+      {CATEGORIES_BAR_NAMES.map((category, index) => (
         <div
           key={index} className={styles.categoriesBarItemContainer}
           onClick={() => handle_category_click(category)}

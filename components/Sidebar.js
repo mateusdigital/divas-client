@@ -32,42 +32,48 @@ import styles from './Sidebar.module.css';
 
 // -----------------------------------------------------------------------------
 function Sidebar() {
-  //
-  //
+  const material_symbol_style = "material-symbols-outlined";
 
   return (
     <div className={styles.sideBarContainer}>
+      {/* Logo */}
       <img src="/img/logo.png" alt="Logo" />
 
+      {/* Items */}
       <div className={styles.sideBarItemsContainer}>
-
+        {/* Profile */}
         <div className={styles.sideBarItemContainer}>
-          <span className={`material-symbols-outlined ${styles.sideBarItemIcon}`}></span>
+          <span className={`${material_symbol_style} ${styles.sideBarItemIcon}`}></span>
           <span className={styles.sideBarItemTitle}>Profile</span>
         </div>
 
+        {/* Create */}
         <div className={styles.sideBarItemContainer}>
-          <span className={`material-symbols-outlined ${styles.sideBarItemIcon}`}>add_box</span>
+          <span className={`${material_symbol_style} ${styles.sideBarItemIcon}`}>add_box</span>
           <span className={styles.sideBarItemTitle}>Create</span>
         </div>
 
+        {/* Feed */}
         <div className={styles.sideBarItemContainer}>
-          <span className={`material-symbols-outlined ${styles.sideBarItemIcon}`}>rss_feed</span>
+          <span className={`${material_symbol_style} ${styles.sideBarItemIcon}`}>rss_feed</span>
           <span className={styles.sideBarItemTitle}>Feed</span>
         </div>
 
+        {/* Discover */}
         <div className={styles.sideBarItemContainer}>
-          <span className={`material-symbols-outlined ${styles.sideBarItemIcon}`}>explore</span>
+          <span className={`${material_symbol_style} ${styles.sideBarItemIcon}`}>explore</span>
           <span className={styles.sideBarItemTitle}>Discover</span>
         </div>
 
+        {/* Messages */}
         <div className={styles.sideBarItemContainer}>
-          <span className={`material-symbols-outlined ${styles.sideBarItemIcon}`}>chat</span>
+          <span className={`${material_symbol_style} ${styles.sideBarItemIcon}`}>chat</span>
           <span className={styles.sideBarItemTitle}>Messages</span>
         </div>
 
+        {/* More */}
         <div className={styles.sideBarItemContainer}>
-          <span className={`material-symbols-outlined ${styles.sideBarItemIcon}`}>menu</span>
+          <span className={`${material_symbol_style} ${styles.sideBarItemIcon}`}>menu</span>
           <span className={styles.sideBarItemTitle}>More</span>
         </div>
 
@@ -76,4 +82,5 @@ function Sidebar() {
   );
 }
 
+// -----------------------------------------------------------------------------
 export default Sidebar;

@@ -30,6 +30,9 @@ class NET
   static SERVER_URL  = Constants.SERVER_URL
   static SERVER_PORT = Constants.SERVER_PORT;
 
+  static APP_URL  = Constants.APP_URL
+  static APP_PORT = Constants.APP_PORT;
+
   // ---------------------------------------------------------------------------
   static Make_API_Url(endpoint, data)
   {
@@ -40,11 +43,23 @@ class NET
     return final_url;
   }
 
+  // ---------------------------------------------------------------------------
+  static Make_Navigation_Url(endpoint, data)
+  {
+    const base_url = `${Constants.APP_URL}:${Constants.APP_PORT}/${endpoint}`;
+    const final_url = (data) ? `${base_url}/${data}` : `${base_url}`;
+
+    console.log(`API: ${final_url}`);
+    return final_url;
+  }
+
+  // ---------------------------------------------------------------------------
   static async GET(url)
   {
     return fetch(url);
   }
 
+  // ---------------------------------------------------------------------------
   static async POST(url, options)
   {
     const base_options = {

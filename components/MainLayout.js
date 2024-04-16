@@ -1,3 +1,4 @@
+
 //~---------------------------------------------------------------------------//
 //                               *       +                                    //
 //                         '                  |                               //
@@ -9,9 +10,9 @@
 //                 +                         +                                //
 //                      O      *        '       .                             //
 //                                                                            //
-//  File      : DesignsItem.js                                                //
+//  File      : MainLayout.js                                                 //
 //  Project   : divas-client                                                  //
-//  Date      : 2024-04-01                                                    //
+//  Date      : 2024-03-25                                                    //
 //  License   : See project's COPYING.TXT for full info.                      //
 //  Author    : mateus.digital <hello@mateus.digital>                         //
 //  Copyright : mateus.digital - 2024                                         //
@@ -22,18 +23,22 @@
 
 
 // -----------------------------------------------------------------------------
-import { useEffect, useState } from 'react';
+import Sidebar from "@/components/Sidebar";
 //
-import styles from "./DesignItem.module.css";
+import styles from "./MainLayout.module.css";
+
 
 // -----------------------------------------------------------------------------
-function DesignItem({ designItem, children }) {
+function Layout({ children }) {
   return (
-    <div >
-      <img src={designItem.imageUrl}></img>
+    <div className={styles.layoutContainer}>
+      <Sidebar />
+      <div className={styles.contentContainer}>
+        {children}
+      </div>
     </div>
   );
 }
 
 // -----------------------------------------------------------------------------
-export default DesignItem;
+export default Layout;

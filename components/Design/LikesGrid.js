@@ -25,9 +25,10 @@ import { useEffect, useState } from 'react';
 //
 import NET from '@/app/NET';
 //
-import DesignItem from './DesignItem';
+import DesignGridItem from './DesignGridItem';
 //
 import styles from "./LikesGrid.module.css";
+
 
 // -----------------------------------------------------------------------------
 function LikesGrid({ user })
@@ -60,7 +61,7 @@ function LikesGrid({ user })
     <div className={styles.designsGridContainer}>
       <div className={styles.designsGrid}>
         {likeItems.map((likeItem) => (
-          <DesignItem key={likeItem._id} designItem={likeItem} />
+          <DesignGridItem key={likeItem._id} designItem={likeItem} />
         ))}
       </div>
     </div>
