@@ -24,12 +24,12 @@
 // -----------------------------------------------------------------------------
 import { useEffect, useState } from 'react';
 //
-import styles from "./DesignItem.module.css";
+import styles from "./DesignGridItem.module.css";
 import Link from 'next/link';
 import NET from '@/app/NET';
 
 // -----------------------------------------------------------------------------
-function DesignItem({ designItem, children })
+function DesignGridItem({ designItem, children })
 {
 
   const design_item_details_url = NET.Make_Navigation_Url("designItem", designItem._id);
