@@ -36,11 +36,11 @@ function Sidebar()
   const material_symbol_style = "material-symbols-outlined";
 
   //
-  const [user, setUser] = useState(null);
+  const [loggedUser, setLoggedUser] = useState(null);
   useEffect(() => {
     const GetLoggedUser = async () => {
       const logged_user = await App.GetCurrentLoggedUser();
-      setUser(logged_user);
+      setLoggedUser(logged_user);
     }
     GetLoggedUser();
   }, []);
@@ -57,7 +57,7 @@ function Sidebar()
         <Link href="/profile" className={styles.sideBarItemContainer}>
           <img
             className={styles.sideBarItemProfileImage}
-            src={user ? user.profilePhotoTinyUrl : ""}>
+            src={loggedUser ? loggedUser.profilePhotoTinyUrl : ""}>
           </img>
           <span className={styles.sideBarItemTitle}>Profile</span>
         </Link>
