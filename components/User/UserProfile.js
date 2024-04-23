@@ -10,7 +10,7 @@ import MainLayout    from "@/components/Layout/MainLayout";
 import UserInfo      from "@/components/User/Profile/UserInfo";
 import CategoriesBar from "@/components/User/Profile/CategoriesBar";
 
-import CATEGORIES_BAR_NAMES from "@/components/User/Profile/CategoriesBarNames";
+import CATEGORIES_BAR_NAMES from "@/models/CategoriesBarNames";
 
 // Conditional rendering based on the selected category
 const DesignsGrid = lazy(() => import("@/components/Design/DesignsGrid"));

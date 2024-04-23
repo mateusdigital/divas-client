@@ -24,17 +24,16 @@
 // -----------------------------------------------------------------------------
 import { useEffect, useState } from "react";
 //
-import CATEGORIES_BAR_NAMES from "./CategoriesBarNames";
+import CATEGORIES_BAR_NAMES from "@/models/CategoriesBarNames";
 //
 import styles from "./CategoriesBar.module.css";
 
 
 // -----------------------------------------------------------------------------
-function CategoriesBar({currentSelectedCategory, OnCategoryClickCallback}) {
+function CategoriesBar({currentSelectedCategory, OnCategoryClickCallback})
+{
   //
   const [selectedCategory, setSelectedCategory] = useState(currentSelectedCategory);
-
-  //
   const handle_category_click = (category) => {
     setSelectedCategory(category);
     OnCategoryClickCallback(category);
