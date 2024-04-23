@@ -22,18 +22,30 @@
 
 
 // -----------------------------------------------------------------------------
-import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
+import Link from "next/link";
 //
-import Constants from '@/app/Constants';
+import App from "@/models/App";
 //
 import styles from './Sidebar.module.css';
 
 
 // -----------------------------------------------------------------------------
-function Sidebar() {
+function Sidebar()
+{
   const material_symbol_style = "material-symbols-outlined";
 
+  //
+  const [user, setUser] = useState(null);
+  useEffect(() => {
+    const GetLoggedUser = async () => {
+      const logged_user = await App.GetCurrentLoggedUser();
+      setUser(logged_user);
+    }
+    GetLoggedUser();
+  }, []);
+
+  //
   return (
     <div className={styles.sideBarContainer}>
       {/* Logo */}
@@ -42,40 +54,43 @@ function Sidebar() {
       {/* Items */}
       <div className={styles.sideBarItemsContainer}>
         {/* Profile */}
-        <div className={styles.sideBarItemContainer}>
-          <span className={`${material_symbol_style} ${styles.sideBarItemIcon}`}></span>
+        <Link href="/profile" className={styles.sideBarItemContainer}>
+          <img
+            className={styles.sideBarItemProfileImage}
+            src={user ? user.profilePhotoTinyUrl : ""}>
+          </img>
           <span className={styles.sideBarItemTitle}>Profile</span>
-        </div>
+        </Link>
 
         {/* Create */}
-        <div className={styles.sideBarItemContainer}>
+        <Link href="/create" className={styles.sideBarItemContainer}>
           <span className={`${material_symbol_style} ${styles.sideBarItemIcon}`}>add_box</span>
           <span className={styles.sideBarItemTitle}>Create</span>
-        </div>
+        </Link>
 
         {/* Feed */}
-        <div className={styles.sideBarItemContainer}>
+        <Link href="/feed" className={styles.sideBarItemContainer}>
           <span className={`${material_symbol_style} ${styles.sideBarItemIcon}`}>rss_feed</span>
           <span className={styles.sideBarItemTitle}>Feed</span>
-        </div>
+        </Link>
 
         {/* Discover */}
-        <div className={styles.sideBarItemContainer}>
+        <Link href="/discover" className={styles.sideBarItemContainer}>
           <span className={`${material_symbol_style} ${styles.sideBarItemIcon}`}>explore</span>
           <span className={styles.sideBarItemTitle}>Discover</span>
-        </div>
+        </Link>
 
         {/* Messages */}
-        <div className={styles.sideBarItemContainer}>
+        <Link href="/messages" className={styles.sideBarItemContainer}>
           <span className={`${material_symbol_style} ${styles.sideBarItemIcon}`}>chat</span>
           <span className={styles.sideBarItemTitle}>Messages</span>
-        </div>
+        </Link>
 
         {/* More */}
-        <div className={styles.sideBarItemContainer}>
+        <Link href="/more" className={styles.sideBarItemContainer}>
           <span className={`${material_symbol_style} ${styles.sideBarItemIcon}`}>menu</span>
           <span className={styles.sideBarItemTitle}>More</span>
-        </div>
+        </Link>
 
       </div>
     </div>
