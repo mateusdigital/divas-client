@@ -91,7 +91,6 @@ function Sidebar()
           <span className={`${material_symbol_style} ${styles.sideBarItemIcon}`}>menu</span>
           <span className={styles.sideBarItemTitle}>More</span>
         </Link>
-
       </div>
     </div>
   );
