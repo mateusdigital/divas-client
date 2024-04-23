@@ -23,13 +23,13 @@
 
 
 // -----------------------------------------------------------------------------
-import Sidebar from "@/components/Sidebar";
+import Sidebar from "@/components/Sidebar/Sidebar";
 //
 import styles from "./MainLayout.module.css";
 
 
 // -----------------------------------------------------------------------------
-function Layout({ children }) {
+function MainLayout({ children }) {
   return (
     <div className={styles.layoutContainer}>
       <Sidebar />
@@ -41,4 +41,4 @@ function Layout({ children }) {
 }
 
 // -----------------------------------------------------------------------------
-export default Layout;
+export default MainLayout;
