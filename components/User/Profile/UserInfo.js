@@ -27,6 +27,7 @@ import styles from "./UserInfo.module.css";
 function UserInfo({ user }) {
   return (
     <div className={styles.profileContainer}>
+      {/* Photo */}
       <div className={styles.profilePhotoSplit}>
         <img className={styles.profilePhoto} src={user.profilePhotoUrl}></img>
       </div>
@@ -52,8 +53,8 @@ function UserInfo({ user }) {
           </div>
           {/* Design Items */}
           <div className={styles.profileStatContainer}>
-            <span className={styles.profileStatValue}>{user.designItems.length}</span>
-            <span className={styles.profileStatDescription}>Designs</span>
+            <span className={styles.profileStatValue}>{user.moodboards.length}</span>
+            <span className={styles.profileStatDescription}>Moodboards</span>
           </div>
           {/* Likes */}
           <div className={styles.profileStatContainer}>

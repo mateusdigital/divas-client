@@ -9,7 +9,7 @@
 //                 +                         +                                //
 //                      O      *        '       .                             //
 //                                                                            //
-//  File      : User.js                                                       //
+//  File      : profile.js                                                    //
 //  Project   : divas-client                                                  //
 //  Date      : 2024-04-23                                                    //
 //  License   : See project's COPYING.TXT for full info.                      //
@@ -21,57 +21,33 @@
 //----------------------------------------------------------------------------//
 
 // -----------------------------------------------------------------------------
-class User
-{
-  // ---------------------------------------------------------------------------
-  static CreateFromServerData(data)
-  {
-    return new User(data)
-  }
-
-  // ---------------------------------------------------------------------------
-  constructor({
-    fullname,
-    description,
-    profilePhotoUrl,
-    username,
-    email,
-    followers,
-    following,
-    likes,
-    moodboards,
-   })
-  {
-    // Info
-    this.fullname        = fullname;
-    this.description     = description;
-
-    // Photo
-    this.profilePhotoUrl     = profilePhotoUrl;
-    this.profilePhotoTinyUrl = this._MakeTinyUrl(profilePhotoUrl);
-
-    // Login
-    this.username = username;
-    this.email    = email;
-
-    // Social
-    this.followers = followers;
-    this.following = following;
-    this.likes     = likes;
-
-    // Moodboard
-    this.moodboards = moodboards;
-  }
-
-
-  // ---------------------------------------------------------------------------
-  _MakeTinyUrl(photoUrl)
-  {
-    // @TODO(mateusdigital): Add logic to create the different sizes of the photo...
-    return photoUrl;
-  }
-};
-
+import { useEffect, useState } from "react";
+import Link from "next/link";
+//
+import App from "@/models/App";
+import UserProfile from "@/components/User/UserProfile";
 
 // -----------------------------------------------------------------------------
-export default User;
+function ProfilePage ()
+{
+  //
+  const [loggedUser, setLoggedUser] = useState(null);
+  useEffect(() => {
+    const GetLoggedUser = async () => {
+      const logged_user = await App.GetCurrentLoggedUser();
+      setLoggedUser(logged_user);
+    }
+    GetLoggedUser();
+  }, []);
+
+  //
+  if (!loggedUser) {
+    return <div>Loading...</div>;
+  }
+
+  //
+  return <UserProfile user={loggedUser}></UserProfile>
+}
+
+// -----------------------------------------------------------------------------
+export default ProfilePage;
