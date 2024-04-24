@@ -46,7 +46,7 @@ function ProfilePage ()
   }
 
   //
-  return <UserProfile user={loggedUser}></UserProfile>
+  return <UserProfile userModel={loggedUser}></UserProfile>
 }
 
 // -----------------------------------------------------------------------------
