@@ -9,9 +9,9 @@
 //                 +                         +                                //
 //                      O      *        '       .                             //
 //                                                                            //
-//  File      : profile.js                                                    //
+//  File      : MoodboardUserInfo.js                                          //
 //  Project   : divas-client                                                  //
-//  Date      : 2024-04-23                                                    //
+//  Date      : 2024-04-24                                                    //
 //  License   : See project's COPYING.TXT for full info.                      //
 //  Author    : mateus.digital <hello@mateus.digital>                         //
 //  Copyright : mateus.digital - 2024                                         //
@@ -20,35 +20,46 @@
 //                                                                            //
 //----------------------------------------------------------------------------//
 
-// -----------------------------------------------------------------------------
-import { useEffect, useState } from "react";
+//
+import { useState, useEffect } from "react";
 //
 import App from "@/models/App";
-import UserProfile from "@/components/User/UserProfile";
-
+//
+import styles from "./MoodboardDetails.module.css";
 
 // -----------------------------------------------------------------------------
-function ProfilePage()
+function MoodboardUserInfo({moodboardModel})
 {
+
   //
-  const [loggedUser, setLoggedUser] = useState(null);
+  const [ownerUserModel, setOwnerUserModel] = useState(null);
   useEffect(()=>{
-    const _GetLoggedUser = async ()=>{
-      const logged_user = await App.GetCurrentLoggedUser();
-      setLoggedUser(logged_user);
+    const _GetUser = async ()=>{
+      const user_model = await App.GetUserWithId(moodboardModel.owner);
+      setOwnerUserModel(user_model);
     }
 
-    _GetLoggedUser();
-  }, []);
+    if(moodboardModel.owner) {
+      _GetUser();
+    }
+  }, [moodboardModel.owner]);
 
   // Not ready...
-  if (!loggedUser) {
+  if(!ownerUserModel) {
     return <div>Loading...</div>;
   }
 
   // Ready...
-  return <UserProfile userModel={loggedUser}></UserProfile>
+  return (
+    <div className={styles.moodboardInfoUserContainer}>
+      <div>
+        <span>Created by: </span>
+        <span>{ownerUserModel ? ownerUserModel.username : "Loading..."}</span>
+      </div>
+      <button>Follow</button>
+    </div>
+  );
 }
 
 // -----------------------------------------------------------------------------
-export default ProfilePage;
+export default MoodboardUserInfo;

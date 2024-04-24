@@ -9,9 +9,9 @@
 //                 +                         +                                //
 //                      O      *        '       .                             //
 //                                                                            //
-//  File      : profile.js                                                    //
+//  File      : MoodboardComments.js                                          //
 //  Project   : divas-client                                                  //
-//  Date      : 2024-04-23                                                    //
+//  Date      : 2024-04-24                                                    //
 //  License   : See project's COPYING.TXT for full info.                      //
 //  Author    : mateus.digital <hello@mateus.digital>                         //
 //  Copyright : mateus.digital - 2024                                         //
@@ -20,35 +20,21 @@
 //                                                                            //
 //----------------------------------------------------------------------------//
 
-// -----------------------------------------------------------------------------
-import { useEffect, useState } from "react";
+
 //
-import App from "@/models/App";
-import UserProfile from "@/components/User/UserProfile";
-
+import styles from "./MoodboardDetails.module.css";
 
 // -----------------------------------------------------------------------------
-function ProfilePage()
+function MoodboardComments({moodboardModel})
 {
-  //
-  const [loggedUser, setLoggedUser] = useState(null);
-  useEffect(()=>{
-    const _GetLoggedUser = async ()=>{
-      const logged_user = await App.GetCurrentLoggedUser();
-      setLoggedUser(logged_user);
-    }
-
-    _GetLoggedUser();
-  }, []);
-
-  // Not ready...
-  if (!loggedUser) {
-    return <div>Loading...</div>;
-  }
 
   // Ready...
-  return <UserProfile userModel={loggedUser}></UserProfile>
+  return (
+    <div>
+      Comments...
+    </div>
+  );
 }
 
 // -----------------------------------------------------------------------------
-export default ProfilePage;
+export default MoodboardComments;

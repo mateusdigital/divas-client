@@ -13,12 +13,13 @@ import CategoriesBar from "@/components/User/Profile/CategoriesBar";
 import CATEGORIES_BAR_NAMES from "@/models/CategoriesBarNames";
 import GetComponentForCategoryName from "@/models/CategoriesBarFactory";
 
+
 // -----------------------------------------------------------------------------
 function UserProfile({userModel})
 {
   //
   const [categoryComponent, setCategoryComponent] = useState(null);
-  const [selectedCategory, setSelectedCategory] = useState(CATEGORIES_BAR_NAMES[0]);
+  const [selectedCategory, setSelectedCategory]   = useState(CATEGORIES_BAR_NAMES[0]);
 
   // Handle Category Selection
   const handle_category_selection = (categoryName) => {
@@ -28,12 +29,12 @@ function UserProfile({userModel})
     setCategoryComponent(category_component);
   };
 
-  //
+  // Not ready...
   if (!userModel) {
     return <div>Loading...</div>;
   }
 
-  //
+  // Ready...
   return (
     <MainLayout>
       <UserInfo userModel={userModel}>

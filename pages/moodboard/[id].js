@@ -9,9 +9,9 @@
 //                 +                         +                                //
 //                      O      *        '       .                             //
 //                                                                            //
-//  File      : profile.js                                                    //
+//  File      : [id].js                                                       //
 //  Project   : divas-client                                                  //
-//  Date      : 2024-04-23                                                    //
+//  Date      : 2024-04-16                                                    //
 //  License   : See project's COPYING.TXT for full info.                      //
 //  Author    : mateus.digital <hello@mateus.digital>                         //
 //  Copyright : mateus.digital - 2024                                         //
@@ -21,34 +21,42 @@
 //----------------------------------------------------------------------------//
 
 // -----------------------------------------------------------------------------
+import { useRouter } from "next/router";
+// -----------------------------------------------------------------------------
 import { useEffect, useState } from "react";
 //
 import App from "@/models/App";
-import UserProfile from "@/components/User/UserProfile";
+import MoodboardDetails from "@/components/Moodboard/DetailsPage/MoodboardDetails";
 
 
 // -----------------------------------------------------------------------------
-function ProfilePage()
+function MoodboardDetailsPageForId()
 {
   //
-  const [loggedUser, setLoggedUser] = useState(null);
+  const router = useRouter();
+  const { id } = router.query;
+
+  //
+  const [moodboardModel, setMoodboardModel] = useState(null);
   useEffect(()=>{
-    const _GetLoggedUser = async ()=>{
-      const logged_user = await App.GetCurrentLoggedUser();
-      setLoggedUser(logged_user);
+    const _GetMoodboard = async ()=>{
+      const moodboard_model = await App.GetMoodboardWithId(id);
+      setMoodboardModel(moodboard_model);
     }
 
-    _GetLoggedUser();
-  }, []);
+    if(id) {
+      _GetMoodboard();
+    }
+  }, [id]);
 
   // Not ready...
-  if (!loggedUser) {
+  if (!moodboardModel) {
     return <div>Loading...</div>;
   }
 
   // Ready...
-  return <UserProfile userModel={loggedUser}></UserProfile>
+  return <MoodboardDetails moodboardModel={moodboardModel}></MoodboardDetails>
 }
 
 // -----------------------------------------------------------------------------
-export default ProfilePage;
+export default MoodboardDetailsPageForId;
