@@ -11,46 +11,32 @@ import UserInfo      from "@/components/User/Profile/UserInfo";
 import CategoriesBar from "@/components/User/Profile/CategoriesBar";
 
 import CATEGORIES_BAR_NAMES from "@/models/CategoriesBarNames";
-
-// Conditional rendering based on the selected category
-const DesignsGrid = lazy(() => import("@/components/Design/DesignsGrid"));
-const LikesGrid   = lazy(() => import("@/components/Design/LikesGrid"));
+import GetComponentForCategoryName from "@/models/CategoriesBarFactory";
 
 // -----------------------------------------------------------------------------
-function UserProfile({user})
+function UserProfile({userModel})
 {
   //
   const [categoryComponent, setCategoryComponent] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState(CATEGORIES_BAR_NAMES[0]);
 
   // Handle Category Selection
-  const [selectedCategory, setSelectedCategory] = useState(CATEGORIES_BAR_NAMES[0]);
-  const handle_category_selection = (category) => {
-    setSelectedCategory(category);
-    setCategoryComponent(getComponentForCategory(category));
-  };
+  const handle_category_selection = (categoryName) => {
+    setSelectedCategory(categoryName);
 
-  const getComponentForCategory = (category) => {
-    switch (category) {
-      case "Likes":       return <LikesGrid user={user} />;
-      case "Designs":     return <DesignsGrid user={user} />;
-      case "Uploads":     return <DesignsGrid user={user} />;
-      case "Collections": return <DesignsGrid user={user} />;
-      case "Challenges":  return <DesignsGrid user={user} />;
-
-      default:
-        return null;
-    }
+    const category_component = GetComponentForCategoryName(categoryName, userModel);
+    setCategoryComponent(category_component);
   };
 
   //
-  if (!user) {
+  if (!userModel) {
     return <div>Loading...</div>;
   }
 
   //
   return (
     <MainLayout>
-      <UserInfo user={user}>
+      <UserInfo userModel={userModel}>
       </UserInfo>
 
       <CategoriesBar
