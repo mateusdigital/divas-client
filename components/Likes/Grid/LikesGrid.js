@@ -1,4 +1,4 @@
-//----------------------------------------------------------------------------//
+//~---------------------------------------------------------------------------//
 //                               *       +                                    //
 //                         '                  |                               //
 //                     ()    .-.,="``"=.    - o -                             //
@@ -9,46 +9,64 @@
 //                 +                         +                                //
 //                      O      *        '       .                             //
 //                                                                            //
-//  File      : profile.js                                                    //
+//  File      : LikesGrid.js                                                  //
 //  Project   : divas-client                                                  //
-//  Date      : 2024-04-23                                                    //
+//  Date      : 2024-04-01                                                    //
 //  License   : See project's COPYING.TXT for full info.                      //
 //  Author    : mateus.digital <hello@mateus.digital>                         //
 //  Copyright : mateus.digital - 2024                                         //
 //                                                                            //
 //  Description :                                                             //
 //                                                                            //
-//----------------------------------------------------------------------------//
+//---------------------------------------------------------------------------~//
 
 // -----------------------------------------------------------------------------
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 //
-import App from "@/models/App";
-import UserProfile from "@/components/User/UserProfile";
+import NET from '@/app/NET';
+//
+import DesignGridItem from "@/components/Moodboard/Grid/MoodboardGrid";
+//
+import styles from "./LikesGrid.module.css";
 
 
 // -----------------------------------------------------------------------------
-function ProfilePage()
+function LikesGrid({ user })
 {
-  //
-  const [loggedUser, setLoggedUser] = useState(null);
-  useEffect(()=>{
-    const _GetLoggedUser = async ()=>{
-      const logged_user = await App.GetCurrentLoggedUser();
-      setLoggedUser(logged_user);
-    }
+  const [likeItems, setLikeItems] = useState([]);
 
-    _GetLoggedUser();
+  //
+  useEffect(() => {
+    const fetchLikes = async () => {
+      try {
+        const api_url  = NET.Make_API_Url("like", user._id);
+        const response = await NET.GET(api_url);
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch likes");
+        }
+
+        const likes_data = await response.json();
+        setLikeItems(likes_data);
+      } catch (error) {
+        console.error("Error fetching design items:", error);
+      }
+    };
+
+    fetchLikes();
   }, []);
 
-  // Not ready...
-  if (!loggedUser) {
-    return <div>Loading...</div>;
-  }
-
-  // Ready...
-  return <UserProfile userModel={loggedUser}></UserProfile>
+  //
+  return (
+    <div className={styles.designsGridContainer}>
+      <div className={styles.designsGrid}>
+        {likeItems.map((likeItem) => (
+          <DesignGridItem key={likeItem._id} moodboard={likeItem} />
+        ))}
+      </div>
+    </div>
+  );
 }
 
 // -----------------------------------------------------------------------------
-export default ProfilePage;
+export default LikesGrid;

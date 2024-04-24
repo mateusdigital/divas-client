@@ -9,7 +9,7 @@
 //                 +                         +                                //
 //                      O      *        '       .                             //
 //                                                                            //
-//  File      : profile.js                                                    //
+//  File      : CategoriesBarFactory.js                                       //
 //  Project   : divas-client                                                  //
 //  Date      : 2024-04-23                                                    //
 //  License   : See project's COPYING.TXT for full info.                      //
@@ -20,35 +20,24 @@
 //                                                                            //
 //----------------------------------------------------------------------------//
 
-// -----------------------------------------------------------------------------
-import { useEffect, useState } from "react";
 //
-import App from "@/models/App";
-import UserProfile from "@/components/User/UserProfile";
-
+import CATEGORIES_BAR_NAMES from "./CategoriesBarNames";
+import MoodboardGrid from "@/components/Moodboard/Grid/MoodboardGrid";
+import LikesGrid from "@/components/Likes/Grid/LikesGrid";
 
 // -----------------------------------------------------------------------------
-function ProfilePage()
+function GetComponentForCategoryName(name, userModel)
 {
-  //
-  const [loggedUser, setLoggedUser] = useState(null);
-  useEffect(()=>{
-    const _GetLoggedUser = async ()=>{
-      const logged_user = await App.GetCurrentLoggedUser();
-      setLoggedUser(logged_user);
+    switch (name) {
+      case "Moodboards":  return <MoodboardGrid userModel={userModel}></MoodboardGrid>;
+      case "Likes":       return <LikesGrid     userModel={userModel}></LikesGrid>;
+      case "Collections": return <div></div>;
+      case "Uploads":     return <div></div>;
+
+      default:
+          debugger;
+          return null;
     }
-
-    _GetLoggedUser();
-  }, []);
-
-  // Not ready...
-  if (!loggedUser) {
-    return <div>Loading...</div>;
-  }
-
-  // Ready...
-  return <UserProfile userModel={loggedUser}></UserProfile>
 }
 
-// -----------------------------------------------------------------------------
-export default ProfilePage;
+export default GetComponentForCategoryName;

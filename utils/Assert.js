@@ -9,9 +9,9 @@
 //                 +                         +                                //
 //                      O      *        '       .                             //
 //                                                                            //
-//  File      : profile.js                                                    //
+//  File      : Assert.js                                                     //
 //  Project   : divas-client                                                  //
-//  Date      : 2024-04-23                                                    //
+//  Date      : 2024-04-24                                                    //
 //  License   : See project's COPYING.TXT for full info.                      //
 //  Author    : mateus.digital <hello@mateus.digital>                         //
 //  Copyright : mateus.digital - 2024                                         //
@@ -20,35 +20,16 @@
 //                                                                            //
 //----------------------------------------------------------------------------//
 
-// -----------------------------------------------------------------------------
-import { useEffect, useState } from "react";
-//
-import App from "@/models/App";
-import UserProfile from "@/components/User/UserProfile";
-
-
-// -----------------------------------------------------------------------------
-function ProfilePage()
+class Assert
 {
-  //
-  const [loggedUser, setLoggedUser] = useState(null);
-  useEffect(()=>{
-    const _GetLoggedUser = async ()=>{
-      const logged_user = await App.GetCurrentLoggedUser();
-      setLoggedUser(logged_user);
+  static NotNull(obj, msg) {
+    if(obj === null || obj == undefined) {
+      const final_msg = `[Assert - NonNull] - ${msg}`;
+      console.error(final_msg);
+      debugger;
+      throw new Error(final_msg);
     }
-
-    _GetLoggedUser();
-  }, []);
-
-  // Not ready...
-  if (!loggedUser) {
-    return <div>Loading...</div>;
   }
-
-  // Ready...
-  return <UserProfile userModel={loggedUser}></UserProfile>
 }
 
-// -----------------------------------------------------------------------------
-export default ProfilePage;
+export default Assert;

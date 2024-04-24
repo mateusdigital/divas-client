@@ -9,7 +9,7 @@
 /*                 +                         +                                */
 /*                      O      *        '       .                             */
 /*                                                                            */
-/*  File      : DesignItemDetails.module.css                                  */
+/*  File      : MoodboardDetails.module.css                                  */
 /*  Project   : divas-client                                                  */
 /*  Date      : 2024-04-16                                                    */
 /*  License   : See project's COPYING.TXT for full info.                      */
@@ -21,7 +21,7 @@
 /*----------------------------------------------------------------------------*/
 
 /* -------------------------------------------------------------------------- */
-.designItemContainer {
+.moodboardContainer {
   display: grid;
   grid-template-columns: 2fr 1fr;
   width: 100%;
@@ -29,30 +29,30 @@
 }
 
 /* -------------------------------------------------------------------------- */
-.designItemImageContainer {
+.moodboardImageContainer {
   background-color: greenyellow;
 }
 
-.designItemImageContainer img {
+.moodboardImageContainer img {
   width:  100%;
   height: 100%;
   aspect-ratio: 1/1;
 }
 
 /* -------------------------------------------------------------------------- */
-.designItemInfoContainer {
+.moodboardInfoContainer {
   background-color: goldenrod;
 }
 
 /* -------------------------------------------------------------------------- */
-.designItemInfoUserContainer {
+.moodboardInfoUserContainer {
   display: flex;
   background-color: chartreuse;
   justify-content: space-between;
   align-items: center;
 }
 
-.designItemInfoUserContainer div{
+.moodboardInfoUserContainer div{
   display: flex;
   flex-direction: column;
 
@@ -60,34 +60,34 @@
 }
 
 /* -------------------------------------------------------------------------- */
-.designItemItemInfoContainer {
+.moodboardItemInfoContainer {
   display: flex;
   flex-direction: column;
   background-color: red;
   text-align: center;
 }
 
-.designItemItemTitle {
+.moodboardItemTitle {
   background-color: blue;
   font-size: 2rem;
 }
 
-.designItemItemDescription {
+.moodboardItemDescription {
 
 }
 
 
 /* -------------------------------------------------------------------------- */
-.designItemOtherContainer {
+.moodboardOtherContainer {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.designItemStatsContainer {
+.moodboardStatsContainer {
   display: flex;
   background-color: rebeccapurple;
 }
-.designItemOtherStat {
+.moodboardOtherStat {
   display: flex;
   flex-direction: column;
   text-align: center;

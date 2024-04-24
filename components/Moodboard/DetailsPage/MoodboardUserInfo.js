@@ -1,4 +1,4 @@
-//~---------------------------------------------------------------------------//
+//----------------------------------------------------------------------------//
 //                               *       +                                    //
 //                         '                  |                               //
 //                     ()    .-.,="``"=.    - o -                             //
@@ -9,65 +9,59 @@
 //                 +                         +                                //
 //                      O      *        '       .                             //
 //                                                                            //
-//  File      : DesignsGrid.js                                                //
+//  File      : MoodboardUserInfo.js                                          //
 //  Project   : divas-client                                                  //
-//  Date      : 2024-03-25                                                    //
+//  Date      : 2024-04-24                                                    //
 //  License   : See project's COPYING.TXT for full info.                      //
 //  Author    : mateus.digital <hello@mateus.digital>                         //
 //  Copyright : mateus.digital - 2024                                         //
 //                                                                            //
 //  Description :                                                             //
 //                                                                            //
-//---------------------------------------------------------------------------~//
+//----------------------------------------------------------------------------//
+
+//
+import { useState, useEffect } from "react";
+//
+import App from "@/models/App";
+//
+import styles from "./MoodboardDetails.module.css";
 
 // -----------------------------------------------------------------------------
-import { useEffect, useState } from 'react';
-//
-import NET from '@/app/NET';
-//
-import DesignGridItem from './DesignGridItem';
-//
-import styles from "./DesignsGrid.module.css";
-
-
-// -----------------------------------------------------------------------------
-function DesignsGrid({ user })
+function MoodboardUserInfo({moodboardModel})
 {
-  //
-  const [designItems, setDesignItems] = useState([]);
 
   //
-  useEffect(() => {
-    const fetchDesignItems = async () => {
-      try {
-        const api_url  = NET.Make_API_Url("designItem/getByIds");
-        const json     = JSON.stringify({ ids: user.designItems });
-        const response = await NET.POST(api_url, { body: json });
+  const [ownerUserModel, setOwnerUserModel] = useState(null);
+  useEffect(()=>{
+    const _GetUser = async ()=>{
+      const user_model = await App.GetUserWithId(moodboardModel.owner);
+      setOwnerUserModel(user_model);
+    }
 
-        if (!response.ok) {
-          throw new Error("Failed to fetch design items");
-        }
-        const data = await response.json();
-        setDesignItems(data);
-      } catch (error) {
-        console.error("Error fetching design items:", error);
-      }
-    };
+    if(moodboardModel.owner) {
+      _GetUser();
+    }
+  }, [moodboardModel.owner]);
 
-    fetchDesignItems();
-  }, [user.designItems]);
+  // Not ready...
+  if(!ownerUserModel) {
+    return <div>Loading...</div>;
+  }
 
-  //
+  // Ready...
   return (
-    <div className={styles.designsGridContainer}>
-      <div className={styles.designsGrid}>
-        {designItems.map((designItem) => (
-          <DesignGridItem key={designItem._id} designItem={designItem} />
-        ))}
+    <div className={styles.moodboardInfoUserContainer}>
+      <div>
+        <span>Created by: </span>
+        <span>{ownerUserModel ? ownerUserModel.username : "Loading..."}</span>
+      </div>
+      <div>
+        <button>Follow</button>
       </div>
     </div>
   );
 }
 
 // -----------------------------------------------------------------------------
-export default DesignsGrid;
+export default MoodboardUserInfo;

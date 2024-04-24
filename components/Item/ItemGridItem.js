@@ -6,7 +6,7 @@ import Link from 'next/link';
 import NET from '@/app/NET';
 
 // -----------------------------------------------------------------------------
-function ItemGridItem({ designItem, children })
+function ItemGridItem({ moodboard, children })
 {
   return ();
 }

@@ -22,92 +22,41 @@
 
 // -----------------------------------------------------------------------------
 import { useRouter } from "next/router";
-import { useEffect, useState, lazy, Suspense } from "react";
+// -----------------------------------------------------------------------------
+import { useEffect, useState } from "react";
 //
-import NET from "@/app/NET";
-//
-import MainLayout    from "@/components/MainLayout";
-import UserInfo      from "@/components/User/Profile/UserInfo";
-import CategoriesBar from "@/components/User/Profile/CategoriesBar";
+import App from "@/models/App";
+import UserProfile from "@/components/User/UserProfile";
 
-import CATEGORIES_BAR_NAMES from "@/components/User/Profile/CategoriesBarNames";
-
-// Conditional rendering based on the selected category
-const DesignsGrid = lazy(() => import("@/components/Design/DesignsGrid"));
-const LikesGrid   = lazy(() => import("@/components/Design/LikesGrid"));
 
 // -----------------------------------------------------------------------------
-function UserProfile()
+function ProfilePageForUser()
 {
   //
   const router = useRouter();
   const { username } = router.query;
-  const [user, setUser] = useState(null);
-  const [categoryComponent, setCategoryComponent] = useState(null);
 
-  // Fetch User Information from server.
-  useEffect(() => {
-    const api_url = NET.Make_API_Url("users", username);
-    if (username) {
-      fetch(api_url)
-        .then((res) => {
-          return res.json()
-        })
-        .then((data) => {
-          setUser(data);
-        })
-        .catch((error) => {
-          console.error("Error fetching user:", error)
-        });
+  //
+  const [userModel, setUserModel] = useState(null);
+  useEffect(()=>{
+    const _GetUser = async ()=>{
+      const user_model = await App.GetUserWithUsername(username);
+      setUserModel(user_model);
+    }
+
+    if(username) {
+      _GetUser();
     }
   }, [username]);
 
-  // Handle Category Selection
-  const [selectedCategory, setSelectedCategory] = useState(CATEGORIES_BAR_NAMES[0]);
-  const handle_category_selection = (category) => {
-    setSelectedCategory(category);
-    setCategoryComponent(getComponentForCategory(category));
-  };
-
-  const getComponentForCategory = (category) => {
-    switch (category) {
-      case "Likes":
-        return <LikesGrid user={user} />;
-      case "Designs":
-        return <DesignsGrid user={user} />;
-      case "Uploads":
-        return <DesignsGrid user={user} />;
-      case "Collections":
-        return <DesignsGrid user={user} />;
-      case "Challenges":
-        return <DesignsGrid user={user} />;
-      default:
-        return null;
-    }
-  };
-
-  //
-  if (!user) {
+  // Not ready...
+  if (!userModel) {
     return <div>Loading...</div>;
   }
 
-  //
-  return (
-    <MainLayout>
-      <UserInfo user={user}>
-      </UserInfo>
-
-      <CategoriesBar
-        currentSelectedCategory={selectedCategory}
-        OnCategoryClickCallback={handle_category_selection}>
-      </CategoriesBar>
-
-      <Suspense fallback={<div>Loading...</div>}>
-        {categoryComponent}
-      </Suspense>
-    </MainLayout>
-  );
+  // Ready...
+  return <UserProfile userModel={userModel}></UserProfile>
 }
 
 // -----------------------------------------------------------------------------
-export default UserProfile;
+export default ProfilePageForUser;

@@ -9,7 +9,7 @@
 //                 +                         +                                //
 //                      O      *        '       .                             //
 //                                                                            //
-//  File      : DesignsItem.js                                                //
+//  File      : MoodboardGridItem.js                                          //
 //  Project   : divas-client                                                  //
 //  Date      : 2024-04-01                                                    //
 //  License   : See project's COPYING.TXT for full info.                      //
@@ -23,24 +23,25 @@
 
 // -----------------------------------------------------------------------------
 import { useEffect, useState } from 'react';
-//
-import styles from "./DesignGridItem.module.css";
 import Link from 'next/link';
+//
 import NET from '@/app/NET';
+//
+import styles from "./MoodboardGridItem.module.css";
+
 
 // -----------------------------------------------------------------------------
-function DesignGridItem({ designItem, children })
+function MoodboardGridItem({moodboardModel})
 {
-
-  const design_item_details_url = NET.Make_Navigation_Url("designItem", designItem._id);
+  const moodboard_details_url = NET.Make_Navigation_Url("moodboard", moodboardModel._id);
   return (
     <div>
-      <Link href={design_item_details_url}>
-        <img src={designItem.imageUrl}></img>
+      <Link href={moodboard_details_url}>
+        <img src={moodboardModel.imageUrl}></img>
       </Link>
     </div>
   );
 }
 
 // -----------------------------------------------------------------------------
-export default DesignItem;
+export default MoodboardGridItem;
