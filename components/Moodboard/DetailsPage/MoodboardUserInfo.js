@@ -56,7 +56,9 @@ function MoodboardUserInfo({moodboardModel})
         <span>Created by: </span>
         <span>{ownerUserModel ? ownerUserModel.username : "Loading..."}</span>
       </div>
-      <button>Follow</button>
+      <div>
+        <button>Follow</button>
+      </div>
     </div>
   );
 }
