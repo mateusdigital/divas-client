@@ -9,9 +9,9 @@
 //                 +                         +                                //
 //                      O      *        '       .                             //
 //                                                                            //
-//  File      : DesignsItem.js                                                //
+//  File      : MoodboardGrid.js                                              //
 //  Project   : divas-client                                                  //
-//  Date      : 2024-04-01                                                    //
+//  Date      : 2024-03-25                                                    //
 //  License   : See project's COPYING.TXT for full info.                      //
 //  Author    : mateus.digital <hello@mateus.digital>                         //
 //  Copyright : mateus.digital - 2024                                         //
@@ -20,27 +20,54 @@
 //                                                                            //
 //---------------------------------------------------------------------------~//
 
-
 // -----------------------------------------------------------------------------
 import { useEffect, useState } from 'react';
 //
-import styles from "./DesignGridItem.module.css";
-import Link from 'next/link';
 import NET from '@/app/NET';
+//
+import MoodboardGridItem from './MoodboardGridItem';
+//
+import styles from "./MoodboardGrid.module.css";
+
 
 // -----------------------------------------------------------------------------
-function DesignGridItem({ designItem, children })
+function MoodboardGrid({ userModel })
 {
+  //
+  const [moodboards, setMoodboards] = useState([]);
 
-  const design_item_details_url = NET.Make_Navigation_Url("designItem", designItem._id);
+  //
+  useEffect(() => {
+    const fetchMoodboards = async () => {
+      try {
+        const api_url  = NET.Make_API_Url("moodboard/getByIds");
+        const json     = JSON.stringify({ ids: userModel.moodboards });
+        const response = await NET.POST(api_url, { body: json });
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch design items");
+        }
+        const data = await response.json();
+        setMoodboards(data);
+      } catch (error) {
+        console.error("Error fetching design items:", error);
+      }
+    };
+
+    fetchMoodboards();
+  }, [userModel.moodboards]);
+
+  //
   return (
-    <div>
-      <Link href={design_item_details_url}>
-        <img src={designItem.imageUrl}></img>
-      </Link>
+    <div className={styles.moodboardGridContainer}>
+      <div className={styles.moodboardGrid}>
+        {moodboards.map((moodboard) => (
+          <MoodboardGridItem key={moodboard._id} moodboardModel={moodboard} />
+        ))}
+      </div>
     </div>
   );
 }
 
 // -----------------------------------------------------------------------------
-export default DesignItem;
+export default MoodboardGrid;
