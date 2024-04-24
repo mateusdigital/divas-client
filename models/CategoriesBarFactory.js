@@ -23,7 +23,7 @@
 //
 import CATEGORIES_BAR_NAMES from "./CategoriesBarNames";
 import MoodboardGrid from "@/components/Moodboard/Grid/MoodboardGrid";
-import LikesGrid from "@/components/Design/LikesGrid";
+import LikesGrid from "@/components/Likes/Grid/LikesGrid";
 
 // -----------------------------------------------------------------------------
 function GetComponentForCategoryName(name, userModel)
