@@ -25,7 +25,7 @@ import { useEffect, useState } from 'react';
 //
 import NET from '@/app/NET';
 //
-import DesignGridItem from '../../Moodboard/Grid/MoodboardGridItem';
+import DesignGridItem from "@/components/Moodboard/Grid/MoodboardGrid";
 //
 import styles from "./LikesGrid.module.css";
 
