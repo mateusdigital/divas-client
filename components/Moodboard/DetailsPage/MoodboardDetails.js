@@ -65,24 +65,38 @@ function MoodboardDetails({moodboardModel})
 
           {/* Other */}
           <div className={styles.moodboardOtherContainer}>
-            <button>Add to collection</button>
+            {/* Collection Button */}
+            <button>
+              Add to collection
+            </button>
+
             <div className={styles.moodboardStatsContainer}>
-              <MaterialIcon
-                className={styles.moodboardOtherStat}
-                icon="share">
-              </MaterialIcon>
+              {/* Share Button */}
+              <button>
+                <MaterialIcon
+                  className={styles.moodboardOtherStat}
+                  icon="share">
+                </MaterialIcon>
+              </button>
 
-              <MaterialIcon
-                className={styles.moodboardOtherStat}
-                icon="chat_bubble">
-                  {moodboardModel.commentsCount}
-              </MaterialIcon>
+              {/* Comments Button */}
+              <button>
+                <MaterialIcon
+                  className={styles.moodboardOtherStat}
+                  icon="chat_bubble">
+                    {moodboardModel.commentsCount}
+                </MaterialIcon>
+              </button>
 
-              <MaterialIcon
-                className={styles.moodboardOtherStat}
-                icon="favorite">
-                  {moodboardModel.likesCount}
-              </MaterialIcon>
+              {/* Likes button */}
+              <button>
+                <MaterialIcon
+                  className={styles.moodboardOtherStat}
+                  icon="favorite">
+                    {moodboardModel.likesCount}
+                </MaterialIcon>
+              </button>
+
             </div>
           </div>
           {/* -Other */}
