@@ -1,8 +1,10 @@
+// -----------------------------------------------------------------------------
 import NET from "@/app/NET";
-
-//
+// -----------------------------------------------------------------------------
 import User from "@/models/User";
 import Assert from "@/utils/Assert";
+// -----------------------------------------------------------------------------
+const Endpoints = require("@/divas-shared/shared/API/Endpoints");
 
 
 // -----------------------------------------------------------------------------
@@ -19,14 +21,23 @@ class App
   static async GetCurrentLoggedUser()
   {
     if(App._currentLoggedUser == null) {
-      const user_id = "6601bed20f723b2f4f98f05b";
-      const api_url = NET.Make_API_Url("usersId", user_id);
+      try {
+        const user_id = "6601bed20f723b2f4f98f05b";
+        const api_url = NET.Make_API_Url(Endpoints.User.GetById, user_id);
 
-      const response = await NET.GET(api_url);
-      const data     = await response.json();
+        const response = await NET.GET(api_url);
+        if(!response.ok) {
+          return null;
+        }
 
-      const user = User.CreateFromServerData(data);
-      this._currentLoggedUser = user;
+        const data = await response.json();
+        const user = User.CreateFromServerData(data);
+
+        this._currentLoggedUser = user;
+      }
+      catch(error) {
+        debugger;
+      }
     }
 
     return App._currentLoggedUser;
