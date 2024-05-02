@@ -9,7 +9,7 @@
 //                 +                         +                                //
 //                      O      *        '       .                             //
 //                                                                            //
-//  File      : MoodboardComments.js                                          //
+//  File      : MoodboardItemsCarrousel.js                                    //
 //  Project   : divas-client                                                  //
 //  Date      : 2024-04-24                                                    //
 //  License   : See project's COPYING.TXT for full info.                      //
@@ -20,21 +20,20 @@
 //                                                                            //
 //----------------------------------------------------------------------------//
 
-
 //
-import styles from "./MoodboardDetails.module.css";
+import styles from "./MoodboardItemsCarrousel.module.css";
 
 // -----------------------------------------------------------------------------
-function MoodboardComments({moodboardModel})
+function MoodboardItemsCarrousel({moodboardModel})
 {
 
   // Ready...
   return (
     <div>
-      Comments...
+      Items Carrousel...
     </div>
   );
 }
 
 // -----------------------------------------------------------------------------
-export default MoodboardComments;
+export default MoodboardItemsCarrousel;
