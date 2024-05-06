@@ -81,6 +81,17 @@ class NET
   }
 
   // ---------------------------------------------------------------------------
+  static async POST_DATA(url, options)
+  {
+    const base_options = {
+      method: "POST",
+    };
+    const full_options = {...base_options, ...options };
+
+    return fetch(url, full_options);
+  }
+
+  // ---------------------------------------------------------------------------
   static async POST(url, options)
   {
     const base_options = {

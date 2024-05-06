@@ -1,3 +1,4 @@
+import { StatusCodes } from "http-status-codes";
 // -----------------------------------------------------------------------------
 import NET from "@/app/NET";
 // -----------------------------------------------------------------------------
@@ -26,7 +27,7 @@ class App
         const api_url = NET.Make_API_Url(Endpoints.User.GetById, user_id);
 
         const response = await NET.GET(api_url);
-        if(!response.ok) {
+        if(response.status != StatusCodes.OK) {
           return null;
         }
 
@@ -48,10 +49,10 @@ class App
   {
     Assert.NotNull(username, "username is null");
 
-    const api_url = NET.Make_API_Url("users", username);
+    const api_url = NET.Make_API_Url(Endpoints.User.GetByUsername, username);
 
     const response = await NET.GET(api_url);
-    if(response.status != 200) {
+    if(response.status != StatusCodes.OK) {
       return null;
     }
 
@@ -66,10 +67,10 @@ class App
   {
     Assert.NotNull(id, "id is null");
 
-    const api_url = NET.Make_API_Url("usersId", id);
+    const api_url = NET.Make_API_Url(Endpoints.User.GetById, id);
 
     const response = await NET.GET(api_url);
-    if(response.status != 200) {
+    if(response.status != StatusCodes.OK) {
       return null;
     }
 
@@ -78,6 +79,37 @@ class App
 
     return user;
   }
+
+  // ---------------------------------------------------------------------------
+  static async CreateUserWithData(data)
+  {
+    // Assert.NonNullNotEmpty(data.username);
+    // Assert.NonNullNotEmpty(data.email);
+    // Assert.NonNullNotEmpty(data.password);
+
+    // Assert.NonNullNotEmpty(data.name);
+    // Assert.NonNullNotEmpty(data.description);
+
+    Assert.NotNull(data.profilePhoto, "profile photo can't be null");
+
+
+    const form_data = new FormData();
+    form_data.append("profilePhoto", data.profilePhoto);
+
+    const api_url = NET.Make_API_Url(Endpoints.User.UploadProfilePhoto);
+    const response = await NET.POST_DATA(api_url, {
+      body: form_data
+    });
+
+    if (response.ok) {
+      console.log('File uploaded successfully');
+    } else {
+      console.error('Failed to upload file');
+    }
+
+    return response;
+  }
+
 
   //
   // Moodboard
