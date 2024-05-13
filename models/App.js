@@ -16,10 +16,22 @@ class Result
     return new Result(value, null);
   }
 
-  static async Error(error)
+  static async ResponseError(error)
   {
     const msg = await error.json();
     return new Result(null, error, msg);
+  }
+
+  static LogicError(msg)
+  {
+    const error = new Error(msg);
+    return new Result(null, error, { message: msg });
+  }
+
+  // ---------------------------------------------------------------------------
+  static ExceptionError(error)
+  {
+    return new Result(null, error, { message: error.message });
   }
 
   constructor(value, error, errorJson)
@@ -46,42 +58,54 @@ class App
   // ---------------------------------------------------------------------------
   static _currentLoggedUser;
 
+  static SetCurrentLoggedUser(data)
+  {
+    const userModel = User.CreateFromServerData(data);
+    this._currentLoggedUser = userModel;
+
+    return Result.Valid(this._currentLoggedUser);
+  }
+
   // ---------------------------------------------------------------------------
   static async GetCurrentLoggedUser()
   {
     if(App._currentLoggedUser == null) {
-      try {
-        const user_id = "6601bed20f723b2f4f98f05b";
-        const api_url = NET.Make_API_Url(Endpoints.User.GetById, user_id);
-
-        const response = await NET.GET(api_url);
-        if(response.status != StatusCodes.OK) {
-          return null;
-        }
-
-        const data = await response.json();
-        const user = User.CreateFromServerData(data);
-
-        this._currentLoggedUser = user;
-      }
-      catch(error) {
-        debugger;
-      }
+      return Result.LogicError("No logged users");
     }
 
-    return App._currentLoggedUser;
+    return Result.Valid(App._currentLoggedUser);
   }
+
+  // ---------------------------------------------------------------------------
+  static async TryToLoginUserWithData(data)
+  {
+    try {
+      const api_url  = NET.Make_API_Url(Endpoints.User.Login);
+      const response = await NET.POST_JSON(api_url, data);
+
+      if(response.status != StatusCodes.OK) {
+        return Result.ResponseError(response);
+      }
+
+      const json = await response.json();
+      return App.SetCurrentLoggedUser(json);
+    }
+    catch(error) {
+      return Result.ExceptionError(error);
+    }
+  }
+
 
   // ---------------------------------------------------------------------------
   static async GetUserWithUsername(username)
   {
-    Assert.NotNull(username, "username is null");
+    Assert.NotNull(username);
 
     const api_url = NET.Make_API_Url(Endpoints.User.GetByUsername, username);
 
     const response = await NET.GET(api_url);
     if(response.status != StatusCodes.OK) {
-      return Result.Error(response);
+      return Result.ResponseError(response);
     }
 
     const data = await response.json();
@@ -99,7 +123,7 @@ class App
 
     const response = await NET.GET(api_url);
     if(response.status != StatusCodes.OK) {
-      return await Result.Error(response);
+      return await Result.ResponseError(response);
     }
 
     const data = await response.json();
@@ -127,10 +151,10 @@ class App
       form_data.append("profilePhoto", photo);
 
       const api_url  = NET.Make_API_Url(Endpoints.User.UploadProfilePhoto);
-      const response = await NET.POST_DATA(api_url, { body: form_data });
+      const response = await NET.POST_DATA(api_url, form_data);
 
       if(response.status != StatusCodes.CREATED) {
-        return await Result.Error(response);
+        return await Result.ResponseError(response);
       }
 
       const response_data  = await response.json();
@@ -140,12 +164,10 @@ class App
     //
     {
       const api_url  = NET.Make_API_Url(Endpoints.User.Create);
-      const response = await NET.POST(api_url, {
-        body: JSON.stringify(data)
-      });
+      const response = await NET.POST_JSON(api_url, data);
 
       if(response.status != StatusCodes.CREATED) {
-        return await Result.Error(response);
+        return await Result.ResponseError(response);
       }
 
       const json = await response.json();
