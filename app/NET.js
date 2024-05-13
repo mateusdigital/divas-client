@@ -74,17 +74,26 @@ class NET
     return final_url;
   }
 
+  //
+  // GET
+  //
+
   // ---------------------------------------------------------------------------
   static async GET(url)
   {
     return fetch(url);
   }
 
+  //
+  // POST
+  //
+
   // ---------------------------------------------------------------------------
-  static async POST_DATA(url, options)
+  static async POST_DATA(url, data, options)
   {
     const base_options = {
       method: "POST",
+      body: { data }
     };
     const full_options = {...base_options, ...options };
 
@@ -92,15 +101,23 @@ class NET
   }
 
   // ---------------------------------------------------------------------------
-  static async POST(url, options)
+  static async POST_JSON(url, jsonObject, options)
   {
     const base_options = {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
+      body: JSON.stringify(jsonObject),
     };
+    const full_options = {...base_options, ...options };
+    return fetch(url, full_options);
+  }
 
+  // ---------------------------------------------------------------------------
+  static async POST(url, options)
+  {
+    const base_options = { method: "POST", };
     const full_options = {...base_options, ...options };
     return fetch(url, full_options);
   }

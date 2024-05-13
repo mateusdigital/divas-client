@@ -9,7 +9,7 @@
 //                 +                         +                                //
 //                      O      *        '       .                             //
 //                                                                            //
-//  File      : create.js                                                     //
+//  File      : login.js                                                      //
 //  Project   : divas-client                                                  //
 //  Date      : 2024-05-13                                                    //
 //  License   : See project's COPYING.TXT for full info.                      //
@@ -21,14 +21,14 @@
 //----------------------------------------------------------------------------//
 
 // -----------------------------------------------------------------------------
-import CreateUser from "@/components/User/Create/CreateUser";
+import LoginUser from "@/components/User/Login/LoginUser";
 
 
 // -----------------------------------------------------------------------------
 function Component()
 {
   return (
-    <CreateUser></CreateUser>
+    <LoginUser></LoginUser>
   );
 }
 

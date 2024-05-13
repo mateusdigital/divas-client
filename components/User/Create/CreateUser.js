@@ -1,3 +1,25 @@
+//----------------------------------------------------------------------------//
+//                               *       +                                    //
+//                         '                  |                               //
+//                     ()    .-.,="``"=.    - o -                             //
+//                           '=/_       \     |                               //
+//                        *   |  '=._    |                                    //
+//                             \     `=./`,        '                          //
+//                          .   '=.__.=' `='      *                           //
+//                 +                         +                                //
+//                      O      *        '       .                             //
+//                                                                            //
+//  File      : CreateUser.js                                                 //
+//  Project   : divas-client                                                  //
+//  Date      : 2024-05-06                                                    //
+//  License   : See project's COPYING.TXT for full info.                      //
+//  Author    : mateus.digital <hello@mateus.digital>                         //
+//  Copyright : mateus.digital - 2024                                         //
+//                                                                            //
+//  Description :                                                             //
+//                                                                            //
+//----------------------------------------------------------------------------//
+
 // -----------------------------------------------------------------------------
 import { useState } from "react";
 import { useRouter } from "next/router";
@@ -42,6 +64,9 @@ function CreateUser()
       ToastUtils.Error(result.errorJson.message);
       return false;
     }
+
+    const user = result.value;
+    App.SetCurrentLoggedUser(user);
 
     router.push("/profile");
   };
