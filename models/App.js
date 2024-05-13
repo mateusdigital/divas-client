@@ -81,33 +81,47 @@ class App
   }
 
   // ---------------------------------------------------------------------------
-  static async CreateUserWithData(data)
+  static async CreateUserWithData(data, photo)
   {
-    // Assert.NonNullNotEmpty(data.username);
-    // Assert.NonNullNotEmpty(data.email);
-    // Assert.NonNullNotEmpty(data.password);
+    //
+    Assert.NotNullOrEmpty(data.username);
+    Assert.NotNullOrEmpty(data.email);
+    Assert.NotNullOrEmpty(data.password);
 
-    // Assert.NonNullNotEmpty(data.name);
-    // Assert.NonNullNotEmpty(data.description);
+    Assert.NotNullOrEmpty(data.fullname);
+    Assert.NotNullOrEmpty(data.description);
 
-    Assert.NotNull(data.profilePhoto, "profile photo can't be null");
+    Assert.NotNull(photo);
 
+    //
+    {
+      const form_data = new FormData();
+      form_data.append("profilePhoto", photo);
 
-    const form_data = new FormData();
-    form_data.append("profilePhoto", data.profilePhoto);
+      const api_url  = NET.Make_API_Url(Endpoints.User.UploadProfilePhoto);
+      const response = await NET.POST_DATA(api_url, { body: form_data });
 
-    const api_url = NET.Make_API_Url(Endpoints.User.UploadProfilePhoto);
-    const response = await NET.POST_DATA(api_url, {
-      body: form_data
-    });
+      if(response.status != StatusCodes.CREATED) {
+        return response;
+      }
 
-    if (response.ok) {
-      console.log('File uploaded successfully');
-    } else {
-      console.error('Failed to upload file');
+      const response_data = await response.json();
+      data.profilePhotoUrl = response_data.profilePhotoPath;
     }
 
-    return response;
+    //
+    {
+      const api_url  = NET.Make_API_Url(Endpoints.User.Create);
+      const response = await NET.POST(api_url, {
+        body: JSON.stringify(data)
+      });
+
+      if(response.status != StatusCodes.CREATED) {
+        return response;
+      }
+
+      return response;
+    }
   }
 
 

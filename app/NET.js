@@ -100,8 +100,8 @@ class NET
         "Content-Type": "application/json",
       },
     };
-    const full_options = {...base_options, ...options };
 
+    const full_options = {...base_options, ...options };
     return fetch(url, full_options);
   }
 }

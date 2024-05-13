@@ -8,43 +8,66 @@ import App from "@/models/App";
 // -----------------------------------------------------------------------------
 function CreateUser()
 {
-  const [file, setFile] = useState(null);
+  const [username, setUsername]         = useState("");
+  const [email, setEmail]               = useState("");
+  const [password, setPassword]         = useState("");
+  const [fullname, setFullname]         = useState("");
+  const [description, setDescription]   = useState("");
+  const [profilePhoto, setProfilePhoto] = useState(null);
 
-  const handleFileUpload = async (e) => {
-    const selected_file = e.target.files[0];
-    setFile(selected_file);
+  const handle_username_change      = async (e) => { setUsername(e.target.value); };
+  const handle_email_change         = async (e) => { setEmail(e.target.value); };
+  const handle_password_change      = async (e) => { setPassword(e.target.value); };
+  const handle_fullname_change      = async (e) => { setFullname(e.target.value); };
+  const handle_description_change   = async (e) => { setDescription(e.target.value); };
+  const handle_profile_photo_change = async (e) => { setProfilePhoto(e.target.files[0]); };
 
+  const handle_submit = async () => {
     const data = {
-      profilePhoto : selected_file
+      username: username,
+      email: email,
+      password: password,
+      fullname: fullname,
+      description: description,
     };
 
-    const result = await App.CreateUserWithData(data);
+    const result = await App.CreateUserWithData(data, profilePhoto);
   };
+
 
   return (
     <div>
       <div>
         <span>Username</span>
-        <input type="text"></input>
+        <input type="text" value={username} onChange={handle_username_change}></input>
       </div>
-
       <div>
         <span>Email</span>
-        <input type="text"></input>
+        <input type="text" value={email} onChange={handle_email_change}></input>
+      </div>
+      <div>
+        <span>Password</span>
+        <input type="text" value={password} onChange={handle_password_change}></input>
       </div>
 
+
       <div>
-        <span>Name</span>
-        <input type="text"></input>
+        <span>Full Name</span>
+        <input type="text" value={fullname} onChange={handle_fullname_change}></input>
+      </div>
+      <div>
+        <span>Description</span>
+        <input type="text" value={description} onChange={handle_description_change}></input>
       </div>
 
       <div>
         <span>Photo</span>
-        <input type="text"></input>
+        <input type="file" onChange={handle_profile_photo_change} />
       </div>
 
+
       <div>
-        <input type="file" onChange={handleFileUpload} />
+        <button onClick={handle_submit}>Create User</button>
       </div>
     </div>
   )
