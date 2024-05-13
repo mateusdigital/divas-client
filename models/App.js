@@ -1,8 +1,11 @@
+import { StatusCodes } from "http-status-codes";
+// -----------------------------------------------------------------------------
 import NET from "@/app/NET";
-
-//
+// -----------------------------------------------------------------------------
 import User from "@/models/User";
 import Assert from "@/utils/Assert";
+// -----------------------------------------------------------------------------
+const Endpoints = require("@/divas-shared/shared/API/Endpoints");
 
 
 // -----------------------------------------------------------------------------
@@ -19,14 +22,23 @@ class App
   static async GetCurrentLoggedUser()
   {
     if(App._currentLoggedUser == null) {
-      const user_id = "6601bed20f723b2f4f98f05b";
-      const api_url = NET.Make_API_Url("usersId", user_id);
+      try {
+        const user_id = "6601bed20f723b2f4f98f05b";
+        const api_url = NET.Make_API_Url(Endpoints.User.GetById, user_id);
 
-      const response = await NET.GET(api_url);
-      const data     = await response.json();
+        const response = await NET.GET(api_url);
+        if(response.status != StatusCodes.OK) {
+          return null;
+        }
 
-      const user = User.CreateFromServerData(data);
-      this._currentLoggedUser = user;
+        const data = await response.json();
+        const user = User.CreateFromServerData(data);
+
+        this._currentLoggedUser = user;
+      }
+      catch(error) {
+        debugger;
+      }
     }
 
     return App._currentLoggedUser;
@@ -37,10 +49,10 @@ class App
   {
     Assert.NotNull(username, "username is null");
 
-    const api_url = NET.Make_API_Url("users", username);
+    const api_url = NET.Make_API_Url(Endpoints.User.GetByUsername, username);
 
     const response = await NET.GET(api_url);
-    if(response.status != 200) {
+    if(response.status != StatusCodes.OK) {
       return null;
     }
 
@@ -55,10 +67,10 @@ class App
   {
     Assert.NotNull(id, "id is null");
 
-    const api_url = NET.Make_API_Url("usersId", id);
+    const api_url = NET.Make_API_Url(Endpoints.User.GetById, id);
 
     const response = await NET.GET(api_url);
-    if(response.status != 200) {
+    if(response.status != StatusCodes.OK) {
       return null;
     }
 
@@ -67,6 +79,51 @@ class App
 
     return user;
   }
+
+  // ---------------------------------------------------------------------------
+  static async CreateUserWithData(data, photo)
+  {
+    //
+    Assert.NotNullOrEmpty(data.username);
+    Assert.NotNullOrEmpty(data.email);
+    Assert.NotNullOrEmpty(data.password);
+
+    Assert.NotNullOrEmpty(data.fullname);
+    Assert.NotNullOrEmpty(data.description);
+
+    Assert.NotNull(photo);
+
+    //
+    {
+      const form_data = new FormData();
+      form_data.append("profilePhoto", photo);
+
+      const api_url  = NET.Make_API_Url(Endpoints.User.UploadProfilePhoto);
+      const response = await NET.POST_DATA(api_url, { body: form_data });
+
+      if(response.status != StatusCodes.CREATED) {
+        return response;
+      }
+
+      const response_data = await response.json();
+      data.profilePhotoUrl = response_data.profilePhotoPath;
+    }
+
+    //
+    {
+      const api_url  = NET.Make_API_Url(Endpoints.User.Create);
+      const response = await NET.POST(api_url, {
+        body: JSON.stringify(data)
+      });
+
+      if(response.status != StatusCodes.CREATED) {
+        return response;
+      }
+
+      return response;
+    }
+  }
+
 
   //
   // Moodboard

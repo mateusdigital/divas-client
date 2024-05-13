@@ -63,7 +63,7 @@ function Sidebar()
         </Link>
 
         {/* Create */}
-        <Link href="/create" className={styles.sideBarItemContainer}>
+        <Link href="/moodboard/create" className={styles.sideBarItemContainer}>
           <span className={`${material_symbol_style} ${styles.sideBarItemIcon}`}>add_box</span>
           <span className={styles.sideBarItemTitle}>Create</span>
         </Link>

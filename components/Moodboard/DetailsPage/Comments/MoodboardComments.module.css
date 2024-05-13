@@ -1,0 +1,25 @@
+/*----------------------------------------------------------------------------*/
+/*                               *       +                                    */
+/*                         '                  |                               */
+/*                     ()    .-.,="``"=.    - o -                             */
+/*                           '=/_       \     |                               */
+/*                        *   |  '=._    |                                    */
+/*                             \     `=./`,        '                          */
+/*                          .   '=.__.=' `='      *                           */
+/*                 +                         +                                */
+/*                      O      *        '       .                             */
+/*                                                                            */
+/*  File      : MoodboardComments.module.css                                  */
+/*  Project   : divas-client                                                  */
+/*  Date      : 2024-04-30                                                    */
+/*  License   : See project's COPYING.TXT for full info.                      */
+/*  Author    : mateus.digital <hello@mateus.digital>                         */
+/*  Copyright : mateus.digital - 2024                                         */
+/*                                                                            */
+/*  Description :                                                             */
+/*                                                                            */
+/*----------------------------------------------------------------------------*/
+
+.moodboardCommentsContainer {
+  background-color: crimson;
+}

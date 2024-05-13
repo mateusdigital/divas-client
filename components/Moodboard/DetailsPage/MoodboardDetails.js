@@ -24,10 +24,10 @@
 //
 import MainLayout from "@/components/Layout/MainLayout";
 import MaterialIcon from "@/components/MaterialIcon";
-import MoodboardUserInfo from "./MoodboardUserInfo";
-import MoodboardComments from "./MoodboardComments";
-import MoodboardItemsCarrousel from "./MoodboardItemsCarrousel";
-
+//
+import MoodboardUserInfo from "./UserInfo/MoodboardUserInfo";
+import MoodboardComments from "./Comments/MoodboardComments";
+import MoodboardItemsCarrousel from "./ItemsCarrousel/MoodboardItemsCarrousel";
 //
 import styles from "./MoodboardDetails.module.css";
 

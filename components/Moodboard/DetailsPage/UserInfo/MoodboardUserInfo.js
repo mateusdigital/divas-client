@@ -25,7 +25,7 @@ import { useState, useEffect } from "react";
 //
 import App from "@/models/App";
 //
-import styles from "./MoodboardDetails.module.css";
+import styles from "./MoodboardUserInfo.module.css";
 
 // -----------------------------------------------------------------------------
 function MoodboardUserInfo({moodboardModel})
