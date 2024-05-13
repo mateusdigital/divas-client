@@ -1,13 +1,18 @@
 // -----------------------------------------------------------------------------
 import { useState } from "react";
+import { useRouter } from "next/router";
 // -----------------------------------------------------------------------------
-import NET from "@/app/NET";
+// -----------------------------------------------------------------------------
 import App from "@/models/App";
-
+import ToastUtils from "@/utils/Toast";
 
 // -----------------------------------------------------------------------------
 function CreateUser()
 {
+  //
+  const router = useRouter();
+
+  //
   const [username, setUsername]         = useState("");
   const [email, setEmail]               = useState("");
   const [password, setPassword]         = useState("");
@@ -15,6 +20,7 @@ function CreateUser()
   const [description, setDescription]   = useState("");
   const [profilePhoto, setProfilePhoto] = useState(null);
 
+  //
   const handle_username_change      = async (e) => { setUsername(e.target.value); };
   const handle_email_change         = async (e) => { setEmail(e.target.value); };
   const handle_password_change      = async (e) => { setPassword(e.target.value); };
@@ -32,9 +38,15 @@ function CreateUser()
     };
 
     const result = await App.CreateUserWithData(data, profilePhoto);
+    if(result.IsError()) {
+      ToastUtils.Error(result.errorJson.message);
+      return false;
+    }
+
+    router.push("/profile");
   };
 
-
+  //
   return (
     <div>
       <div>
