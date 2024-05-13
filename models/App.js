@@ -9,8 +9,36 @@ const Endpoints = require("@/divas-shared/shared/API/Endpoints");
 
 
 // -----------------------------------------------------------------------------
+class Result
+{
+  static Valid(value)
+  {
+    return new Result(value, null);
+  }
+
+  static async Error(error)
+  {
+    const msg = await error.json();
+    return new Result(null, error, msg);
+  }
+
+  constructor(value, error, errorJson)
+  {
+    this.value     = value;
+    this.error     = error;
+    this.errorJson = errorJson;
+  }
+
+
+  IsValid() { return this.value  && !this.error; }
+  IsError() { return this.error; }
+}
+
+
+// -----------------------------------------------------------------------------
 class App
 {
+
   //
   // User
   //
@@ -53,13 +81,13 @@ class App
 
     const response = await NET.GET(api_url);
     if(response.status != StatusCodes.OK) {
-      return null;
+      return Result.Error(response);
     }
 
     const data = await response.json();
     const user = User.CreateFromServerData(data);
 
-    return user;
+    return Result.Valid(user);
   }
 
   // ---------------------------------------------------------------------------
@@ -71,13 +99,13 @@ class App
 
     const response = await NET.GET(api_url);
     if(response.status != StatusCodes.OK) {
-      return null;
+      return await Result.Error(response);
     }
 
     const data = await response.json();
     const user = User.CreateFromServerData(data);
 
-    return user;
+    return Result.Valid(user);
   }
 
   // ---------------------------------------------------------------------------
@@ -102,10 +130,10 @@ class App
       const response = await NET.POST_DATA(api_url, { body: form_data });
 
       if(response.status != StatusCodes.CREATED) {
-        return response;
+        return await Result.Error(response);
       }
 
-      const response_data = await response.json();
+      const response_data  = await response.json();
       data.profilePhotoUrl = response_data.profilePhotoPath;
     }
 
@@ -117,10 +145,12 @@ class App
       });
 
       if(response.status != StatusCodes.CREATED) {
-        return response;
+        return await Result.Error(response);
       }
 
-      return response;
+      const json = await response.json();
+      const user = User.CreateFromServerData(json);
+      return Result.Valid(user);
     }
   }
 
