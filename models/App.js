@@ -1,3 +1,26 @@
+//----------------------------------------------------------------------------//
+//                               *       +                                    //
+//                         '                  |                               //
+//                     ()    .-.,="``"=.    - o -                             //
+//                           '=/_       \     |                               //
+//                        *   |  '=._    |                                    //
+//                             \     `=./`,        '                          //
+//                          .   '=.__.=' `='      *                           //
+//                 +                         +                                //
+//                      O      *        '       .                             //
+//                                                                            //
+//  File      : App.js                                                        //
+//  Project   : divas-client                                                  //
+//  Date      : 2024-04-23                                                    //
+//  License   : See project's COPYING.TXT for full info.                      //
+//  Author    : mateus.digital <hello@mateus.digital>                         //
+//  Copyright : mateus.digital - 2024                                         //
+//                                                                            //
+//  Description :                                                             //
+//                                                                            //
+//----------------------------------------------------------------------------//
+
+// -----------------------------------------------------------------------------
 import { StatusCodes } from "http-status-codes";
 // -----------------------------------------------------------------------------
 import NET from "@/app/NET";
@@ -60,10 +83,12 @@ class App
 
   static SetCurrentLoggedUser(data)
   {
-    const userModel = User.CreateFromServerData(data);
-    this._currentLoggedUser = userModel;
+    if(!App._currentLoggedUser || App._currentLoggedUser._id == data._id) {
+      const userModel = User.CreateFromServerData(data);
+      App._currentLoggedUser = userModel;
+    }
 
-    return Result.Valid(this._currentLoggedUser);
+    return Result.Valid(App._currentLoggedUser);
   }
 
   // ---------------------------------------------------------------------------

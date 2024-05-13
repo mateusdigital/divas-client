@@ -22,14 +22,23 @@
 
 // -----------------------------------------------------------------------------
 import styles from "./UserInfo.module.css";
+import NET from "@/app/NET";
+
+// @XXX: Get the correct url place
+function XXX_GetFullProfilePhoto(url)
+{
+  return `http://localhost:5000/${url}`;
+}
+
 
 // -----------------------------------------------------------------------------
-function UserInfo({ userModel }) {
+function UserInfo({ userModel })
+{
   return (
     <div className={styles.profileContainer}>
       {/* Photo */}
       <div className={styles.profilePhotoSplit}>
-        <img className={styles.profilePhoto} src={userModel.profilePhotoUrl}></img>
+        <img className={styles.profilePhoto} src={XXX_GetFullProfilePhoto(userModel.profilePhotoUrl)}></img>
       </div>
 
       <div className={styles.profileInfoSplit}>
@@ -58,7 +67,7 @@ function UserInfo({ userModel }) {
           </div>
           {/* Likes */}
           <div className={styles.profileStatContainer}>
-            <span className={styles.profileStatValue}>{userModel.likes}</span>
+            <span className={styles.profileStatValue}>{userModel.likes} ? {userModel.likes} : 0</span>
             <span className={styles.profileStatDescription}>Likes</span>
           </div>
         </div>
