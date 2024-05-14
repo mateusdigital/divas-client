@@ -9,9 +9,9 @@
 //                 +                         +                                //
 //                      O      *        '       .                             //
 //                                                                            //
-//  File      : profile.js                                                    //
+//  File      : MoodboardEditor.js                                            //
 //  Project   : divas-client                                                  //
-//  Date      : 2024-04-23                                                    //
+//  Date      : 2024-05-02                                                    //
 //  License   : See project's COPYING.TXT for full info.                      //
 //  Author    : mateus.digital <hello@mateus.digital>                         //
 //  Copyright : mateus.digital - 2024                                         //
@@ -21,39 +21,23 @@
 //----------------------------------------------------------------------------//
 
 // -----------------------------------------------------------------------------
-import { useEffect, useState } from "react";
-//
 import App from "@/models/App";
-import UserProfile from "@/components/User/UserProfile";
-import ToastUtils from "@/utils/Toast";
+import MoodboardCanvas from "./Canvas/MoodboardCanvas";
+import MoodboardControls from "./Controls/MoodboardControls";
+// -----------------------------------------------------------------------------
+import styles from "./MoodboardEditor.module.css";
 
 
 // -----------------------------------------------------------------------------
-function ProfilePage()
+function MoodboardEditor()
 {
-  //
-  const [loggedUserResult, setLoggedUserResult] = useState(null);
-  useEffect(()=>{
-    const _GetLoggedUser = async ()=>{
-      const result = await App.GetCurrentLoggedUser();
-      if(result.IsValid()) {
-        setLoggedUserResult(result);
-      } else {
-        ToastUtils.ResultError(result);
-      }
-    }
-
-    _GetLoggedUser();
-  }, []);
-
-  // Not ready...
-  if (!loggedUserResult) {
-    return <div>Loading...</div>;
-  }
-
-  // Ready...
-  return <UserProfile userModel={loggedUserResult.value}></UserProfile>
+  return (
+    <div className={styles.editorMainContainer}>
+      {/* <MoodboardCanvas></MoodboardCanvas> */}
+      <MoodboardControls></MoodboardControls>
+    </div>
+  )
 }
 
 // -----------------------------------------------------------------------------
-export default ProfilePage;
+export default MoodboardEditor;

@@ -9,9 +9,9 @@
 //                 +                         +                                //
 //                      O      *        '       .                             //
 //                                                                            //
-//  File      : profile.js                                                    //
+//  File      : MoodboardControls.js                                          //
 //  Project   : divas-client                                                  //
-//  Date      : 2024-04-23                                                    //
+//  Date      : 2024-05-02                                                    //
 //  License   : See project's COPYING.TXT for full info.                      //
 //  Author    : mateus.digital <hello@mateus.digital>                         //
 //  Copyright : mateus.digital - 2024                                         //
@@ -21,39 +21,32 @@
 //----------------------------------------------------------------------------//
 
 // -----------------------------------------------------------------------------
-import { useEffect, useState } from "react";
-//
-import App from "@/models/App";
-import UserProfile from "@/components/User/UserProfile";
-import ToastUtils from "@/utils/Toast";
-
+import { useRouter } from "next/router";
+import { useEffect, useState, useRef } from "react";
+// -----------------------------------------------------------------------------
+import CategoriesSelection from "./CategoriesSelection/CategoriesSelection";
+// -----------------------------------------------------------------------------
+import styles from "./MoodboardControls.module.css";
 
 // -----------------------------------------------------------------------------
-function ProfilePage()
+function MoodboardControls()
 {
-  //
-  const [loggedUserResult, setLoggedUserResult] = useState(null);
-  useEffect(()=>{
-    const _GetLoggedUser = async ()=>{
-      const result = await App.GetCurrentLoggedUser();
-      if(result.IsValid()) {
-        setLoggedUserResult(result);
-      } else {
-        ToastUtils.ResultError(result);
-      }
-    }
+  return (
+    <div className={styles.controlsContainer}>
+      {/* Select Category Input */}
+      <div className={styles.selectCategoryContainer}>
+        <span>Select new category</span>
+        <input type="text"></input>
+      </div>
+      {/* -Select Category Input */}
 
-    _GetLoggedUser();
-  }, []);
-
-  // Not ready...
-  if (!loggedUserResult) {
-    return <div>Loading...</div>;
-  }
-
-  // Ready...
-  return <UserProfile userModel={loggedUserResult.value}></UserProfile>
+      {/* Moodboard Categories */}
+      <CategoriesSelection>
+      </CategoriesSelection>
+      {/* -Moodboard Categories */}
+    </div>
+  )
 }
 
 // -----------------------------------------------------------------------------
-export default ProfilePage;
+export default MoodboardControls;
