@@ -9,7 +9,7 @@
 //                 +                         +                                //
 //                      O      *        '       .                             //
 //                                                                            //
-//  File      : MoodboardEditor.js                                            //
+//  File      : CategoryButtonTop.js                                          //
 //  Project   : divas-client                                                  //
 //  Date      : 2024-05-02                                                    //
 //  License   : See project's COPYING.TXT for full info.                      //
@@ -21,23 +21,31 @@
 //----------------------------------------------------------------------------//
 
 // -----------------------------------------------------------------------------
-import App from "@/models/App";
-import MoodboardCanvas   from "./Canvas/MoodboardCanvas";
-import MoodboardControls from "./Controls/MoodboardControls";
+import { useRouter } from "next/router";
+import { useEffect, useState, useRef } from "react";
 // -----------------------------------------------------------------------------
-import styles from "./MoodboardEditor.module.css";
-
+import MaterialIcon from "@/components/MaterialIcon";
+// -----------------------------------------------------------------------------
+import style from "./CategoryButton.module.css";
 
 // -----------------------------------------------------------------------------
-function MoodboardEditor()
+function Component({icon, content, handler})
 {
   return (
-    <div className={styles.editorMainContainer}>
-      {/* <MoodboardCanvas></MoodboardCanvas> */}
-      <MoodboardControls></MoodboardControls>
-    </div>
+    <button>
+      <div className={style.categoryContainer} onClick={handler}>
+        <MaterialIcon
+          icon={icon}
+          className={style.categoryIcon}>
+        </MaterialIcon>
+
+        <span className={style.categoryTextContent}>
+          {content}
+        </span>
+      </div>
+    </button>
   )
 }
 
 // -----------------------------------------------------------------------------
-export default MoodboardEditor;
+export default Component;

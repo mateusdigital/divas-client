@@ -24,7 +24,7 @@
 import { useRouter } from "next/router";
 import { useEffect, useState, useRef } from "react";
 // -----------------------------------------------------------------------------
-import styles from "./MoodboardCanvas.module.css";
+import styles from "./MoodboardCanvas.css";
 
 // -----------------------------------------------------------------------------
 function MoodboardCanvas()

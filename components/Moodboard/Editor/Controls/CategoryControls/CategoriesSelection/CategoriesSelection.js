@@ -24,8 +24,8 @@
 import { useRouter } from "next/router";
 import { useEffect, useState, useRef } from "react";
 // -----------------------------------------------------------------------------
-import ButtonTop    from "@/components/Moodboard/Editor/Controls/CategoryButton/CategoryButtonTop";
-import ButtonBottom from "@/components/Moodboard/Editor/Controls/CategoryButton/CategoryButtonBottom";
+import ButtonTop    from "../CategoryButton/CategoryButtonTop";
+import ButtonBottom from "../CategoryButton/CategoryButtonBottom";
 // -----------------------------------------------------------------------------
 import styles from "./CategoriesSelection.module.css"
 
@@ -105,12 +105,15 @@ function Component({OnSelectedCategoryChanged})
   //
   const bottom_categories_types = GetBottomCategoriesTypes();
   return (<>
+    {/* TOP CATEGORIES MODES */}
     <div className={styles.topCategoriesContainer}>
       <ButtonTop icon="insert_text"          content="Fonts"       handler={_OnFontsClicked}> </ButtonTop>
       <ButtonTop icon="photo_prints"         content="Elements"    handler={_OnElementsClicked}> </ButtonTop>
       <ButtonTop icon="background_dot_small" content="Backgrounds" handler={_OnBackgroundsClicked}> </ButtonTop>
     </div>
+    {/* -TOP CATEGORIES MODES */}
 
+    {/* DEFAULT CATEGORIES */}
     <div>
       <span>Categories</span>
       <div className={styles.bottomCategoriesContainer}>
@@ -119,6 +122,7 @@ function Component({OnSelectedCategoryChanged})
         })}
       </div>
     </div>
+    {/* DEFAULT CATEGORIES */}
   </>)
 }
 

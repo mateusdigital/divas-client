@@ -211,14 +211,34 @@ class App
   {
     Assert.NotNull(id, "id can't be null");
 
-    const api_url = NET.Make_API_Url("moodboard", id);
+    const api_url = NET.Make_API_Url(Endpoints.Moodboard.GetById, id);
 
     const response = await NET.GET(api_url);
-    if(response.status != 200) {
+    if(response.status != StatusCodes.OK) {
       return null;
     }
 
     // @TODO(mateusdigital): Create model for moodboard.
+    const data = await response.json();
+    return data;
+  }
+
+
+  //
+  // Moodboard Items
+  //
+
+  // ---------------------------------------------------------------------------
+  static async GetMoodboardItemsForCategory(category)
+  {
+    Assert.NotNull(category);
+    const api_url  = NET.Make_API_Url(Endpoints.MoodboardItem.GetByCategory, category);
+    const response = await NET.GET(api_url);
+
+    if(response.status != StatusCodes.OK) {
+      return null;
+    }
+
     const data = await response.json();
     return data;
   }

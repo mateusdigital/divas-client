@@ -9,9 +9,9 @@
 //                 +                         +                                //
 //                      O      *        '       .                             //
 //                                                                            //
-//  File      : MoodboardEditor.js                                            //
+//  File      : ItemSelection.js                                              //
 //  Project   : divas-client                                                  //
-//  Date      : 2024-05-02                                                    //
+//  Date      : 2024-05-29                                                    //
 //  License   : See project's COPYING.TXT for full info.                      //
 //  Author    : mateus.digital <hello@mateus.digital>                         //
 //  Copyright : mateus.digital - 2024                                         //
@@ -21,23 +21,33 @@
 //----------------------------------------------------------------------------//
 
 // -----------------------------------------------------------------------------
-import App from "@/models/App";
-import MoodboardCanvas   from "./Canvas/MoodboardCanvas";
-import MoodboardControls from "./Controls/MoodboardControls";
+import { useRouter } from "next/router";
+import { useEffect, useState, useRef } from "react";
 // -----------------------------------------------------------------------------
-import styles from "./MoodboardEditor.module.css";
-
+import MaterialIcon from "@/components/MaterialIcon";
+// -----------------------------------------------------------------------------
+import ItemsGrid from "../ItemsGrid/ItemsGrid.js";
+import styles from "./ItemSelection.module.css";
 
 // -----------------------------------------------------------------------------
-function MoodboardEditor()
+function Component({category, OnSelectedCategoryChanged})
 {
-  return (
-    <div className={styles.editorMainContainer}>
-      {/* <MoodboardCanvas></MoodboardCanvas> */}
-      <MoodboardControls></MoodboardControls>
-    </div>
-  )
+  //
+  return (<>
+    <button onClick={()=>{ OnSelectedCategoryChanged(null); }}>
+      <MaterialIcon icon="arrow_back_ios_new"></MaterialIcon>
+      <span>Select new category</span>
+    </button>
+
+    <input type="text">
+    </input>
+
+    <ItemsGrid
+      category={category}
+    >
+    </ItemsGrid>
+  </>);
 }
 
 // -----------------------------------------------------------------------------
-export default MoodboardEditor;
+export default Component;

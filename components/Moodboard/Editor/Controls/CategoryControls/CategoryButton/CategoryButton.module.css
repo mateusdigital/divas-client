@@ -1,0 +1,46 @@
+/*----------------------------------------------------------------------------*/
+/*                               *       +                                    */
+/*                         '                  |                               */
+/*                     ()    .-.,="``"=.    - o -                             */
+/*                           '=/_       \     |                               */
+/*                        *   |  '=._    |                                    */
+/*                             \     `=./`,        '                          */
+/*                          .   '=.__.=' `='      *                           */
+/*                 +                         +                                */
+/*                      O      *        '       .                             */
+/*                                                                            */
+/*  File      : CategoryButton.module.css                                     */
+/*  Project   : divas-client                                                  */
+/*  Date      : 2024-05-02                                                    */
+/*  License   : See project's COPYING.TXT for full info.                      */
+/*  Author    : mateus.digital <hello@mateus.digital>                         */
+/*  Copyright : mateus.digital - 2024                                         */
+/*                                                                            */
+/*  Description :                                                             */
+/*                                                                            */
+/*----------------------------------------------------------------------------*/
+
+/* -------------------------------------------------------------------------- */
+.categoryContainer {
+  background-color: blue;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+}
+.categoryContainer:hover {
+  background-color: green;
+}
+
+.categoryContainer:active {
+  background-color: red;
+}
+
+.categoryIcon {
+  margin: 0.5rem;
+}
+
+.categoryIcon span {
+  background-color: aqua;
+  font-size: 3rem  !important;
+}

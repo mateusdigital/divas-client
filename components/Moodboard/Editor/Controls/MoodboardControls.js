@@ -24,44 +24,58 @@
 import { useRouter } from "next/router";
 import { useEffect, useState, useRef } from "react";
 // -----------------------------------------------------------------------------
-import CategoriesSelection from "./CategoriesSelection/CategoriesSelection";
+import CategoriesSelection from "./CategoryControls/CategoriesSelection/CategoriesSelection";
+import ItemsSelection from "./ItemControls/ItemSelection/ItemSelection.js";
 
 // -----------------------------------------------------------------------------
 import styles from "./MoodboardControls.module.css";
 
 // -----------------------------------------------------------------------------
-function MoodboardControls()
+function Component()
 {
   //
   const [currentSelectedCategory, setCurrentSelectedCategory] = useState(null);
 
   //
-  return (<>
-    <div className={styles.controlsContainer}>
-      {/* Select Category Input */}
-      <div className={styles.selectCategoryContainer}>
-        <span>Select new category</span>
-        <input type="text"></input>
-      </div>
-      {/* -Select Category Input */}
+  const _Render = () => {
+    if(!currentSelectedCategory) {
+      return (<>
+        <div className={styles.controlsContainer}>
+          {/* Select Category Input */}
+          <div className={styles.selectCategoryContainer}>
+            <span>Select new category</span>
+            <input type="text"></input>
+          </div>
+          {/* -Select Category Input */}
 
-      {/* Moodboard Categories */}
-      <CategoriesSelection
+          {/* Moodboard Categories */}
+          <CategoriesSelection OnSelectedCategoryChanged={(category)=>{
+              setCurrentSelectedCategory(category)
+          }}>
+          </CategoriesSelection>
+          {/* -Moodboard Categories */}
+        </div>
+      </>);
+    };
+
+    return (<>
+      <ItemsSelection
+        category={currentSelectedCategory}
         OnSelectedCategoryChanged={(category)=>{
-          setCurrentSelectedCategory(category)
-        }}
-      >
-      </CategoriesSelection>
-      
-      {
-      }
+          setCurrentSelectedCategory(category);
+      }}>
+      </ItemsSelection>
+    </>);
+  }
+
+  //
+  return (<>
+      {_Render()}
       <span>
         {currentSelectedCategory ? currentSelectedCategory : "no category"}
       </span>
-      {/* -Moodboard Categories */}
-    </div>
-  </>)
+  </>);
 }
 
 // -----------------------------------------------------------------------------
-export default MoodboardControls;
+export default Component;
