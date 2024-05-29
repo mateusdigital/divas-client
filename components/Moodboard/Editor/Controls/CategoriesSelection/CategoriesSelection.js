@@ -20,7 +20,6 @@
 //                                                                            //
 //----------------------------------------------------------------------------//
 
-
 // -----------------------------------------------------------------------------
 import { useRouter } from "next/router";
 import { useEffect, useState, useRef } from "react";
@@ -94,7 +93,7 @@ function GetBottomCategoriesTypes()
 
 
 // -----------------------------------------------------------------------------
-function Component()
+function Component({OnSelectedCategoryChanged})
 {
   const _OnFontsClicked = ()=>{
   }
@@ -103,10 +102,7 @@ function Component()
   const _OnBackgroundsClicked = ()=>{
   }
 
-  const _OnCategoryBottomClicked = (type)=>{
-
-  };
-
+  //
   const bottom_categories_types = GetBottomCategoriesTypes();
   return (<>
     <div className={styles.topCategoriesContainer}>
@@ -119,7 +115,7 @@ function Component()
       <span>Categories</span>
       <div className={styles.bottomCategoriesContainer}>
         {bottom_categories_types.map((type, index) => {
-          return _CreateControlCategory(index, type, _OnCategoryBottomClicked);
+          return _CreateControlCategory(index, type, OnSelectedCategoryChanged);
         })}
       </div>
     </div>

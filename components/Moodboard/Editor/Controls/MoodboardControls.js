@@ -25,13 +25,18 @@ import { useRouter } from "next/router";
 import { useEffect, useState, useRef } from "react";
 // -----------------------------------------------------------------------------
 import CategoriesSelection from "./CategoriesSelection/CategoriesSelection";
+
 // -----------------------------------------------------------------------------
 import styles from "./MoodboardControls.module.css";
 
 // -----------------------------------------------------------------------------
 function MoodboardControls()
 {
-  return (
+  //
+  const [currentSelectedCategory, setCurrentSelectedCategory] = useState(null);
+
+  //
+  return (<>
     <div className={styles.controlsContainer}>
       {/* Select Category Input */}
       <div className={styles.selectCategoryContainer}>
@@ -41,11 +46,21 @@ function MoodboardControls()
       {/* -Select Category Input */}
 
       {/* Moodboard Categories */}
-      <CategoriesSelection>
+      <CategoriesSelection
+        OnSelectedCategoryChanged={(category)=>{
+          setCurrentSelectedCategory(category)
+        }}
+      >
       </CategoriesSelection>
+      
+      {
+      }
+      <span>
+        {currentSelectedCategory ? currentSelectedCategory : "no category"}
+      </span>
       {/* -Moodboard Categories */}
     </div>
-  )
+  </>)
 }
 
 // -----------------------------------------------------------------------------

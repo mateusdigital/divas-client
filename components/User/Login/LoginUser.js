@@ -17,10 +17,10 @@ function LoginUser()
   const [password, setPassword] = useState("");
 
   //
-  const handle_username_change = async (e) => { setUsername(e.target.value); };
-  const handle_password_change = async (e) => { setPassword(e.target.value); };
+  const _HandleUsernameChange = async (e) => { setUsername(e.target.value); };
+  const _HandlePasswordChange = async (e) => { setPassword(e.target.value); };
 
-  const handle_submit = async () => {
+  const _HandleSubmit = async () => {
     const data = {
       username: username,
       password: password,
@@ -43,15 +43,15 @@ function LoginUser()
     <div>
       <div>
         <span>Username</span>
-        <input type="text" value={username} onChange={handle_username_change}></input>
+        <input type="text" value={username} onChange={_HandleUsernameChange}></input>
       </div>
       <div>
         <span>Password</span>
-        <input type="text" value={password} onChange={handle_password_change}></input>
+        <input type="text" value={password} onChange={_HandlePasswordChange}></input>
       </div>
 
       <div>
-        <button onClick={handle_submit}>Login</button>
+        <button onClick={_HandleSubmit}>Login</button>
       </div>
     </div>
   )
