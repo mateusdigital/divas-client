@@ -30,6 +30,7 @@ import User from "@/models/User";
 import MoodboardItemsController from "@/controllers/Moodboard/MoodboardItemsController"
 // -----------------------------------------------------------------------------
 import Endpoints from "@/divas-shared/shared/API/Endpoints";
+import CachedImageController from "@/controllers/CachedImage/CachedImageController";
 
 
 // -----------------------------------------------------------------------------
@@ -81,6 +82,7 @@ class App
   // ---------------------------------------------------------------------------
   static _currentLoggedUser;
 
+  // ---------------------------------------------------------------------------
   static SetCurrentLoggedUser(data)
   {
     if(!App._currentLoggedUser || App._currentLoggedUser._id == data._id) {
@@ -247,6 +249,23 @@ class App
     }
 
     return App._moodboardItemsController.GetItemsForCategory(category);
+  }
+
+  //
+  // Cached Images
+  //
+
+  // ---------------------------------------------------------------------------
+  static GetCachedImageForUrl(url, onLoadCallback)
+  {
+    Assert.NotNull(url);
+
+    // Lazy load the controller.
+    if(!App._cachedImagesController) {
+      App._cachedImagesController = new CachedImageController();
+    }
+
+    return App._cachedImagesController.GetCachedImageForUrl(url, onLoadCallback);
   }
 };
 

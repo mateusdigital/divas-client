@@ -8,8 +8,10 @@ import styles from "./MoodboardCanvas.module.css";
 // -----------------------------------------------------------------------------
 function MoodboardCanvas()
 {
-  const canvasRef = useRef(null);
-  const ctxRef    = useRef(null);
+  //
+  const _canvas_ref   = useRef(null);
+  const _context_ref  = useRef(null);
+
   const isDrawing = useRef(false);
 
   //
@@ -18,18 +20,18 @@ function MoodboardCanvas()
 
   // ---------------------------------------------------------------------------
   useEffect(() => {
-    const canvas = canvasRef.current;
-    const ctx = canvas.getContext("2d");
-
+    const canvas = _canvas_ref.current;
     const parent = canvas.parentElement;
+    const ctx    = canvas.getContext("2d");
+
     canvas.width  = parent.clientWidth;
     canvas.height = parent.clientHeight;
 
-    ctx.lineCap = "round";
+    ctx.lineCap     = "round";
     ctx.strokeStyle = "black";
-    ctx.lineWidth = 5;
+    ctx.lineWidth   = 5;
 
-    ctxRef.current = ctx;
+    _context_ref.current = ctx;
 
     window.addEventListener("resize", _ResizeCanvas);
 
@@ -52,8 +54,8 @@ function MoodboardCanvas()
     const y = event.clientY;
 
     isDrawing.current = true;
-    ctxRef.current.beginPath();
-    ctxRef.current.moveTo(x, y);
+    _context_ref.current.beginPath();
+    _context_ref.current.moveTo(x, y);
   };
 
   const _OnMouseMove = (event) => {
@@ -62,8 +64,8 @@ function MoodboardCanvas()
     const x = event.clientX;
     const y = event.clientY;
 
-    ctxRef.current.lineTo(x, y);
-    ctxRef.current.stroke();
+    _context_ref.current.lineTo(x, y);
+    _context_ref.current.stroke();
   };
 
   const _OnMouseUp = () => {
@@ -95,8 +97,9 @@ function MoodboardCanvas()
 
   // ---------------------------------------------------------------------------
   const _ResizeCanvas = () => {
-    const canvas = canvasRef.current;
+    const canvas = _canvas_ref.current;
     const parent = canvas.parentElement;
+
     canvas.width  = parent.clientWidth;
     canvas.height = parent.clientHeight;
   }
@@ -110,13 +113,15 @@ function MoodboardCanvas()
   return (
     <div className={styles.canvasContainer}>
       <canvas
-        ref={canvasRef}
-        onMouseDown={_OnMouseDown}
-        onMouseMove={_OnMouseMove}
-        onMouseUp={_OnMouseUp}
-        onMouseOut={_OnMouseUp}
-        onDrop={_HandleDragDrop}
-        onDragOver={_HandleDragOver}
+        ref = {_canvas_ref}
+
+        onMouseDown = {_OnMouseDown}
+        onMouseMove = {_OnMouseMove}
+        onMouseUp   = {_OnMouseUp}
+        onMouseOut  = {_OnMouseUp}
+
+        onDrop      = {_HandleDragDrop}
+        onDragOver  = {_HandleDragOver}
       >
       </canvas>
     </div>

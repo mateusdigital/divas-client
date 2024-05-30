@@ -33,8 +33,6 @@ import styles from "./Item.module.css";
 // -----------------------------------------------------------------------------
 function ItemComponent({itemModel})
 {
-  const img_url = NET.Make_Image_Url(itemModel.imageUrl);
-
   //
   const [loaded, setLoaded] = useState(false);
 
@@ -54,9 +52,11 @@ function ItemComponent({itemModel})
 
       {/* Image */}
       <CachedImage
-        itemModel={itemModel}
         style={{ display: loaded ? "block" : "none" }}
-        onLoad={() => setLoaded(true)}
+        itemModel={itemModel}
+        onLoad={() => {
+          setLoaded(true)
+        }}
         draggable={true}
         onDragStart={_HandleDragStart}
       >

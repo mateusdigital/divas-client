@@ -9,16 +9,19 @@ import Endpoints from "@/divas-shared/shared/API/Endpoints";
 // -----------------------------------------------------------------------------
 class MoodboardItemsController
 {
+  // ---------------------------------------------------------------------------
   constructor()
   {
     this._items = new Map();
   }
 
+  // ---------------------------------------------------------------------------
   HasItemsForCategory(category)
   {
     return this._items.has(category);
   }
 
+  // ---------------------------------------------------------------------------
   GetItemsForCategory(category)
   {
     if(!this.HasItemsForCategory(category)) {
@@ -28,6 +31,7 @@ class MoodboardItemsController
     return this._items.get(category);
   }
 
+  // ---------------------------------------------------------------------------
   async FetchItemsForCategory(category)
   {
     const api_url  = NET.Make_API_Url(Endpoints.MoodboardItem.GetByCategory, category);
