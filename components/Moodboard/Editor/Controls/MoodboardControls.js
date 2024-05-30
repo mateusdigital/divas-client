@@ -41,6 +41,7 @@ function Component()
     if(!currentSelectedCategory) {
       return (<>
         <div className={styles.controlsContainer}>
+          <div>
           {/* Select Category Input */}
           <div className={styles.selectCategoryContainer}>
             <span>Select new category</span>
@@ -55,6 +56,7 @@ function Component()
           </CategoriesSelection>
           {/* -Moodboard Categories */}
         </div>
+      </div>
       </>);
     };
 
@@ -71,9 +73,6 @@ function Component()
   //
   return (<>
       {_Render()}
-      <span>
-        {currentSelectedCategory ? currentSelectedCategory : "no category"}
-      </span>
   </>);
 }
 

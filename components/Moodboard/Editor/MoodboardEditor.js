@@ -32,8 +32,8 @@ import styles from "./MoodboardEditor.module.css";
 function MoodboardEditor()
 {
   return (
-    <div className={styles.editorMainContainer}>
-      {/* <MoodboardCanvas></MoodboardCanvas> */}
+    <div className={styles.editorContainer}>
+      <MoodboardCanvas></MoodboardCanvas>
       <MoodboardControls></MoodboardControls>
     </div>
   )

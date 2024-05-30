@@ -1,30 +1,9 @@
-//----------------------------------------------------------------------------//
-//                               *       +                                    //
-//                         '                  |                               //
-//                     ()    .-.,="``"=.    - o -                             //
-//                           '=/_       \     |                               //
-//                        *   |  '=._    |                                    //
-//                             \     `=./`,        '                          //
-//                          .   '=.__.=' `='      *                           //
-//                 +                         +                                //
-//                      O      *        '       .                             //
-//                                                                            //
-//  File      : MoodboardCanvas.js                                            //
-//  Project   : divas-client                                                  //
-//  Date      : 2024-05-02                                                    //
-//  License   : See project's COPYING.TXT for full info.                      //
-//  Author    : mateus.digital <hello@mateus.digital>                         //
-//  Copyright : mateus.digital - 2024                                         //
-//                                                                            //
-//  Description :                                                             //
-//                                                                            //
-//----------------------------------------------------------------------------//
 
 // -----------------------------------------------------------------------------
 import { useRouter } from "next/router";
 import { useEffect, useState, useRef } from "react";
 // -----------------------------------------------------------------------------
-import styles from "./MoodboardCanvas.css";
+import styles from "./MoodboardCanvas.module.css";
 
 // -----------------------------------------------------------------------------
 function MoodboardCanvas()
@@ -35,23 +14,27 @@ function MoodboardCanvas()
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext("2d");
 
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    const parent = canvas.parentElement;
+    canvas.width  = parent.clientWidth;
+    canvas.height = parent.clientHeight;
 
-    ctx.lineCap = 'round';
-    ctx.strokeStyle = 'black';
+    ctx.lineCap = "round";
+    ctx.strokeStyle = "black";
     ctx.lineWidth = 5;
 
     ctxRef.current = ctx;
 
+    window.addEventListener("resize", _ResizeCanvas);
+
     return () => {
-      canvas.removeEventListener('mousedown', _OnMouseDown);
-      canvas.removeEventListener('mousemove', _OnMouseMove);
-      canvas.removeEventListener('mouseup', _OnMouseUp);
-      canvas.removeEventListener('mouseout', _OnMouseUp);
-    };
+      canvas.removeEventListener("mousedown", _OnMouseDown);
+      canvas.removeEventListener("mousemove", _OnMouseMove);
+      canvas.removeEventListener("mouseup",   _OnMouseUp);
+      canvas.removeEventListener("mouseout",  _OnMouseUp);
+      window.removeEventListener("resize",    _ResizeCanvas);
+    }
   }, []);
 
   const _OnMouseDown = (event) => {
@@ -76,6 +59,13 @@ function MoodboardCanvas()
   const _OnMouseUp = () => {
     isDrawing.current = false;
   };
+
+  const _ResizeCanvas = () => {
+    const canvas = canvasRef.current;
+    const parent = canvas.parentElement;
+    canvas.width  = parent.clientWidth;
+    canvas.height = parent.clientHeight;
+  }
 
   return (
     <div className={styles.canvasContainer}>
