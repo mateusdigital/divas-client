@@ -38,13 +38,26 @@ function Component({itemModel})
   const [loaded, setLoaded] = useState(false);
 
   //
+  const _HandleDragStart = (event) => {
+    console.log("dragging");
+
+    event.dataTransfer.clearData();
+    event.dataTransfer.setData("text/plain", JSON.stringify(itemModel));
+  }
+
+  //
   return (<>
     <div className={styles.itemContainer}>
-      {!loaded && <div className="placeholder">Loading...</div>}
+      {/* Placeholder */}
+      {!loaded && <div className="@TODO">Loading...</div>}
+
+      {/* Image */}
       <img
         src={img_url}
         style={{ display: loaded ? "block" : "none" }}
         onLoad={() => setLoaded(true)}
+        draggable={true}
+        onDragStart={_HandleDragStart}
       />
     </div>
   </>);

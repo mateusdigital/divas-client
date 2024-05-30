@@ -12,6 +12,11 @@ function MoodboardCanvas()
   const ctxRef    = useRef(null);
   const isDrawing = useRef(false);
 
+  //
+  // React Hooks
+  //
+
+  // ---------------------------------------------------------------------------
   useEffect(() => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
@@ -37,6 +42,11 @@ function MoodboardCanvas()
     }
   }, []);
 
+  //
+  // Mouse Events
+  //
+
+  // ---------------------------------------------------------------------------
   const _OnMouseDown = (event) => {
     const x = event.clientX;
     const y = event.clientY;
@@ -60,6 +70,30 @@ function MoodboardCanvas()
     isDrawing.current = false;
   };
 
+  //
+  // Drag Events
+  //
+
+  // ---------------------------------------------------------------------------
+  const _HandleDragOver = (event) => {
+    event.preventDefault();
+  }
+
+  const _HandleDragDrop = (event) => {
+    event.preventDefault();
+
+    const data      = event.dataTransfer.getData("text");
+    const itemModel = JSON.parse(data);
+
+    console.log(itemModel);
+  }
+
+
+  //
+  // Resize Events
+  //
+
+  // ---------------------------------------------------------------------------
   const _ResizeCanvas = () => {
     const canvas = canvasRef.current;
     const parent = canvas.parentElement;
@@ -67,6 +101,12 @@ function MoodboardCanvas()
     canvas.height = parent.clientHeight;
   }
 
+
+  //
+  // Component
+  //
+
+  // ---------------------------------------------------------------------------
   return (
     <div className={styles.canvasContainer}>
       <canvas
@@ -74,7 +114,10 @@ function MoodboardCanvas()
         onMouseDown={_OnMouseDown}
         onMouseMove={_OnMouseMove}
         onMouseUp={_OnMouseUp}
-        onMouseOut={_OnMouseUp}>
+        onMouseOut={_OnMouseUp}
+        onDrop={_HandleDragDrop}
+        onDragOver={_HandleDragOver}
+      >
       </canvas>
     </div>
   );
