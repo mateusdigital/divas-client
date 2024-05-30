@@ -25,10 +25,11 @@ import { StatusCodes } from "http-status-codes";
 // -----------------------------------------------------------------------------
 import NET from "@/app/NET";
 // -----------------------------------------------------------------------------
-import User from "@/models/User";
 import Assert from "@/utils/Assert";
+import User from "@/models/User";
+import MoodboardItemsController from "@/controllers/Moodboard/MoodboardItemsController"
 // -----------------------------------------------------------------------------
-const Endpoints = require("@/divas-shared/shared/API/Endpoints");
+import Endpoints from "@/divas-shared/shared/API/Endpoints";
 
 
 // -----------------------------------------------------------------------------
@@ -73,7 +74,6 @@ class Result
 // -----------------------------------------------------------------------------
 class App
 {
-
   //
   // User
   //
@@ -229,18 +229,24 @@ class App
   //
 
   // ---------------------------------------------------------------------------
+  static _moodboardItemsController = null;
+
+  // ---------------------------------------------------------------------------
   static async GetMoodboardItemsForCategory(category)
   {
     Assert.NotNull(category);
-    const api_url  = NET.Make_API_Url(Endpoints.MoodboardItem.GetByCategory, category);
-    const response = await NET.GET(api_url);
 
-    if(response.status != StatusCodes.OK) {
-      return null;
+    // Lazy load the controller.
+    if(!App._moodboardItemsController) {
+      App._moodboardItemsController = new MoodboardItemsController();
     }
 
-    const data = await response.json();
-    return data;
+    // We already fetched that data???
+    if(!App._moodboardItemsController.HasItemsForCategory(category)) {
+      await App._moodboardItemsController.FetchItemsForCategory(category);
+    }
+
+    return App._moodboardItemsController.GetItemsForCategory(category);
   }
 };
 

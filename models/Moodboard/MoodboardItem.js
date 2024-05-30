@@ -9,9 +9,9 @@
 //                 +                         +                                //
 //                      O      *        '       .                             //
 //                                                                            //
-//  File      : CategoriesBarFactory.js                                       //
+//  File      : MoodboardItem.js                                              //
 //  Project   : divas-client                                                  //
-//  Date      : 2024-04-23                                                    //
+//  Date      : 2024-05-30                                                    //
 //  License   : See project's COPYING.TXT for full info.                      //
 //  Author    : mateus.digital <hello@mateus.digital>                         //
 //  Copyright : mateus.digital - 2024                                         //
@@ -20,24 +20,37 @@
 //                                                                            //
 //----------------------------------------------------------------------------//
 
-//
-import CATEGORIES_BAR_NAMES from "./CategoriesBarNames";
-import MoodboardGrid from "@/components/Moodboard/Grid/MoodboardGrid";
-import LikesGrid from "@/components/Likes/Grid/LikesGrid";
-
 // -----------------------------------------------------------------------------
-function GetComponentForCategoryName(name, userModel)
+class MoodboardItemModel
 {
-    switch (name) {
-      case "Moodboards":  return <MoodboardGrid userModel={userModel}></MoodboardGrid>;
-      case "Likes":       return <LikesGrid     userModel={userModel}></LikesGrid>;
-      case "Collections": return <div></div>;
-      case "Uploads":     return <div></div>;
+  // ---------------------------------------------------------------------------
+  constructor({
+    _id,
+    imageUrl,
+    category,
+    subcategory1,
+    subcategory2,
+    color,
+  })
+  {
+    this._id          = _id;
 
-      default:
-        debugger;
-        return null;
-    }
+    this.imageUrl     = imageUrl;
+
+    this.category     = category;
+    this.subcategory1 = subcategory1;
+    this.subcategory2 = subcategory2;
+
+    this.color        = color;
+  }
+
+  // ---------------------------------------------------------------------------
+  static CreateFromData(data)
+  {
+    const model = new MoodboardItemModel(data);
+    return model;
+  }
 }
 
-export default GetComponentForCategoryName;
+// -----------------------------------------------------------------------------
+export default MoodboardItemModel;
