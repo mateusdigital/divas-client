@@ -26,11 +26,12 @@ import { useRouter } from "next/router";
 import { useEffect, useState, useRef } from "react";
 // -----------------------------------------------------------------------------
 import NET from "@/app/NET";
+import CachedImage from "@/components/UI/CachedImage/CachedImage"
 // -----------------------------------------------------------------------------
 import styles from "./Item.module.css";
 
 // -----------------------------------------------------------------------------
-function Component({itemModel})
+function ItemComponent({itemModel})
 {
   const img_url = NET.Make_Image_Url(itemModel.imageUrl);
 
@@ -52,16 +53,17 @@ function Component({itemModel})
       {!loaded && <div className="@TODO">Loading...</div>}
 
       {/* Image */}
-      <img
-        src={img_url}
+      <CachedImage
+        itemModel={itemModel}
         style={{ display: loaded ? "block" : "none" }}
         onLoad={() => setLoaded(true)}
         draggable={true}
         onDragStart={_HandleDragStart}
-      />
+      >
+      </CachedImage>
     </div>
   </>);
 }
 
 // -----------------------------------------------------------------------------
-export default Component;
+export default ItemComponent;
