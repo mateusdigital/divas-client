@@ -90,7 +90,12 @@ class NET
   // ---------------------------------------------------------------------------
   static async GET(url)
   {
-    return fetch(url);
+    try {
+      return fetch(url);
+    } catch(ex) {
+      console.log(`ex: ${ex}`);
+      debugger;
+    }
   }
 
   //

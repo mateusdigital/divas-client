@@ -1,26 +1,31 @@
 
 // -----------------------------------------------------------------------------
 import { useRouter } from "next/router";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef} from "react";
 import { fabric } from 'fabric';
 // -----------------------------------------------------------------------------
-import MoodboardItemModel from "@/models/Moodboard/MoodboardItem";
-import MoodboardCanvasController from "@/controllers/Moodboard/MoodboardCanvasController";
-// -----------------------------------------------------------------------------
-import styles from "./MoodboardCanvas.module.css";
 import App from "@/models/App";
+import MoodboardItemModel from "@/models/Moodboard/MoodboardItem";
+import { useMoodboardEditorContext } from "@/contexts/Moodboard/Editor/MoodboardEditorContext";
+// -----------------------------------------------------------------------------
+import MoodboardCanvasControls from "./Controls/CanvasControls";
+import styles from "./MoodboardCanvas.module.css";
+import EventType from "./Controls/EventType";
 
 // -----------------------------------------------------------------------------
 function MoodboardCanvas()
 {
-  const _controller = new MoodboardCanvasController
+  const _controller = useMoodboardEditorContext();
 
   //
   // React Hooks
   //
+
   // ---------------------------------------------------------------------------
   const _canvas_ref        = useRef(null);
   const _fabric_canvas_ref = useRef(null);
+
+  const [ selection, setSelection ] = useState(null);
 
   // ---------------------------------------------------------------------------
   useEffect(() => {
@@ -30,18 +35,25 @@ function MoodboardCanvas()
     // Setup Fabric
     const fabric_canvas = new fabric.Canvas(canvas, {
       width:  canvas.parentElement.clientWidth,
-      height: canvas.parentElement.clientHeight
+      height: canvas.parentElement.clientHeight,
+      preserveObjectStacking: true, // This prevents automatic bringing to front
     });
 
     _fabric_canvas_ref.current = fabric_canvas;
 
     // Event Listeners...
-    fabric_canvas.on("drop", _HandleDrop);
+    fabric_canvas.on("drop",              _HandleDrop);
+    fabric_canvas.on("selection:created", _HandleOnSelection);
+    fabric_canvas.on("selection:cleared", _HandleOnDeselection);
+
     window.addEventListener("resize", _ResizeCanvas);
 
     return () => {
       window.removeEventListener("resize", _ResizeCanvas);
-      fabric_canvas.off("drop", _HandleDrop);
+
+      fabric_canvas.off("drop",              _HandleDrop);
+      fabric_canvas.off("selection:cleared", _HandleOnDeselection);
+      fabric_canvas.off("selection:created", _HandleOnSelection);
     }
   }, []);
 
@@ -54,27 +66,29 @@ function MoodboardCanvas()
     const e = event.e;
     e.preventDefault();
 
-    const text  = e.dataTransfer.getData("text");
-    const data  = JSON.parse(text);
-    const model = MoodboardItemModel.CreateFromData(data);
+    // Get the model.
+    const text       = e.dataTransfer.getData("text");
+    const data       = JSON.parse(text);
+    const item_model = MoodboardItemModel.CreateFromData(data);
 
-    console.log(e);
-    // _controller.AddItem(model);
-    const cached_img = App.GetCachedImageForUrl(model.imageUrl);
+    // Get the image.
+    const cached_img = App.GetCachedImageForUrl(item_model.imageUrl);
+
+    // Add image to fabric.
     fabric.Image.fromURL(cached_img.src, (fabric_img)=>{
-      const rect   = e.target.getBoundingClientRect();
+      const rect    = e.target.getBoundingClientRect();
       const mouse_x = e.clientX;
       const mouse_y = e.clientY;
 
-      // Adjust for canvas scaling and offsets
-      const canvas = _fabric_canvas_ref.current;
-      const scaleX = canvas.width  / rect.width;
-      const scaleY = canvas.height / rect.height;
-      const adjusted_mouse_x = mouse_x * scaleX;
-      const adjusted_mouse_y = mouse_y * scaleY;
+      // Adjust for canvas scaling and offsets.
+      const fabric_canvas = _fabric_canvas_ref.current;
 
+      const scale_x          = (fabric_canvas.width  / rect.width);
+      const scale_y          = (fabric_canvas.height / rect.height);
+      const adjusted_mouse_x = (mouse_x * scale_x);
+      const adjusted_mouse_y = (mouse_y * scale_y);
 
-      // Set image width and height
+      // Set image width and height.
       fabric_img.set({
         width:  cached_img.width,
         height: cached_img.height,
@@ -85,8 +99,35 @@ function MoodboardCanvas()
         top:  adjusted_mouse_y - (fabric_img.height * 0.5),
       });
 
-      _fabric_canvas_ref.current.add(fabric_img);
+      // Set the pegs visibility
+      fabric_img.setControlsVisibility({
+        mt: true,  // middle top
+        mb: true,  // middle bottom
+        ml: true,  // middle left
+        mr: true,  // middle right
+        bl: true,  // bottom left
+        br: true,  // bottom right
+        tl: true,  // top left
+        tr: true,  // top right
+        mtr: true, // middle top rotation enabled
+      });
+
+      _controller.AddItem(fabric_canvas, fabric_img, item_model);
     });
+  }
+
+
+  //
+  // Selection Events
+  //
+
+  // ---------------------------------------------------------------------------
+  const _HandleOnSelection = (ob) => {
+    setSelection(ob);
+  }
+
+  const _HandleOnDeselection = (ob) => {
+    setSelection(null);
   }
 
   //
@@ -105,6 +146,55 @@ function MoodboardCanvas()
     fabric_canvas.setHeight(canvas.height);
   }
 
+  //
+  // Moodboard Controls Events
+  //
+
+  // ---------------------------------------------------------------------------
+  const _HandleMoodboardControlsClick = (eventType) => {
+    if(!selection) {
+      return;
+    }
+
+    const fabric_canvas = _fabric_canvas_ref.current;
+    for(let item of selection.selected) {
+      switch (eventType) {
+        case EventType.Delete: {
+          _controller.DeleteItem(fabric_canvas, item);
+        } break;
+
+        case EventType.Duplicate: {
+          _controller.DuplicateItem(fabric_canvas, item);
+        } break;
+
+        case EventType.Flip_Horizontal: {
+          item.set("flipX", !item.flipX);
+        } break;
+
+        case EventType.Flip_Vertical: {
+          item.set("flipY", !item.flipY);
+        } break;
+
+        case EventType.Resize: {
+        } break;
+
+        case EventType.Send_To_Back: {
+          fabric_canvas.sendToBack(item);
+        } break;
+
+        case EventType.Send_To_Front: {
+          fabric_canvas.bringToFront(item);
+        } break;
+
+        default: {
+          console.log(eventType);
+          debugger;
+        } break;
+      }
+    }
+
+    fabric_canvas.requestRenderAll();
+  }
 
   //
   // Component
@@ -113,7 +203,14 @@ function MoodboardCanvas()
   // ---------------------------------------------------------------------------
   return (
     <div className={styles.canvasContainer}>
-      <canvas ref = {_canvas_ref}> </canvas>
+      <div style={{ display: selection ? 'block' : 'none' }}>
+        <MoodboardCanvasControls
+          onClick={_HandleMoodboardControlsClick}>
+        </MoodboardCanvasControls>
+      </div>
+
+      <canvas ref = {_canvas_ref}>
+      </canvas>
     </div>
   );
 };

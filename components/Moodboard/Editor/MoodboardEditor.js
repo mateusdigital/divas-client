@@ -26,6 +26,7 @@ import MoodboardCanvas   from "./Canvas/MoodboardCanvas";
 import MoodboardControls from "./Controls/MoodboardControls";
 // -----------------------------------------------------------------------------
 import styles from "./MoodboardEditor.module.css";
+import { MoodboardEditorContextProvider } from "@/contexts/Moodboard/Editor/MoodboardEditorContext";
 
 
 // -----------------------------------------------------------------------------
@@ -33,8 +34,10 @@ function MoodboardEditor()
 {
   return (
     <div className={styles.editorContainer}>
-      <MoodboardCanvas></MoodboardCanvas>
-      <MoodboardControls></MoodboardControls>
+      <MoodboardEditorContextProvider>
+        <MoodboardCanvas></MoodboardCanvas>
+        <MoodboardControls></MoodboardControls>
+      </MoodboardEditorContextProvider>
     </div>
   )
 }
