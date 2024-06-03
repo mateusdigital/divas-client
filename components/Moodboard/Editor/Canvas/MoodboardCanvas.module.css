@@ -1,10 +1,8 @@
 .canvasContainer {
   flex: 1;
+  position: relative;
   background-color: lightblue;
-  display: flex; /* Makes child1 a flex container */
-  justify-content: center; /* Optional: Center canvas horizontally */
-  align-items: center; /* Optional: Center canvas vertically */
-  overflow: hidden; /* Ensures content inside doesn't cause overflow */
+  overflow: hidden;
 }
 
 .canvasContainer canvas {

@@ -1,0 +1,13 @@
+.controlsContainer {
+  display: flex;
+  gap: 1rem;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 0%);
+  margin: 1rem;
+  z-index: 10000;
+}
+
+.tooltipContainer {
+  display: none;
+}
