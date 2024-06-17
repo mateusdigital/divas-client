@@ -1,27 +1,19 @@
 // -----------------------------------------------------------------------------
-import { useEffect } from "react";
-import router from "next/router";
+import { useRouter } from "next/router";
+import { useEffect, useState, useRef} from "react";
 // -----------------------------------------------------------------------------
-import App from "@/models/App";
-
 
 // -----------------------------------------------------------------------------
-function HomePage()
+const IMG_SRC = "img/divas_logo_black.png";
+
+// -----------------------------------------------------------------------------
+function DivasLogo()
 {
   //
-  useEffect(() => {
-    const logged_user = App.GetCurrentLoggedUser();
-    if(logged_user) {
-      router.push("/login");
-    } else {
-      router.push("/profile");
-    }
-  }, []);
-
-
   return (<>
+    <img src={IMG_SRC}></img>
   </>);
-}
+};
 
 // -----------------------------------------------------------------------------
-export default HomePage;
+export default DivasLogo;

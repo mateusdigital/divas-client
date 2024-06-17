@@ -1,27 +1,22 @@
 // -----------------------------------------------------------------------------
-import { useEffect } from "react";
-import router from "next/router";
+import { useRouter } from "next/router";
+import { useEffect, useState, useRef} from "react";
 // -----------------------------------------------------------------------------
-import App from "@/models/App";
-
+import styles from "./Buttons.module.css";
 
 // -----------------------------------------------------------------------------
-function HomePage()
+function ActionButton({children, onClick})
 {
   //
-  useEffect(() => {
-    const logged_user = App.GetCurrentLoggedUser();
-    if(logged_user) {
-      router.push("/login");
-    } else {
-      router.push("/profile");
-    }
-  }, []);
-
-
   return (<>
+    <button
+      className={styles.actionButton}
+      onClick={onClick}
+    >
+      {children}
+    </button>
   </>);
-}
+};
 
 // -----------------------------------------------------------------------------
-export default HomePage;
+export default ActionButton;

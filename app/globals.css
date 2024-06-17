@@ -12,4 +12,10 @@ body {
 
 * {
   outline: 1px solid magenta; /* Add a red outline to all elements */
+  /* all: unset; */
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  list-style: none; /* Remove bullets from ul */
+
 }

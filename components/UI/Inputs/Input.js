@@ -1,27 +1,17 @@
 // -----------------------------------------------------------------------------
-import { useEffect } from "react";
-import router from "next/router";
+import { useRouter } from "next/router";
+import { useEffect, useState, useRef} from "react";
 // -----------------------------------------------------------------------------
-import App from "@/models/App";
-
+import styles from "./Inputs.module.css";
 
 // -----------------------------------------------------------------------------
-function HomePage()
+function Input({...props})
 {
   //
-  useEffect(() => {
-    const logged_user = App.GetCurrentLoggedUser();
-    if(logged_user) {
-      router.push("/login");
-    } else {
-      router.push("/profile");
-    }
-  }, []);
-
-
   return (<>
+    <input className={styles.mainInput} {...props}></input>
   </>);
-}
+};
 
 // -----------------------------------------------------------------------------
-export default HomePage;
+export default Input;
