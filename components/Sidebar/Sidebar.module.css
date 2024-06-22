@@ -22,18 +22,24 @@
 
 
 /* -------------------------------------------------------------------------- */
-.sideBarContainer {
+.contentContainer {
   max-width: 21rem;
+  min-width: fit-content;
+  background-color: gold;
+
+
+  --text-size: 1.2rem;
+  --icon-size: 1.5rem;
 }
 
 /* -------------------------------------------------------------------------- */
 .sideBarItemsContainer {
   display: flex;
   flex-direction: column;
-  gap: 3.5rem;
+  gap: 2rem;
 
   margin-top: 5rem;
-  /* background-color: blue; */
+  /* background-color: red; */
 }
 
 /* -------------------------------------------------------------------------- */
@@ -42,25 +48,23 @@
   align-items: center;
   gap: 1rem;
 
-  font-size: 1.5rem;
+  font-size: var(--text-size);
 
   /* background-color: blue; */
-}
-.sideBarItemContainer {
+
   color: black;
   text-decoration: none;
-
 }
 
 /* -------------------------------------------------------------------------- */
 .sideBarItemIcon {
-  font-size: 2.5rem  !important;
+  font-size: var(--icon-size) !important;
 }
 
 /* -------------------------------------------------------------------------- */
 .sideBarItemProfileImage {
-  max-width: 2rem;
-  max-height: 2rem;
+  max-width:  var(--icon-size);
+  max-height: var(--icon-size);
 
   object-fit: cover;
   aspect-ratio: 1/1;

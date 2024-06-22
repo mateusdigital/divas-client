@@ -22,75 +22,94 @@
 
 
 // -----------------------------------------------------------------------------
-import { useEffect, useState } from "react";
 import Link from "next/link";
-//
+// -----------------------------------------------------------------------------
 import App from "@/models/App";
-//
-import styles from './Sidebar.module.css';
+import { useLoggedUser } from "@/components/Logic/UserLogged"; // Import useLoggedUser hook
+import PageUrls from "@/utils/PageUrls";
+// -----------------------------------------------------------------------------
+import DivasLogo from "@/components/UI/DivasLogo";
+import MaterialIcon from "@/components/MaterialIcon";
+// -----------------------------------------------------------------------------
+import styles from "./Sidebar.module.css";
 
+
+// -----------------------------------------------------------------------------
+function _SidebarLink({href, children})
+{
+  if(!href){
+    debugger;
+  }
+  return (
+    <Link href={href} className={styles.sideBarItemContainer}>
+      {children}
+    </Link>
+  );
+}
+
+// -----------------------------------------------------------------------------
+function _SidebarItem({icon, children})
+{
+  return (
+    <MaterialIcon
+      className={styles.sideBarItemContainer}
+      iconStyle={styles.sideBarItemIcon}
+      icon={icon}
+    >
+      <span className={styles.sideBarItemTitle}>
+        {children}
+      </span>
+    </MaterialIcon>
+  )
+}
 
 // -----------------------------------------------------------------------------
 function Sidebar()
 {
   const material_symbol_style = "material-symbols-outlined";
-
-  //
-  const [loggedUser, setLoggedUser] = useState(null);
-  useEffect(() => {
-    const GetLoggedUser = async () => {
-      const logged_user = await App.GetCurrentLoggedUser();
-      setLoggedUser(logged_user);
-    }
-    GetLoggedUser();
-  }, []);
+  const loggedUserResult = useLoggedUser();
 
   //
   return (
-    <div className={styles.sideBarContainer}>
+    <div className={styles.contentContainer}>
       {/* Logo */}
-      <img src="/img/logo.png" alt="Logo" />
+      <DivasLogo/>
 
       {/* Items */}
       <div className={styles.sideBarItemsContainer}>
         {/* Profile */}
-        <Link href="/profile" className={styles.sideBarItemContainer}>
+        <_SidebarLink href={PageUrls.UserOwnProfile}>
           <img
             className={styles.sideBarItemProfileImage}
-            src={loggedUser ? loggedUser.profilePhotoTinyUrl : ""}>
+            src={loggedUserResult ? loggedUserResult.value.profilePhotoTinyUrl : ""}>
           </img>
           <span className={styles.sideBarItemTitle}>Profile</span>
-        </Link>
+        </_SidebarLink>
 
         {/* Create */}
-        <Link href="/moodboard/create" className={styles.sideBarItemContainer}>
-          <span className={`${material_symbol_style} ${styles.sideBarItemIcon}`}>add_box</span>
-          <span className={styles.sideBarItemTitle}>Create</span>
-        </Link>
+        <_SidebarLink href={PageUrls.MoodboardCreate}>
+          <_SidebarItem icon="add_box"> Create </_SidebarItem>
+        </_SidebarLink>
 
         {/* Feed */}
-        <Link href="/feed" className={styles.sideBarItemContainer}>
-          <span className={`${material_symbol_style} ${styles.sideBarItemIcon}`}>rss_feed</span>
-          <span className={styles.sideBarItemTitle}>Feed</span>
-        </Link>
+        <_SidebarLink href={PageUrls.FeedUser}>
+          <_SidebarItem icon="rss_feed"> Feed </_SidebarItem>
+        </_SidebarLink>
 
         {/* Discover */}
-        <Link href="/discover" className={styles.sideBarItemContainer}>
-          <span className={`${material_symbol_style} ${styles.sideBarItemIcon}`}>explore</span>
-          <span className={styles.sideBarItemTitle}>Discover</span>
-        </Link>
+        <_SidebarLink href={PageUrls.FeedMain}>
+          <_SidebarItem icon="explore"> Discover </_SidebarItem>
+        </_SidebarLink>
 
         {/* Messages */}
-        <Link href="/messages" className={styles.sideBarItemContainer}>
-          <span className={`${material_symbol_style} ${styles.sideBarItemIcon}`}>chat</span>
-          <span className={styles.sideBarItemTitle}>Messages</span>
-        </Link>
+        <_SidebarLink href={PageUrls.UserMessages}>
+          <_SidebarItem icon="message"> Messages </_SidebarItem>
+        </_SidebarLink>
 
         {/* More */}
-        <Link href="/more" className={styles.sideBarItemContainer}>
-          <span className={`${material_symbol_style} ${styles.sideBarItemIcon}`}>menu</span>
-          <span className={styles.sideBarItemTitle}>More</span>
-        </Link>
+        <_SidebarLink href={PageUrls.SidebarMore}>
+          <_SidebarItem icon="menu"> More </_SidebarItem>
+        </_SidebarLink>
 
 
         {/* More */}
@@ -100,7 +119,7 @@ function Sidebar()
           onClick={()=>{ App.TryToLogoutUser(); }}
           >
           <span className={`${material_symbol_style} ${styles.sideBarItemIcon}`}>menu</span>
-          <span className={styles.sideBarItemTitle}>logout</span>
+          logout
         </Link>
 
       </div>
