@@ -24,10 +24,12 @@
 import { useEffect, useState } from 'react';
 //
 import NET from '@/app/NET';
+import ToastUtils from '@/utils/Toast';
 //
 import MoodboardGridItem from './MoodboardGridItem';
 //
 import styles from "./MoodboardGrid.module.css";
+import App from '@/models/App';
 
 
 // -----------------------------------------------------------------------------
@@ -38,23 +40,21 @@ function MoodboardGrid({ userModel })
 
   //
   useEffect(() => {
-    const fetchMoodboards = async () => {
-      try {
-        const api_url  = NET.Make_API_Url("moodboard/getByIds");
-        const json     = JSON.stringify({ ids: userModel.moodboards });
-        const response = await NET.POST(api_url, { body: json });
-
-        if (!response.ok) {
-          throw new Error("Failed to fetch design items");
-        }
-        const data = await response.json();
-        setMoodboards(data);
-      } catch (error) {
-        console.error("Error fetching design items:", error);
+    const _FetchMoodboards = async () => {
+      if(userModel.moodboards.length == 0) {
+        return;
       }
+
+      const result = await App.GetMultipleMoodboardWithIds(userModel.moodboards);
+      if(result.IsError()) {
+        ToastUtils.ResultError(result);
+        return;
+      }
+
+      setMoodboards(result.value);
     };
 
-    fetchMoodboards();
+    _FetchMoodboards();
   }, [userModel.moodboards]);
 
   //

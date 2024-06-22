@@ -224,6 +224,24 @@ class App
   //
 
   // ---------------------------------------------------------------------------
+  static async GetMultipleMoodboardWithIds(idList)
+  {
+    Assert.NotNullOrEmpty(idList);
+
+    const api_url = NET.Make_API_Url(Endpoints.Moodboard.GetMultiple, id);
+
+    const response = await NET.POST_JSON(api_url, { ids: idList });
+    if(response.status != StatusCodes.OK) {
+      return await Result.ResponseError(response);
+    }
+
+    // @TODO(mateusdigital): Create model for moodboard.
+    const data = await response.json();
+    return Result.Valid(data);
+  }
+
+
+  // ---------------------------------------------------------------------------
   static async GetMoodboardWithId(id)
   {
     Assert.NotNull(id, "id can't be null");
