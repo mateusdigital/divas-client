@@ -43,8 +43,9 @@ class Result
 
   static async ResponseError(error)
   {
-    const msg = await error.json();
-    return new Result(null, error, msg);
+    const json_obj = await error.json();
+    const msg      = json_obj.error;
+    return new Result(null, json_obj, { message: msg });
   }
 
   static LogicError(msg)

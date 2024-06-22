@@ -21,50 +21,26 @@
 //----------------------------------------------------------------------------//
 
 // -----------------------------------------------------------------------------
-import { useEffect, useState } from "react";
-//
-import App from "@/models/App";
-import ToastUtils from "@/utils/Toast";
-import PageUrls from "@/utils/PageUrls";
-import UsePageRouter from "@/utils/PageRouter";
-//
 import MainLayout from "@/components/Layout/MainLayout";
 import UserProfile from "@/components/User/UserProfile";
+// -----------------------------------------------------------------------------
+import PageUrls from "@/utils/PageUrls";
+import UserLogged, { useLoggedUser } from "@/components/Logic/UserLogged"; // Import useLoggedUser hook
 
 
 // -----------------------------------------------------------------------------
 function ProfilePage()
 {
-  //
-  const [loggedUserResult, setLoggedUserResult] = useState(null);
-  const { NavigateTo } = UsePageRouter();
 
-  //
-  useEffect(()=>{
-    const _GetLoggedUser = async ()=>{
-      const result = await App.GetCurrentLoggedUser();
-      if(result.IsValid()) {
-        setLoggedUserResult(result);
-      } else {
-        ToastUtils.ResultError(result);
-        NavigateTo(PageUrls.UserLogin);
-      }
-    }
-
-    _GetLoggedUser();
-  }, []);
-
-
-  // Not ready...
-  if (!loggedUserResult) {
-    return <div>Loading...</div>;
-  }
+  const loggedUserResult = useLoggedUser();
 
   // Ready...
   return (<>
-    <MainLayout>
-      <UserProfile userModel={loggedUserResult.value}/>
-    </MainLayout>
+    <UserLogged requiresLoggedUser={true} redirectTo={PageUrls.UserLogin}>
+      <MainLayout>
+        <UserProfile userModel={loggedUserResult}/>
+      </MainLayout>
+    </UserLogged>
   </>);
 }
 

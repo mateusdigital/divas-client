@@ -107,7 +107,7 @@ class NET
   {
     const base_options = {
       method: "POST",
-      body: { data }
+      body:  data
     };
     const full_options = {...base_options, ...options };
 

@@ -1,13 +1,18 @@
+// -----------------------------------------------------------------------------
 import MoodboardCanvasController from "@/controllers/Moodboard/MoodboardCanvasController";
 import { createContext, useContext, useState } from "react";
 
-export const _EditorContext = createContext(null);
+// -----------------------------------------------------------------------------
+const _EditorContext = createContext(null);
 
+
+// -----------------------------------------------------------------------------
 export function useMoodboardEditorContext()
 {
   return useContext(_EditorContext);
 }
 
+// -----------------------------------------------------------------------------
 export function MoodboardEditorContextProvider({children})
 {
   const [controller, setController] = useState(

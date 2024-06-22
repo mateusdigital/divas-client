@@ -25,9 +25,8 @@ import { useEffect } from "react";
 // -----------------------------------------------------------------------------
 import Link from "next/link";
 // -----------------------------------------------------------------------------
-import App from "@/models/App";
 import PageUrls from "@/utils/PageUrls";
-import UsePageRouter from "@/utils/PageRouter";
+import UserLogged from "@/components/Logic/UserLogged";
 // -----------------------------------------------------------------------------
 import MaterialIcon from "@/components/MaterialIcon";
 import LoginUser from "@/components/User/Login/LoginUser";
@@ -38,58 +37,45 @@ import styles from "./styles/LoginPage.module.css";
 // -----------------------------------------------------------------------------
 function LoginPage()
 {
-
-  //
-  const { NavigateTo } = UsePageRouter();
-
-  //
-  useEffect(()=>{
-    const _GetLoggedUser = async ()=>{
-      const result = await App.GetCurrentLoggedUser();
-      if(result.IsValid()) {
-        NavigateTo(PageUrls.UserOwnProfile);
-      }
-    }
-    _GetLoggedUser();
-  }, []);
-
-
   //
   return (<>
-    <div className={styles.mainContainer}>
-      <div className={styles.contentContainer}>
-        {/*  */}
-        <div className={styles.loginContainer}>
+    <UserLogged requiresLoggedUser={false} redirectTo={PageUrls.UserOwnProfile}>
+      {/*  */}
+      <div className={styles.mainContainer}>
+        <div className={styles.contentContainer}>
           {/*  */}
-          <div className={styles.artContainer}>
-            <img src="https://placehold.co/600x400"></img>
+          <div className={styles.loginContainer}>
+            {/*  */}
+            <div className={styles.artContainer}>
+              <img src="https://placehold.co/600x400"></img>
+            </div>
+
+            {/*  */}
+            <div className={styles.loginUserContainer}>
+              <LoginUser/>
+            </div>
           </div>
 
           {/*  */}
-          <div className={styles.loginUserContainer}>
-            <LoginUser/>
-          </div>
-        </div>
+          <div className={styles.bottomContainer}>
+            <div className={styles.linksContainer}>
+              <ul>
+                <li><Link href={PageUrls.DocsHelp}>Help</Link></li>
+                <li><Link href={PageUrls.DocsTerms}>Terms</Link></li>
+                <li><Link href={PageUrls.DocsPrivacy}>Privacy</Link></li>
+                <li><Link href={PageUrls.DocsCopyright}>Copyright Policy</Link></li>
+              </ul>
+            </div>
 
-        {/*  */}
-        <div className={styles.bottomContainer}>
-          <div className={styles.linksContainer}>
-            <ul>
-              <li><Link href={PageUrls.DocsHelp}>Help</Link></li>
-              <li><Link href={PageUrls.DocsTerms}>Terms</Link></li>
-              <li><Link href={PageUrls.DocsPrivacy}>Privacy</Link></li>
-              <li><Link href={PageUrls.DocsCopyright}>Copyright Policy</Link></li>
-            </ul>
-          </div>
-
-          <div className={styles.socialContainer}>
-            <MaterialIcon icon="favorite"> </MaterialIcon>
-            <MaterialIcon icon="favorite"> </MaterialIcon>
-            <MaterialIcon icon="favorite"> </MaterialIcon>
+            <div className={styles.socialContainer}>
+              <MaterialIcon icon="favorite"> </MaterialIcon>
+              <MaterialIcon icon="favorite"> </MaterialIcon>
+              <MaterialIcon icon="favorite"> </MaterialIcon>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </UserLogged>
   </>);
 }
 

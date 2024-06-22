@@ -24,33 +24,44 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
 // -----------------------------------------------------------------------------
-// -----------------------------------------------------------------------------
 import App from "@/models/App";
 import ToastUtils from "@/utils/Toast";
+import PageUrls from "@/utils/PageUrls";
+import UsePageRouter from "@/utils/PageRouter";
+// -----------------------------------------------------------------------------
+import DivasLogo from "@/components/UI/DivasLogo";
+import ActionButton from "@/components/UI/Buttons/ActionButton";
+import TextButton from "@/components/UI/Buttons/TextButton";
+import Input from "@/components/UI/Inputs/Input";
+// -----------------------------------------------------------------------------
+import styles from "@/components/User/styles/LoginSignup.module.css";
+
 
 // -----------------------------------------------------------------------------
 function CreateUser()
 {
   //
-  const router = useRouter();
+  const { NavigateTo } = UsePageRouter();
 
   //
-  const [username, setUsername]         = useState("");
-  const [email, setEmail]               = useState("");
-  const [password, setPassword]         = useState("");
-  const [fullname, setFullname]         = useState("");
-  const [description, setDescription]   = useState("");
-  const [profilePhoto, setProfilePhoto] = useState(null);
+  const [username, setUsername]               = useState("");
+  const [email, setEmail]                     = useState("");
+  const [password, setPassword]               = useState("");
+  const [passwordConfirm, setPasswordConfirm] = useState("");
+  const [fullname, setFullname]               = useState("");
+  const [description, setDescription]         = useState("");
+  const [profilePhoto, setProfilePhoto]       = useState(null);
 
   //
-  const handle_username_change      = async (e) => { setUsername(e.target.value); };
-  const handle_email_change         = async (e) => { setEmail(e.target.value); };
-  const handle_password_change      = async (e) => { setPassword(e.target.value); };
-  const handle_fullname_change      = async (e) => { setFullname(e.target.value); };
-  const handle_description_change   = async (e) => { setDescription(e.target.value); };
-  const handle_profile_photo_change = async (e) => { setProfilePhoto(e.target.files[0]); };
+  const _HandleUsernameChange        = async (e) => { setUsername(e.target.value); };
+  const _HandleEmailChange           = async (e) => { setEmail(e.target.value); };
+  const _HandlePasswordChange        = async (e) => { setPassword(e.target.value); };
+  const _HandlePasswordConfirmChange = async (e) => { setPasswordConfirm(e.target.value); };
+  const _HandleFullnameChange        = async (e) => { setFullname(e.target.value); };
+  const _HandleDescriptionChange     = async (e) => { setDescription(e.target.value); };
+  const _HandleProfilePhotoChange    = async (e) => { setProfilePhoto(e.target.files[0]); };
 
-  const handle_submit = async () => {
+  const _HandleSignUp = async () => {
     const data = {
       username: username,
       email: email,
@@ -68,46 +79,77 @@ function CreateUser()
     const user = result.value;
     App.SetCurrentLoggedUser(user);
 
-    router.push("/profile");
+    NavigateTo(PageUrls.UserOwnProfile);
   };
 
+  const _HandleAlreadyHaveUser = async () => {
+    NavigateTo(PageUrls.UserLogin);
+  }
+
   //
-  return (
-    <div>
+  return (<>
+    <div className={styles.loginContainer} >
+      {/*  */}
       <div>
-        <span>Username</span>
-        <input type="text" value={username} onChange={handle_username_change}></input>
+          <DivasLogo></DivasLogo>
       </div>
+
       <div>
-        <span>Email</span>
-        <input type="text" value={email} onChange={handle_email_change}></input>
+        {/*  */}
+        <div className={styles.inputContainer}>
+          <span>Username</span>
+          <Input type="text" value={username} onChange={_HandleUsernameChange}></Input>
+        </div>
+        {/*  */}
+        <div className={styles.inputContainer}>
+          <span>Email</span>
+          <Input type="text" value={email} onChange={_HandleEmailChange}></Input>
+        </div>
       </div>
+
       <div>
-        <span>Password</span>
-        <input type="text" value={password} onChange={handle_password_change}></input>
+        {/*  */}
+        <div className={styles.inputContainer}>
+          <span>Password</span>
+          <Input type="text" value={password} onChange={_HandlePasswordChange}></Input>
+        </div>
+        <div className={styles.inputContainer}>
+          <span>Confirm Password</span>
+          <Input type="text" value={password} onChange={_HandlePasswordConfirmChange}></Input>
+        </div>
       </div>
 
 
       <div>
-        <span>Full Name</span>
-        <input type="text" value={fullname} onChange={handle_fullname_change}></input>
-      </div>
-      <div>
-        <span>Description</span>
-        <input type="text" value={description} onChange={handle_description_change}></input>
+        {/*  */}
+        <div className={styles.inputContainer}>
+          <span>Full Name</span>
+          <Input type="text" value={fullname} onChange={_HandleFullnameChange}></Input>
+        </div>
+        {/*  */}
+        <div className={styles.inputContainer}>
+          <span>Description</span>
+          <Input type="text" value={description} onChange={_HandleDescriptionChange}></Input>
+        </div>
       </div>
 
       <div>
-        <span>Photo</span>
-        <input type="file" onChange={handle_profile_photo_change} />
+        <div>
+          <span>Photo</span>
+          <input type="file" onChange={_HandleProfilePhotoChange} />
+        </div>
       </div>
 
-
       <div>
-        <button onClick={handle_submit}>Create User</button>
+      </div>
+      {/*  */}
+      <div className={styles.buttonsContainer}>
+        <ActionButton onClick={_HandleSignUp}>Sign Up</ActionButton>
+        or
+        <TextButton onClick={_HandleAlreadyHaveUser}>Already have user?</TextButton>
       </div>
     </div>
-  )
+  </>)
 }
 
 // -----------------------------------------------------------------------------

@@ -21,6 +21,9 @@
 //----------------------------------------------------------------------------//
 
 // -----------------------------------------------------------------------------
+import UserLogged from "@/components/Logic/UserLogged";
+import PageUrls from "@/utils/PageUrls";
+// -----------------------------------------------------------------------------
 import CreateUser from "@/components/User/Create/CreateUser";
 
 
@@ -28,7 +31,9 @@ import CreateUser from "@/components/User/Create/CreateUser";
 function Component()
 {
   return (<>
-    <CreateUser></CreateUser>
+    <UserLogged requiresLoggedUser={false} redirectTo={PageUrls.UserOwnProfile}>
+      <CreateUser></CreateUser>
+    </UserLogged>
   </>);
 }
 

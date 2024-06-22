@@ -33,7 +33,7 @@ import ActionButton from "@/components/UI/Buttons/ActionButton";
 import TextButton from "@/components/UI/Buttons/TextButton";
 import Input from "@/components/UI/Inputs/Input";
 // -----------------------------------------------------------------------------
-import styles from "./LoginUser.module.css";
+import styles from "@/components/User/styles/LoginSignup.module.css";
 
 
 // -----------------------------------------------------------------------------
