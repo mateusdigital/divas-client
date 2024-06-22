@@ -50,7 +50,8 @@ function LoginUser()
   const _HandleUsernameChange = async (e) => { setUsername(e.target.value); };
   const _HandlePasswordChange = async (e) => { setPassword(e.target.value); };
 
-  const _HandleSubmit = async () => {
+  //
+  const _HandleLogin = async () => {
     setIsTryingToLog(true);
 
     const data = {
@@ -72,6 +73,14 @@ function LoginUser()
 
     NavigateTo(PageUrls.UserOwnProfile);
   };
+
+  const _HandleForgotPassword = async () => {
+    NavigateTo(PageUrls.UserForgotPassword);
+  }
+
+  const _HandleSignUp = async () => {
+    NavigateTo(PageUrls.UserSignUp);
+  }
 
   //
   return (<>
@@ -97,12 +106,12 @@ function LoginUser()
       {/*  */}
       <div className={styles.buttonsContainer}>
         <div>
-          <ActionButton onClick={_HandleSubmit}>login</ActionButton>
-          <TextButton onClick={_HandleSubmit}>forgot password?</TextButton>
+          <ActionButton onClick={_HandleLogin}>login</ActionButton>
+          <TextButton onClick={_HandleForgotPassword}>forgot password?</TextButton>
         </div>
         or
         <div>
-          <ActionButton onClick={_HandleSubmit}>sign up</ActionButton>
+          <ActionButton onClick={_HandleSignUp}>sign up</ActionButton>
         </div>
       </div>
     </div>

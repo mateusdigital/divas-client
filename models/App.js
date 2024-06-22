@@ -129,6 +129,13 @@ class App
     }
   }
 
+  // ---------------------------------------------------------------------------
+  static async TryToLogoutUser()
+  {
+    Cookies.remove("loggedUser");
+    App._currentLoggedUser = null;
+  }
+
 
   // ---------------------------------------------------------------------------
   static async GetUserWithUsername(username)

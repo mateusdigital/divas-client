@@ -91,6 +91,18 @@ function Sidebar()
           <span className={`${material_symbol_style} ${styles.sideBarItemIcon}`}>menu</span>
           <span className={styles.sideBarItemTitle}>More</span>
         </Link>
+
+
+        {/* More */}
+        <Link
+          href="/login"
+          className={styles.sideBarItemContainer}
+          onClick={()=>{ App.TryToLogoutUser(); }}
+          >
+          <span className={`${material_symbol_style} ${styles.sideBarItemIcon}`}>menu</span>
+          <span className={styles.sideBarItemTitle}>logout</span>
+        </Link>
+
       </div>
     </div>
   );

@@ -67,7 +67,7 @@ function LoginPage()
 
           {/*  */}
           <div className={styles.loginUserContainer}>
-            <LoginUser></LoginUser>
+            <LoginUser/>
           </div>
         </div>
 
@@ -75,10 +75,10 @@ function LoginPage()
         <div className={styles.bottomContainer}>
           <div className={styles.linksContainer}>
             <ul>
-              <li><Link href="/doc/help">Help</Link></li>
-              <li><Link href="/doc/terms">Terms</Link></li>
-              <li><Link href="/doc/privacy">Privacy</Link></li>
-              <li><Link href="/doc/copyright">Copyright Policy</Link></li>
+              <li><Link href={PageUrls.DocsHelp}>Help</Link></li>
+              <li><Link href={PageUrls.DocsTerms}>Terms</Link></li>
+              <li><Link href={PageUrls.DocsPrivacy}>Privacy</Link></li>
+              <li><Link href={PageUrls.DocsCopyright}>Copyright Policy</Link></li>
             </ul>
           </div>
 

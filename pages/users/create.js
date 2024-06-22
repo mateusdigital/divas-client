@@ -27,9 +27,9 @@ import CreateUser from "@/components/User/Create/CreateUser";
 // -----------------------------------------------------------------------------
 function Component()
 {
-  return (
+  return (<>
     <CreateUser></CreateUser>
-  );
+  </>);
 }
 
 // -----------------------------------------------------------------------------
