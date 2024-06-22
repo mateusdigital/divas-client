@@ -25,10 +25,12 @@ import { StatusCodes } from "http-status-codes";
 // -----------------------------------------------------------------------------
 import NET from "@/app/NET";
 // -----------------------------------------------------------------------------
-import User from "@/models/User";
 import Assert from "@/utils/Assert";
+import User from "@/models/User";
+import MoodboardItemsController from "@/controllers/Moodboard/MoodboardItemsController"
 // -----------------------------------------------------------------------------
-const Endpoints = require("@/divas-shared/shared/API/Endpoints");
+import Endpoints from "@/divas-shared/shared/API/Endpoints";
+import CachedImageController from "@/controllers/CachedImage/CachedImageController";
 
 
 // -----------------------------------------------------------------------------
@@ -73,7 +75,6 @@ class Result
 // -----------------------------------------------------------------------------
 class App
 {
-
   //
   // User
   //
@@ -81,6 +82,7 @@ class App
   // ---------------------------------------------------------------------------
   static _currentLoggedUser;
 
+  // ---------------------------------------------------------------------------
   static SetCurrentLoggedUser(data)
   {
     if(!App._currentLoggedUser || App._currentLoggedUser._id == data._id) {
@@ -211,16 +213,59 @@ class App
   {
     Assert.NotNull(id, "id can't be null");
 
-    const api_url = NET.Make_API_Url("moodboard", id);
+    const api_url = NET.Make_API_Url(Endpoints.Moodboard.GetById, id);
 
     const response = await NET.GET(api_url);
-    if(response.status != 200) {
+    if(response.status != StatusCodes.OK) {
       return null;
     }
 
     // @TODO(mateusdigital): Create model for moodboard.
     const data = await response.json();
     return data;
+  }
+
+
+  //
+  // Moodboard Items
+  //
+
+  // ---------------------------------------------------------------------------
+  static _moodboardItemsController = null;
+
+  // ---------------------------------------------------------------------------
+  static async GetMoodboardItemsForCategory(category)
+  {
+    Assert.NotNull(category);
+
+    // Lazy load the controller.
+    if(!App._moodboardItemsController) {
+      App._moodboardItemsController = new MoodboardItemsController();
+    }
+
+    // We already fetched that data???
+    if(!App._moodboardItemsController.HasItemsForCategory(category)) {
+      await App._moodboardItemsController.FetchItemsForCategory(category);
+    }
+
+    return App._moodboardItemsController.GetItemsForCategory(category);
+  }
+
+  //
+  // Cached Images
+  //
+
+  // ---------------------------------------------------------------------------
+  static GetCachedImageForUrl(url, onLoadCallback)
+  {
+    Assert.NotNull(url);
+
+    // Lazy load the controller.
+    if(!App._cachedImagesController) {
+      App._cachedImagesController = new CachedImageController();
+    }
+
+    return App._cachedImagesController.GetCachedImageForUrl(url, onLoadCallback);
   }
 };
 

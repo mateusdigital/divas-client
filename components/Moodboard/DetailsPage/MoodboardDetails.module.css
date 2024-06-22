@@ -83,10 +83,12 @@
   justify-content: space-between;
   align-items: center;
 }
+
 .moodboardStatsContainer {
   display: flex;
   background-color: rebeccapurple;
 }
+
 .moodboardOtherStat {
   display: flex;
   flex-direction: column;

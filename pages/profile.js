@@ -25,29 +25,34 @@ import { useEffect, useState } from "react";
 //
 import App from "@/models/App";
 import UserProfile from "@/components/User/UserProfile";
+import ToastUtils from "@/utils/Toast";
 
 
 // -----------------------------------------------------------------------------
 function ProfilePage()
 {
   //
-  const [loggedUser, setLoggedUser] = useState(null);
+  const [loggedUserResult, setLoggedUserResult] = useState(null);
   useEffect(()=>{
     const _GetLoggedUser = async ()=>{
-      const logged_user = await App.GetCurrentLoggedUser();
-      setLoggedUser(logged_user);
+      const result = await App.GetCurrentLoggedUser();
+      if(result.IsValid()) {
+        setLoggedUserResult(result);
+      } else {
+        ToastUtils.ResultError(result);
+      }
     }
 
     _GetLoggedUser();
   }, []);
 
   // Not ready...
-  if (!loggedUser) {
+  if (!loggedUserResult) {
     return <div>Loading...</div>;
   }
 
   // Ready...
-  return <UserProfile userModel={loggedUser}></UserProfile>
+  return <UserProfile userModel={loggedUserResult.value}></UserProfile>
 }
 
 // -----------------------------------------------------------------------------

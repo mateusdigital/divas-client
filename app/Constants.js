@@ -28,8 +28,12 @@ class Constants
   static SERVER_URL  = "http://localhost";
   static SERVER_PORT = 5000;
 
+  // ---------------------------------------------------------------------------
   static APP_URL  = "http://localhost";
   static APP_PORT = 3000;
+
+  // ---------------------------------------------------------------------------
+  static IMAGES_URL = "https://mateus.digital/divas";
 }
 
 // -----------------------------------------------------------------------------

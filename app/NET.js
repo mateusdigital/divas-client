@@ -42,10 +42,12 @@ class NET
     for(let i = 0; i < components.length; ++i) {
       const component = components[i];
       if(component.startsWith(":")) {
-        const value = args[arg_index];
-        replaced.push(value);
-        ++arg_index;
-      } else {
+        if(arg_index < args.length) {
+          const value = args[arg_index];
+          replaced.push(value);
+          ++arg_index;
+        }
+      } else if(component.length != 0) {
         replaced.push(component);
       }
     }
@@ -58,7 +60,7 @@ class NET
   {
     const base_url  = `${Constants.SERVER_URL}:${Constants.SERVER_PORT}`;
     const replaced  = NET._ReplaceArgs(endpoint, ...data);
-    const final_url = `${base_url}${replaced}`;
+    const final_url = `${base_url}/${replaced}`;
 
     console.log(`API: ${final_url}`);
     return final_url;
@@ -74,6 +76,13 @@ class NET
     return final_url;
   }
 
+  // ---------------------------------------------------------------------------
+  static Make_Image_Url(suffix)
+  {
+    const final_url = `${Constants.IMAGES_URL}/${suffix}`;
+    return final_url;
+  }
+
   //
   // GET
   //
@@ -81,7 +90,12 @@ class NET
   // ---------------------------------------------------------------------------
   static async GET(url)
   {
-    return fetch(url);
+    try {
+      return fetch(url);
+    } catch(ex) {
+      console.log(`ex: ${ex}`);
+      debugger;
+    }
   }
 
   //

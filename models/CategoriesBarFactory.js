@@ -35,8 +35,8 @@ function GetComponentForCategoryName(name, userModel)
       case "Uploads":     return <div></div>;
 
       default:
-          debugger;
-          return null;
+        debugger;
+        return null;
     }
 }
 

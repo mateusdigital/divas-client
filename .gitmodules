@@ -1,3 +1,6 @@
 [submodule "divas-shared"]
 	path = divas-shared
 	url = git@github.com:mateusdigital/divas-shared
+[submodule "libs/mdjs"]
+	path = libs/mdjs
+	url = git@github.com:mateusdigital/mdjs.git

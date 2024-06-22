@@ -22,7 +22,7 @@ function UserProfile({userModel})
   const [selectedCategory, setSelectedCategory]   = useState(CATEGORIES_BAR_NAMES[0]);
 
   // Handle Category Selection
-  const handle_category_selection = (categoryName) => {
+  const _HandleCategorySelection = (categoryName) => {
     setSelectedCategory(categoryName);
 
     const category_component = GetComponentForCategoryName(categoryName, userModel);
@@ -42,7 +42,7 @@ function UserProfile({userModel})
 
       <CategoriesBar
         currentSelectedCategory={selectedCategory}
-        OnCategoryClickCallback={handle_category_selection}>
+        OnCategoryClickCallback={_HandleCategorySelection}>
       </CategoriesBar>
 
       <Suspense fallback={<div>Loading...</div>}>

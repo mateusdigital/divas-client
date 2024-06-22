@@ -1,11 +1,27 @@
-// pages/index.js
+// -----------------------------------------------------------------------------
+import { useEffect } from "react";
+import router from "next/router";
+// -----------------------------------------------------------------------------
+import App from "@/models/App";
 
-function HomePage() {
-  return (
-    <div>
-      <h1>Welcome to Divas Fashion!</h1>
-    </div>
-  );
+
+// -----------------------------------------------------------------------------
+function HomePage()
+{
+  //
+  useEffect(() => {
+    const logged_user = App.GetCurrentLoggedUser();
+    if(logged_user) {
+      router.push("/login");
+    } else {
+      router.push("/profile");
+    }
+  }, []);
+
+
+  return (<>
+  </>);
 }
 
+// -----------------------------------------------------------------------------
 export default HomePage;

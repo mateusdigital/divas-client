@@ -1,0 +1,14 @@
+.topCategoriesContainer {
+  display: grid;
+  grid-template-columns: repeat(4, auto);
+  gap: 1rem;
+  background-color: red;
+}
+
+
+.bottomCategoriesContainer {
+  display: grid;
+  grid-template-columns: repeat(4, auto);
+  gap: 1rem;
+  background-color: blue;
+}

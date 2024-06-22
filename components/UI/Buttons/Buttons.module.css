@@ -1,0 +1,26 @@
+.actionButton {
+  padding: 0.2rem 1rem;
+  margin: 0.5rem;
+
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+
+  background-color: #bee2d1;
+  transition: background-color 0.3s;
+}
+
+.actionButton:hover {
+  background-color: #a6cebb;
+}
+
+.actionButton:active {
+  background-color: #fa7b90;
+}
+
+.textButton {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  text-decoration: underline dotted;
+}

@@ -1,0 +1,23 @@
+.loginContainer {
+  padding: 2rem;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap:1rem;
+
+  font-size: 0.7rem;
+
+}
+
+.inputContainer {
+  display: flex;
+  flex-direction: column;
+  margin-top: 0.5rem;
+}
+
+.buttonsContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
