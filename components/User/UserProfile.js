@@ -33,13 +33,13 @@ function UserProfile({userModel})
   return (<>
     <UserInfo userModel={userModel}/>
 
-    <CategoriesBar
+    {/* <CategoriesBar
       currentSelectedCategory={selectedCategory}
       OnCategoryClickCallback={_HandleCategorySelection}/>
 
     <Suspense fallback={<div>Loading...</div>}>
       {categoryComponent}
-    </Suspense>
+    </Suspense> */}
   </>);
 }
 

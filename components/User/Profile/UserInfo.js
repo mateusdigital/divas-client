@@ -31,9 +31,9 @@ import styles from "./UserInfo.module.css";
 function UserInfo({ userModel })
 {
   return (
-    <div className={styles.profileContainer}>
+    <div className={styles.contentContainer}>
       {/* Photo */}
-      <div className={styles.profilePhotoSplit}>
+      <div className={styles.photoContainer}>
         <CachedImage
           className={styles.profilePhoto}
           imageUrl={
@@ -41,42 +41,40 @@ function UserInfo({ userModel })
           }/>
       </div>
 
-      <div className={styles.profileInfoSplit}>
+      <div className={styles.infoContainer}>
         {/* User - Fullname / handle */}
-        <span className={styles.profileNamesContainer}>
-          <span className={styles.profileFullname}>{userModel.fullname}</span>
-          <span className={styles.profileUsername}>@{userModel.username}</span>
-        </span>
+        <div className={styles.namesContainer}>
+          <span className={styles.fullname}>{userModel.fullname}</span>
+          <span className={styles.username}>@{userModel.username}</span>
+        </div>
 
         {/* Stats */}
-        <div className={styles.profileStatsContainer}>
+        <div className={styles.statsContainer}>
           {/* Followers */}
-          <div className={styles.profileStatContainer}>
-            <span className={styles.profileStatValue}>{userModel.followers.length}</span>
-            <span className={styles.profileStatDescription}>Followers</span>
+          <div className={styles.statContainer}>
+            <span className={styles.statValue}>{userModel.followers.length}</span>
+            <span className={styles.statText}>Followers</span>
           </div>
           {/* Following */}
-          <div className={styles.profileStatContainer}>
-            <span className={styles.profileStatValue}>{userModel.following.length}</span>
-            <span className={styles.profileStatDescription}>Following</span>
+          <div className={styles.statContainer}>
+            <span className={styles.statValue}>{userModel.following.length}</span>
+            <span className={styles.statText}>Following</span>
           </div>
           {/* Design Items */}
-          <div className={styles.profileStatContainer}>
-            <span className={styles.profileStatValue}>{userModel.moodboards.length}</span>
-            <span className={styles.profileStatDescription}>Moodboards</span>
+          <div className={styles.statContainer}>
+            <span className={styles.statValue}>{userModel.moodboards.length}</span>
+            <span className={styles.statText}>Moodboards</span>
           </div>
           {/* Likes */}
-          <div className={styles.profileStatContainer}>
-            <span className={styles.profileStatValue}>{userModel.likes} ? {userModel.likes} : 0</span>
-            <span className={styles.profileStatDescription}>Likes</span>
+          <div className={styles.statContainer}>
+            <span className={styles.statValue}>{userModel.likes ? userModel.likes : 0}</span>
+            <span className={styles.statText}>Likes</span>
           </div>
         </div>
 
         {/* Description */}
-        <div className={styles.profileDescription}>
-          <span>
-            {userModel.description}
-          </span>
+        <div className={styles.descriptionContainer}>
+          <span className={styles.description}>{userModel.description}</span>
         </div>
       </div>
     </div>
