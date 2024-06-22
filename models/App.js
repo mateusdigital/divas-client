@@ -22,6 +22,7 @@
 
 // -----------------------------------------------------------------------------
 import { StatusCodes } from "http-status-codes";
+import Cookies from "js-cookie";
 // -----------------------------------------------------------------------------
 import NET from "@/app/NET";
 // -----------------------------------------------------------------------------
@@ -82,11 +83,13 @@ class App
   static _currentLoggedUser;
 
   // ---------------------------------------------------------------------------
-  static SetCurrentLoggedUser(data)
+  static SetCurrentLoggedUser(data, setLoginCookie = true)
   {
-    if(!App._currentLoggedUser || App._currentLoggedUser._id == data._id) {
-      const userModel = User.CreateFromServerData(data);
-      App._currentLoggedUser = userModel;
+    const user_model = User.CreateFromServerData(data);
+    App._currentLoggedUser = user_model;
+
+    if(setLoginCookie) {
+      Cookies.set("loggedUser", JSON.stringify(data), { expires: 7 });
     }
 
     return Result.Valid(App._currentLoggedUser);
@@ -96,7 +99,12 @@ class App
   static async GetCurrentLoggedUser()
   {
     if(App._currentLoggedUser == null) {
-      return Result.LogicError("No logged users");
+      const cookie_user = Cookies.get("loggedUser");
+      if(!cookie_user) {
+        return Result.LogicError("No logged user");
+      }
+
+      App.SetCurrentLoggedUser(JSON.parse(cookie_user), false);
     }
 
     return Result.Valid(App._currentLoggedUser);
