@@ -28,13 +28,14 @@
   justify-content: center;
   align-items: center;
   background-color: blueviolet;
+  gap: 2rem;
 }
 
 /* -------------------------------------------------------------------------- */
 .photoContainer {
   display: flex;
   flex-direction: row;
-  max-width: 250px;
+  max-width: 200px;
 }
 
 .photoContainer img {

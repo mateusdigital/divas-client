@@ -22,39 +22,33 @@
 
 
 /* -------------------------------------------------------------------------- */
-.categoriesBarItemsContainer {
-  display: grid;
-  grid-template-columns: repeat(4, auto);
-  justify-content: center;
-  gap: 5rem;
-
-  /* background-color: red; */
+.contentContainer{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
 }
 
 /* -------------------------------------------------------------------------- */
-.categoriesBarItemContainer {
-
-}
-
-/* -------------------------------------------------------------------------- */
-.categoriesBarItemTitle {
+.title {
   display: block;
+  padding: 0.2rem 1rem;
+  margin: 0.5rem;
 
-  padding: 1rem;
+  font-size: 1.2rem;
 
-  font-weight: lighter;
-  font-size: 1.5rem;
-
-  color: #6E6E6E;
   cursor: pointer;
-  /* background-color: blue; */
 }
 
-.selectedCategory {
+.title:hover {
+  color: #a6cebb;
+}
+
+.selected {
   color: #fa7b90 !important;
   font-weight: normal;
   /* background-color: blue; */
 }
 
-.unselectedCategory {
+.unselected {
+  font-weight: lighter;
 }
