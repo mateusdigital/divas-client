@@ -3,10 +3,10 @@ import App from "@/models/App";
 
 
 // -----------------------------------------------------------------------------
-function CachedImageComponent({itemModel, ...imageProps})
+function CachedImageComponent({imageUrl, ...imageProps})
 {
   //
-  const img = App.GetCachedImageForUrl(itemModel.imageUrl, imageProps.onLoad);
+  const img = App.GetCachedImageForUrl(imageUrl, imageProps.onLoad);
 
   //
   return (<>

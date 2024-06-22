@@ -53,14 +53,15 @@ function ItemComponent({itemModel})
       {/* Image */}
       <CachedImage
         style={{ display: loaded ? "block" : "none" }}
-        itemModel={itemModel}
+        imageUrl={
+          NET.Make_External_Image_Url(itemModel.imageUrl)
+        }
         onLoad={() => {
-          setLoaded(true)
+          setLoaded(true);
         }}
         draggable={true}
         onDragStart={_HandleDragStart}
-      >
-      </CachedImage>
+      />
     </div>
   </>);
 }

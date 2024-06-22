@@ -10,15 +10,23 @@ import UsePageRouter from "@/utils/PageRouter";
 // -----------------------------------------------------------------------------
 const LoggedUserContext = createContext(null);
 
-export function useLoggedUser()
+let _LoggedUser = null;
+
+export function useLoggedUserContext()
 {
   return useContext(LoggedUserContext);
 }
 
+export function getLoggedUser()
+{
+  return _LoggedUser;
+}
+
+
 // -----------------------------------------------------------------------------
 function UserLogged({requiresLoggedUser, redirectTo, children})
 {
-  const [loggedUserResult, setLoggedUserResult] = useState(null);
+  const [loggedUser, setLoggedUser] = useState(null);
   const { NavigateTo } = UsePageRouter();
 
   //
@@ -26,7 +34,9 @@ function UserLogged({requiresLoggedUser, redirectTo, children})
     const _GetLoggedUser = async ()=>{
       const result = await App.GetCurrentLoggedUser();
       if(result.IsValid()) {
-        setLoggedUserResult(result);
+        setLoggedUser(result.value);
+        _LoggedUser = result.value;
+
         if(!requiresLoggedUser) {
           NavigateTo(redirectTo);
         }
@@ -46,7 +56,7 @@ function UserLogged({requiresLoggedUser, redirectTo, children})
 
   //
   return (
-    <LoggedUserContext.Provider value={loggedUserResult}>
+    <LoggedUserContext.Provider value={loggedUser}>
       {children}
     </LoggedUserContext.Provider>
   );

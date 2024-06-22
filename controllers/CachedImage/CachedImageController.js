@@ -19,7 +19,7 @@ class CachedImageController
 
     const img = new Image();
 
-    img.src    = NET.Make_Image_Url(url);
+    img.src    = url;
     img.onload = onLoadCallback;
 
     this._imageMap.set(url, img);

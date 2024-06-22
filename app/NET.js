@@ -77,7 +77,13 @@ class NET
   }
 
   // ---------------------------------------------------------------------------
-  static Make_Image_Url(suffix)
+  static Make_External_Image_Url(suffix)
+  {
+    const final_url = `${Constants.EXTERNAL_IMAGES_URL}/${suffix}`;
+    return final_url;
+  }
+  // ---------------------------------------------------------------------------
+  static Make_Local_Image_Url(suffix)
   {
     const final_url = `${Constants.IMAGES_URL}/${suffix}`;
     return final_url;

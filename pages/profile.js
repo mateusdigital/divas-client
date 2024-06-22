@@ -25,24 +25,32 @@ import MainLayout from "@/components/Layout/MainLayout";
 import UserProfile from "@/components/User/UserProfile";
 // -----------------------------------------------------------------------------
 import PageUrls from "@/utils/PageUrls";
-import UserLogged, { useLoggedUser } from "@/components/Logic/UserLogged"; // Import useLoggedUser hook
+import UserLogged, { useLoggedUserContext } from "@/components/Logic/UserLogged";
 
+
+// -----------------------------------------------------------------------------
+function Content()
+{
+  const loggedUser = useLoggedUserContext();
+  if(!loggedUser) {
+    return null;
+  }
+
+  return (<>
+    <MainLayout>
+      <UserProfile userModel={loggedUser}/>
+    </MainLayout>
+  </>);
+}
 
 // -----------------------------------------------------------------------------
 function ProfilePage()
 {
-
-  const loggedUserResult = useLoggedUser();
-
-  // Ready...
-  return (<>
+  return (
     <UserLogged requiresLoggedUser={true} redirectTo={PageUrls.UserLogin}>
-      <MainLayout>
-        <UserProfile userModel={loggedUserResult}/>
-      </MainLayout>
+      <Content/>
     </UserLogged>
-  </>);
+  );
 }
-
 // -----------------------------------------------------------------------------
 export default ProfilePage;

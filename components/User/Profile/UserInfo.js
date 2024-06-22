@@ -21,15 +21,11 @@
 //---------------------------------------------------------------------------~//
 
 // -----------------------------------------------------------------------------
-import styles from "./UserInfo.module.css";
 import NET from "@/app/NET";
+import CachedImage from "@/components/UI/CachedImage/CachedImage";
 
-// @XXX: Get the correct url place
-function XXX_GetFullProfilePhoto(url)
-{
-  return `http://localhost:5000/${url}`;
-}
-
+// -----------------------------------------------------------------------------
+import styles from "./UserInfo.module.css";
 
 // -----------------------------------------------------------------------------
 function UserInfo({ userModel })
@@ -38,7 +34,11 @@ function UserInfo({ userModel })
     <div className={styles.profileContainer}>
       {/* Photo */}
       <div className={styles.profilePhotoSplit}>
-        <img className={styles.profilePhoto} src={XXX_GetFullProfilePhoto(userModel.profilePhotoUrl)}></img>
+        <CachedImage
+          className={styles.profilePhoto}
+          imageUrl={
+            NET.Make_Local_Image_Url(userModel.profilePhotoUrl)
+          }/>
       </div>
 
       <div className={styles.profileInfoSplit}>

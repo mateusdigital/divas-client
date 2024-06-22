@@ -25,7 +25,8 @@
 import Link from "next/link";
 // -----------------------------------------------------------------------------
 import App from "@/models/App";
-import { useLoggedUser } from "@/components/Logic/UserLogged"; // Import useLoggedUser hook
+import NET from "@/app/NET";
+import UserLogged, {useLoggedUserContext } from "@/components/Logic/UserLogged";
 import PageUrls from "@/utils/PageUrls";
 // -----------------------------------------------------------------------------
 import DivasLogo from "@/components/UI/DivasLogo";
@@ -64,10 +65,14 @@ function _SidebarItem({icon, children})
 }
 
 // -----------------------------------------------------------------------------
-function Sidebar()
+function Content()
 {
   const material_symbol_style = "material-symbols-outlined";
-  const loggedUserResult = useLoggedUser();
+  const loggedUser = useLoggedUserContext();
+
+  if(!loggedUser) {
+    return null;
+  }
 
   //
   return (
@@ -81,7 +86,9 @@ function Sidebar()
         <_SidebarLink href={PageUrls.UserOwnProfile}>
           <img
             className={styles.sideBarItemProfileImage}
-            src={loggedUserResult ? loggedUserResult.value.profilePhotoTinyUrl : ""}>
+            src={
+              loggedUser ? NET.Make_Local_Image_Url(loggedUser.profilePhotoTinyUrl) : ""
+            }>
           </img>
           <span className={styles.sideBarItemTitle}>Profile</span>
         </_SidebarLink>
@@ -126,6 +133,14 @@ function Sidebar()
     </div>
   );
 }
-
+// -----------------------------------------------------------------------------
+function Sidebar()
+{
+  return (
+    <UserLogged requiresLoggedUser={true} redirectTo={PageUrls.UserLogin}>
+      <Content/>
+    </UserLogged>
+  );
+}
 // -----------------------------------------------------------------------------
 export default Sidebar;

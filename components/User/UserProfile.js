@@ -1,12 +1,10 @@
 
-
 // -----------------------------------------------------------------------------
-import { useRouter } from "next/router";
-import { useEffect, useState, lazy, Suspense } from "react";
-//
+import { useState, Suspense } from "react";
+// -----------------------------------------------------------------------------
 import UserInfo      from "@/components/User/Profile/UserInfo";
 import CategoriesBar from "@/components/User/Profile/CategoriesBar";
-
+// -----------------------------------------------------------------------------
 import CATEGORIES_BAR_NAMES from "@/models/CategoriesBarNames";
 import GetComponentForCategoryName from "@/models/CategoriesBarFactory";
 
