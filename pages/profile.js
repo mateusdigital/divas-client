@@ -28,6 +28,7 @@ import ToastUtils from "@/utils/Toast";
 import PageUrls from "@/utils/PageUrls";
 import UsePageRouter from "@/utils/PageRouter";
 //
+import MainLayout from "@/components/Layout/MainLayout";
 import UserProfile from "@/components/User/UserProfile";
 
 
@@ -37,6 +38,7 @@ function ProfilePage()
   //
   const [loggedUserResult, setLoggedUserResult] = useState(null);
   const { NavigateTo } = UsePageRouter();
+
   //
   useEffect(()=>{
     const _GetLoggedUser = async ()=>{
@@ -59,7 +61,11 @@ function ProfilePage()
   }
 
   // Ready...
-  return <UserProfile userModel={loggedUserResult.value}></UserProfile>
+  return (<>
+    <MainLayout>
+      <UserProfile userModel={loggedUserResult.value}/>
+    </MainLayout>
+  </>);
 }
 
 // -----------------------------------------------------------------------------

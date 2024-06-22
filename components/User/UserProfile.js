@@ -4,9 +4,6 @@
 import { useRouter } from "next/router";
 import { useEffect, useState, lazy, Suspense } from "react";
 //
-import NET from "@/app/NET";
-//
-import MainLayout    from "@/components/Layout/MainLayout";
 import UserInfo      from "@/components/User/Profile/UserInfo";
 import CategoriesBar from "@/components/User/Profile/CategoriesBar";
 
@@ -35,21 +32,17 @@ function UserProfile({userModel})
   }
 
   // Ready...
-  return (
-    <MainLayout>
-      <UserInfo userModel={userModel}>
-      </UserInfo>
+  return (<>
+    <UserInfo userModel={userModel}/>
 
-      <CategoriesBar
-        currentSelectedCategory={selectedCategory}
-        OnCategoryClickCallback={_HandleCategorySelection}>
-      </CategoriesBar>
+    <CategoriesBar
+      currentSelectedCategory={selectedCategory}
+      OnCategoryClickCallback={_HandleCategorySelection}/>
 
-      <Suspense fallback={<div>Loading...</div>}>
-        {categoryComponent}
-      </Suspense>
-    </MainLayout>
-  );
+    <Suspense fallback={<div>Loading...</div>}>
+      {categoryComponent}
+    </Suspense>
+  </>);
 }
 
 // -----------------------------------------------------------------------------

@@ -21,17 +21,40 @@
 //----------------------------------------------------------------------------//
 
 // -----------------------------------------------------------------------------
+import { useEffect } from "react";
+// -----------------------------------------------------------------------------
 import Link from "next/link";
 // -----------------------------------------------------------------------------
+import App from "@/models/App";
+import PageUrls from "@/utils/PageUrls";
+import UsePageRouter from "@/utils/PageRouter";
+// -----------------------------------------------------------------------------
+import MaterialIcon from "@/components/MaterialIcon";
 import LoginUser from "@/components/User/Login/LoginUser";
 // -----------------------------------------------------------------------------
 import styles from "./styles/LoginPage.module.css";
-import MaterialIcon from "@/components/MaterialIcon";
 
 
 // -----------------------------------------------------------------------------
 function LoginPage()
 {
+
+  //
+  const { NavigateTo } = UsePageRouter();
+
+  //
+  useEffect(()=>{
+    const _GetLoggedUser = async ()=>{
+      const result = await App.GetCurrentLoggedUser();
+      if(result.IsValid()) {
+        NavigateTo(PageUrls.UserOwnProfile);
+      }
+    }
+    _GetLoggedUser();
+  }, []);
+
+
+  //
   return (<>
     <div className={styles.mainContainer}>
       <div className={styles.contentContainer}>
