@@ -34,7 +34,7 @@ class ToastUtils
 
   static ResultError(result)
   {
-    ToastUtils.Error(result.errorJson)
+    ToastUtils.Error(result.errorJson.message);
   }
 }
 

@@ -19,37 +19,40 @@
 //  Description :                                                             //
 //                                                                            //
 //----------------------------------------------------------------------------//
+
 // -----------------------------------------------------------------------------
 import { useState } from "react";
-import { useRouter } from "next/router";
 // -----------------------------------------------------------------------------
 import App from "@/models/App";
 import ToastUtils from "@/utils/Toast";
-
+import UsePageRouter from "@/utils/PageRouter";
+import PageUrls from "@/utils/PageUrls";
+// -----------------------------------------------------------------------------
 import DivasLogo from "@/components/UI/DivasLogo";
 import ActionButton from "@/components/UI/Buttons/ActionButton";
 import TextButton from "@/components/UI/Buttons/TextButton";
 import Input from "@/components/UI/Inputs/Input";
-
-
 // -----------------------------------------------------------------------------
 import styles from "./LoginUser.module.css";
+
 
 // -----------------------------------------------------------------------------
 function LoginUser()
 {
   //
-  const router = useRouter();
-
-  //
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [isTryingToLog, setIsTryingToLog] = useState(false);
+
+  const { NavigateTo } = UsePageRouter();
 
   //
   const _HandleUsernameChange = async (e) => { setUsername(e.target.value); };
   const _HandlePasswordChange = async (e) => { setPassword(e.target.value); };
 
   const _HandleSubmit = async () => {
+    setIsTryingToLog(true);
+
     const data = {
       username: username,
       password: password,
@@ -58,13 +61,16 @@ function LoginUser()
     const result = await App.TryToLoginUserWithData(data);
     if(result.IsError()) {
       ToastUtils.Error(result.errorJson.message);
+      setIsTryingToLog(false);
+
       return false;
     }
 
     const user = result.value;
     App.SetCurrentLoggedUser(user);
+    setIsTryingToLog(false);
 
-    router.push("/profile");
+    NavigateTo(PageUrls.UserOwnProfile);
   };
 
   //
@@ -98,10 +104,8 @@ function LoginUser()
         <div>
           <ActionButton onClick={_HandleSubmit}>sign up</ActionButton>
         </div>
-
       </div>
     </div>
-
   </>)
 }
 

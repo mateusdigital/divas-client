@@ -24,8 +24,11 @@
 import { useEffect, useState } from "react";
 //
 import App from "@/models/App";
-import UserProfile from "@/components/User/UserProfile";
 import ToastUtils from "@/utils/Toast";
+import PageUrls from "@/utils/PageUrls";
+import UsePageRouter from "@/utils/PageRouter";
+//
+import UserProfile from "@/components/User/UserProfile";
 
 
 // -----------------------------------------------------------------------------
@@ -33,6 +36,8 @@ function ProfilePage()
 {
   //
   const [loggedUserResult, setLoggedUserResult] = useState(null);
+  const { NavigateTo } = UsePageRouter();
+  //
   useEffect(()=>{
     const _GetLoggedUser = async ()=>{
       const result = await App.GetCurrentLoggedUser();
@@ -40,11 +45,13 @@ function ProfilePage()
         setLoggedUserResult(result);
       } else {
         ToastUtils.ResultError(result);
+        NavigateTo(PageUrls.UserLogin);
       }
     }
 
     _GetLoggedUser();
   }, []);
+
 
   // Not ready...
   if (!loggedUserResult) {
