@@ -11,3 +11,22 @@
 .tooltipContainer {
   display: none;
 }
+
+
+.canvasControl {
+  /* padding: 1rem; */
+  /* background-color: red; */
+  background-color: transparent;
+  border:  2px dotted transparent;
+  border-radius: 8px;
+  padding: 4px;
+}
+
+.canvasControl:hover {
+  border:  2px dotted black;
+}
+
+/* -------------------------------------------------------------------------- */
+.canvasControlIcon {
+  font-size: 2.5rem !important;
+}

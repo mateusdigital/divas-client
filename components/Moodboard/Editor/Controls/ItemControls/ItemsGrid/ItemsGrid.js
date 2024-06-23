@@ -30,7 +30,7 @@ import Item from "../Item/Item.js";
 import styles from "./ItemsGrid.module.css";
 
 // -----------------------------------------------------------------------------
-function Component({category})
+function ItemsGrid({category})
 {
   //
   const [items, setItems] = useState(null);
@@ -64,4 +64,4 @@ function Component({category})
 }
 
 // -----------------------------------------------------------------------------
-export default Component;
+export default ItemsGrid;

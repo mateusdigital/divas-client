@@ -20,15 +20,14 @@
 //                                                                            //
 //----------------------------------------------------------------------------//
 
-
 // -----------------------------------------------------------------------------
-import { useRouter } from "next/router";
-import { useEffect, useState, useRef } from "react";
+import { useState } from "react";
 // -----------------------------------------------------------------------------
 import NET from "@/app/NET";
 import CachedImage from "@/components/UI/CachedImage/CachedImage"
 // -----------------------------------------------------------------------------
 import styles from "./Item.module.css";
+
 
 // -----------------------------------------------------------------------------
 function ItemComponent({itemModel})
@@ -46,7 +45,7 @@ function ItemComponent({itemModel})
 
   //
   return (<>
-    <div className={styles.itemContainer}>
+    <div className={styles.contentContainer}>
       {/* Placeholder */}
       {!loaded && <div className="@TODO">Loading...</div>}
 

@@ -1,20 +1,21 @@
 // -----------------------------------------------------------------------------
-import { useRouter } from "next/router";
-import { useEffect, useState, useRef} from "react";
+import _Button from "./_Button";
 // -----------------------------------------------------------------------------
 import styles from "./Buttons.module.css";
 
 // -----------------------------------------------------------------------------
-function TextButton({children, onClick})
+function TextButton({children, onClick, className})
 {
+  const class_name = `${styles.textButton} ${className}`;
+
   //
   return (<>
-    <button
-      className={styles.textButton}
+    <_Button
+      className={class_name}
       onClick={onClick}
     >
       {children}
-    </button>
+    </_Button>
   </>);
 };
 

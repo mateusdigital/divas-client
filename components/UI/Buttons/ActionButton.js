@@ -1,20 +1,21 @@
 // -----------------------------------------------------------------------------
-import { useRouter } from "next/router";
-import { useEffect, useState, useRef} from "react";
+import _Button from "./_Button";
 // -----------------------------------------------------------------------------
 import styles from "./Buttons.module.css";
 
 // -----------------------------------------------------------------------------
-function ActionButton({children, onClick})
+function ActionButton({children, onClick, className})
 {
+  const class_name = `${styles.actionButton} ${className}`;
+
   //
   return (<>
-    <button
-      className={styles.actionButton}
+    <_Button
+      className={class_name}
       onClick={onClick}
     >
       {children}
-    </button>
+    </_Button>
   </>);
 };
 

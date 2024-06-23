@@ -26,8 +26,8 @@ const SYMBOL_STYLE = "material-symbols-outlined";
 // -----------------------------------------------------------------------------
 function MaterialIcon({icon, iconStyle, className, children})
 {
-  iconStyle = iconStyle ? iconStyle : "";
-  className = className ? className : "";
+  iconStyle = iconStyle || "";
+  className = className || "";
 
   return (
     <div className={className}>

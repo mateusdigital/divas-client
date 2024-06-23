@@ -1,14 +1,20 @@
-// -----------------------------------------------------------------------------
-import styles from "./Inputs.module.css";
 
 // -----------------------------------------------------------------------------
-function Input({...props})
+import styles from "./Buttons.module.css";
+
+// -----------------------------------------------------------------------------
+function _Button({children, onClick, className})
 {
   //
   return (<>
-    <input className={styles.mainInput} {...props}></input>
+    <button
+      className={className}
+      onClick={onClick}
+    >
+      {children}
+    </button>
   </>);
 };
 
 // -----------------------------------------------------------------------------
-export default Input;
+export default _Button;

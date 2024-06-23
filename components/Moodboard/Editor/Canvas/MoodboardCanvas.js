@@ -11,6 +11,7 @@ import { useMoodboardEditorContext } from "@/contexts/Moodboard/Editor/Moodboard
 import MoodboardCanvasControls from "./Controls/CanvasControls";
 import styles from "./MoodboardCanvas.module.css";
 import EventType from "./Controls/EventType";
+import NET from "@/app/NET";
 
 // -----------------------------------------------------------------------------
 function MoodboardCanvas()
@@ -40,6 +41,7 @@ function MoodboardCanvas()
     });
 
     _fabric_canvas_ref.current = fabric_canvas;
+    // fabric_canvas.backgroundColor = "red";
 
     // Event Listeners...
     fabric_canvas.on("drop",              _HandleDrop);
@@ -47,9 +49,11 @@ function MoodboardCanvas()
     fabric_canvas.on("selection:cleared", _HandleOnDeselection);
 
     window.addEventListener("resize", _ResizeCanvas);
+    window.addEventListener("wheel", _HandleZoom);
 
     return () => {
       window.removeEventListener("resize", _ResizeCanvas);
+      window.removeEventListener("wheel", _HandleZoom);
 
       fabric_canvas.off("drop",              _HandleDrop);
       fabric_canvas.off("selection:cleared", _HandleOnDeselection);
@@ -72,7 +76,8 @@ function MoodboardCanvas()
     const item_model = MoodboardItemModel.CreateFromData(data);
 
     // Get the image.
-    const cached_img = App.GetCachedImageForUrl(item_model.imageUrl);
+    const img_url    = NET.Make_External_Image_Url(item_model.imageUrl);
+    const cached_img = App.GetCachedImageForUrl(img_url);
 
     // Add image to fabric.
     fabric.Image.fromURL(cached_img.src, (fabric_img)=>{
@@ -130,6 +135,7 @@ function MoodboardCanvas()
     setSelection(null);
   }
 
+
   //
   // Resize Events
   //
@@ -145,6 +151,7 @@ function MoodboardCanvas()
     fabric_canvas.setWidth (canvas.width);
     fabric_canvas.setHeight(canvas.height);
   }
+
 
   //
   // Moodboard Controls Events
@@ -195,6 +202,34 @@ function MoodboardCanvas()
 
     fabric_canvas.requestRenderAll();
   }
+
+  //
+  // Zoom Functions
+  //
+  // ---------------------------------------------------------------------------
+  const _HandleZoom = (event) => {
+    event.preventDefault();
+    if (event.deltaY < 0) {
+      _ZoomIn();
+    }
+    else {
+      _ZoomOut();
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  function _ZoomIn() {
+    const fabric_canvas = _fabric_canvas_ref.current;
+    fabric_canvas.setZoom(fabric_canvas.getZoom() * 1.1);
+    fabric_canvas.renderAll();
+  }
+
+  function _ZoomOut() {
+    const fabric_canvas = _fabric_canvas_ref.current;
+    fabric_canvas.setZoom(fabric_canvas.getZoom() / 1.1);
+    fabric_canvas.renderAll();
+  }
+
 
   //
   // Component
