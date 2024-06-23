@@ -1,5 +1,8 @@
+// -----------------------------------------------------------------------------
 const Arr = require("@/libs/mdjs/mdjs/Array");
 
+
+// -----------------------------------------------------------------------------
 class MoodboardCanvasController
 {
   // ---------------------------------------------------------------------------
@@ -40,6 +43,11 @@ class MoodboardCanvasController
 
       this.AddItem(fabric_canvas, cloned, item.itemModel);
     });
+  }
+
+  PrepareSaveData()
+  {
+
   }
 }
 

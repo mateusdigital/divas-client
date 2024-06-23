@@ -13,6 +13,7 @@ import styles from "./MoodboardCanvas.module.css";
 import EventType from "./Controls/EventType";
 import NET from "@/app/NET";
 
+
 // -----------------------------------------------------------------------------
 function MoodboardCanvas()
 {
@@ -49,11 +50,9 @@ function MoodboardCanvas()
     fabric_canvas.on("selection:cleared", _HandleOnDeselection);
 
     window.addEventListener("resize", _ResizeCanvas);
-    window.addEventListener("wheel", _HandleZoom);
 
     return () => {
       window.removeEventListener("resize", _ResizeCanvas);
-      window.removeEventListener("wheel", _HandleZoom);
 
       fabric_canvas.off("drop",              _HandleDrop);
       fabric_canvas.off("selection:cleared", _HandleOnDeselection);

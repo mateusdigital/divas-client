@@ -23,28 +23,33 @@
 // -----------------------------------------------------------------------------
 import App from "@/models/App";
 // -----------------------------------------------------------------------------
-import { MoodboardEditorContextProvider } from "@/contexts/Moodboard/Editor/MoodboardEditorContext";
+import DivasLogo from "@/components/UI/DivasLogo";
+import ActionButton from "@/components/UI/Buttons/ActionButton";
+import TextButton from "@/components/UI/Buttons/TextButton";
+import ProfileImage from "@/components/UI/Images/ProfileImage";
+import { MoodboardEditorContextProvider, useMoodboardEditorContext } from "@/contexts/Moodboard/Editor/MoodboardEditorContext";
 // -----------------------------------------------------------------------------
 import MoodboardCanvas   from "./Canvas/MoodboardCanvas";
 import MoodboardControls from "./Controls/MoodboardControls";
 // -----------------------------------------------------------------------------
 import styles from "./MoodboardEditor.module.css";
-import DivasLogo from "@/components/UI/DivasLogo";
-import ActionButton from "@/components/UI/Buttons/ActionButton";
-import TextButton from "@/components/UI/Buttons/TextButton";
-import ProfileImage from "@/components/UI/Images/ProfileImage";
 
-// -----------------------------------------------------------------------------
-function MoodboardEditor()
+function _Content()
 {
-  return (
-    <MoodboardEditorContextProvider>
+  const _controller = useMoodboardEditorContext();
+
+  const _HandleOnPublishClick = ()=>{
+
+  }
+
+  return (<>
+    <div className={styles.mainContainer}>
       {/*  */}
       <div className={styles.topBarContainer}>
         <DivasLogo/>
         <div>
-          <ActionButton>Publish</ActionButton>
-          <TextButton>Save Draft</TextButton>
+          <ActionButton onClick={_HandleOnPublishClick}>Publish</ActionButton>
+          <TextButton onClick={_HandleOnSaveDraftClick}>Save Draft</TextButton>
         </div>
         <ProfileImage className={styles.photoContainer}/>
       </div>
@@ -56,6 +61,16 @@ function MoodboardEditor()
           <MoodboardControls className={styles.controlsContainer}></MoodboardControls>
         </div>
       </div>
+    </div>
+  </>);
+}
+
+// -----------------------------------------------------------------------------
+function MoodboardEditor()
+{
+  return (
+    <MoodboardEditorContextProvider>
+      <_Content></_Content>
     </MoodboardEditorContextProvider>
   )
 }
