@@ -1,0 +1,33 @@
+.contentContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background-color: blue;
+}
+
+/* -------------------------------------------------------------------------- */
+.inputContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.inputContainer span {
+}
+
+.inputContainer input {
+  width: 100%;
+}
+
+/* -------------------------------------------------------------------------- */
+.topContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+
+.bottomContainer {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(100px, 1fr));
+}

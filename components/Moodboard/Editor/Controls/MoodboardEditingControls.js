@@ -30,11 +30,11 @@ import { GetBottomCategoriesInfo } from "@/models/Moodboard/UI/CategoryButtonInf
 import { GetTopCategoriesNames } from "@/models/Moodboard/UI/CategoryButtonsNames";
 import { GetTopCategoriesInfo } from "@/models/Moodboard/UI/CategoryButtonInfo";
 // -----------------------------------------------------------------------------
-import ButtonTop    from "./CategoryControls/CategoryButton/CategoryButtonTop";
-import ButtonBottom from "./CategoryControls/CategoryButton/CategoryButtonBottom";
+import ButtonTop    from "./CategoryControls/CategoryButton/CategoryButtonTop.js";
+import ButtonBottom from "./CategoryControls/CategoryButton/CategoryButtonBottom.js";
 import ItemsSelection from "./ItemControls/ItemSelection/ItemSelection.js";
 // -----------------------------------------------------------------------------
-import styles from "./MoodboardControls.module.css";
+import styles from "./MoodboardEditingControls.module.css";
 
 
 // -----------------------------------------------------------------------------
@@ -130,7 +130,7 @@ function _ItemsSelection(currentSelectedCategory, OnSelectedCategoryChanged)
 
 
 // -----------------------------------------------------------------------------
-function MoodboardControls({className})
+function MoodboardEditingControls({className})
 {
   //
   const [currentSelectedCategory, setCurrentSelectedCategory] = useState(null);
@@ -158,4 +158,4 @@ function MoodboardControls({className})
 }
 
 // -----------------------------------------------------------------------------
-export default MoodboardControls;
+export default MoodboardEditingControls;

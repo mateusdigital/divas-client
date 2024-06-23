@@ -19,6 +19,12 @@
 /*  Description :                                                             */
 /*                                                                            */
 /*----------------------------------------------------------------------------*/
+
+/*
+*  Main
+*/
+
+/* -------------------------------------------------------------------------- */
 .mainContainer {
   display: flex;
   flex-direction: column;
@@ -26,6 +32,11 @@
   width: 100%;
 }
 
+/*
+*  Top Bar
+*/
+
+/* -------------------------------------------------------------------------- */
 
 .topBarContainer {
   display: flex;
@@ -33,26 +44,43 @@
   align-items: center;
   justify-content: space-between;
   height: 60px;
+  min-height: 60px;
+  max-height: 60px;
 }
 
 .photoContainer {
   max-width: 2rem;
 }
 
+/*
+*  Editor
+*/
+
+/* -------------------------------------------------------------------------- */
 .editorContainer {
   display: flex;
   flex-grow: 1;
   overflow: hidden;
 }
 
-.contentContainer {
+.editorContentContainer {
   display: flex;
   flex-direction: row;
   width: 100%;
   height: 100%;
 }
 
+/*
+*  Controls
+*/
+
+/* -------------------------------------------------------------------------- */
 .controlsContainer {
-  /* background-color: cadetblue; */
+  background-color: red;
   width: 30%;
+}
+
+.controlsContentContainer {
+  background-color: cadetblue;
+  width: 100%;
 }

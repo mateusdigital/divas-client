@@ -1,3 +1,26 @@
+/*----------------------------------------------------------------------------*/
+/*                               *       +                                    */
+/*                         '                  |                               */
+/*                     ()    .-.,="``"=.    - o -                             */
+/*                           '=/_       \     |                               */
+/*                        *   |  '=._    |                                    */
+/*                             \     `=./`,        '                          */
+/*                          .   '=.__.=' `='      *                           */
+/*                 +                         +                                */
+/*                      O      *        '       .                             */
+/*                                                                            */
+/*  File      : Inputs.module.css                                             */
+/*  Project   : divas-client                                                  */
+/*  Date      : 2024-06-17                                                    */
+/*  License   : See project's COPYING.TXT for full info.                      */
+/*  Author    : mateus.digital <hello@mateus.digital>                         */
+/*  Copyright : mateus.digital - 2024                                         */
+/*                                                                            */
+/*  Description :                                                             */
+/*                                                                            */
+/*----------------------------------------------------------------------------*/
+
+/* -------------------------------------------------------------------------- */
 .mainInput {
   margin: 0.2rem 0rem;
   padding: 0.2rem;
@@ -6,4 +29,23 @@
   border-radius: 8px;
 
   font-size: 1.2rem;
+}
+
+/* -------------------------------------------------------------------------- */
+.mainTextArea {
+  margin: 0.2rem 0rem;
+  padding: 0.2rem;
+  border: none;
+  border-radius: 8px;
+
+  font-size: 1.2rem;
+}
+
+
+/* -------------------------------------------------------------------------- */
+.labeledInputContainer {
+  display: flex;
+  flex-direction: column;
+  margin-top: 0.5rem;
+  font-size: 0.7rem;
 }

@@ -12,10 +12,11 @@ import MoodboardCanvasControls from "./Controls/CanvasControls";
 import styles from "./MoodboardCanvas.module.css";
 import EventType from "./Controls/EventType";
 import NET from "@/app/NET";
+import { FLOW_STATE_EDITING } from "../utils/FlowState";
 
 
 // -----------------------------------------------------------------------------
-function MoodboardCanvas()
+function MoodboardCanvas({flowState})
 {
   const _controller = useMoodboardEditorContext();
 
@@ -28,6 +29,17 @@ function MoodboardCanvas()
   const _fabric_canvas_ref = useRef(null);
 
   const [ selection, setSelection ] = useState(null);
+  const [ editableClassName, setEditableClassName ] = useState("");
+
+  useEffect(()=>{
+    if(flowState != FLOW_STATE_EDITING) {
+      setEditableClassName(styles.canvasContainerLocked);
+      console.log("----------", editableClassName, "----",styles.canvasContainerLocked );
+    }
+    else {
+      setEditableClassName("");
+    }
+  }, [flowState]);
 
   // ---------------------------------------------------------------------------
   useEffect(() => {
@@ -235,9 +247,12 @@ function MoodboardCanvas()
   //
 
   // ---------------------------------------------------------------------------
+  const class_name = `${styles.canvasContainer} ${editableClassName}`;
   return (
-    <div className={styles.canvasContainer}>
-      <div style={{ display: selection ? 'block' : 'none' }}>
+    <div className={class_name}>
+      <div style={{
+          display: (selection && editableClassName.length == 0) ? 'block' : 'none'
+        }}>
         <MoodboardCanvasControls
           onClick={_HandleMoodboardControlsClick}>
         </MoodboardCanvasControls>

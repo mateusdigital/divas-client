@@ -1,3 +1,31 @@
+/*----------------------------------------------------------------------------*/
+/*                               *       +                                    */
+/*                         '                  |                               */
+/*                     ()    .-.,="``"=.    - o -                             */
+/*                           '=/_       \     |                               */
+/*                        *   |  '=._    |                                    */
+/*                             \     `=./`,        '                          */
+/*                          .   '=.__.=' `='      *                           */
+/*                 +                         +                                */
+/*                      O      *        '       .                             */
+/*                                                                            */
+/*  File      : Buttons.module.css                                            */
+/*  Project   : divas-client                                                  */
+/*  Date      : 2024-06-17                                                    */
+/*  License   : See project's COPYING.TXT for full info.                      */
+/*  Author    : mateus.digital <hello@mateus.digital>                         */
+/*  Copyright : mateus.digital - 2024                                         */
+/*                                                                            */
+/*  Description :                                                             */
+/*                                                                            */
+/*----------------------------------------------------------------------------*/
+
+
+/*
+*  Action Button
+*/
+
+/* -------------------------------------------------------------------------- */
 .actionButton {
   padding: 0.2rem 1rem;
   margin: 0.5rem;
@@ -18,9 +46,26 @@
   background-color: #fa7b90;
 }
 
+/*
+*  Text Button
+*/
+
+/* -------------------------------------------------------------------------- */
 .textButton {
   background-color: transparent;
   border: none;
   cursor: pointer;
   text-decoration: underline dotted;
+}
+
+/*
+*  Back Button
+*/
+
+/* -------------------------------------------------------------------------- */
+.backButton {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0.5rem;
 }
