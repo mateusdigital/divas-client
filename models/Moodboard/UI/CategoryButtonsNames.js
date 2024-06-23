@@ -9,9 +9,9 @@
 //                 +                         +                                //
 //                      O      *        '       .                             //
 //                                                                            //
-//  File      : ItemSelection.js                                              //
+//  File      : CategoryButtonsNames.js                                       //
 //  Project   : divas-client                                                  //
-//  Date      : 2024-05-29                                                    //
+//  Date      : 2024-06-22                                                    //
 //  License   : See project's COPYING.TXT for full info.                      //
 //  Author    : mateus.digital <hello@mateus.digital>                         //
 //  Copyright : mateus.digital - 2024                                         //
@@ -21,27 +21,34 @@
 //----------------------------------------------------------------------------//
 
 // -----------------------------------------------------------------------------
-import MaterialIcon from "@/components/MaterialIcon";
-import ActionButton from "@/components/UI/Buttons/ActionButton.js";
-import TextButton from "@/components/UI/Buttons/TextButton.js";
-// -----------------------------------------------------------------------------
-import ItemsGrid from "../ItemsGrid/ItemsGrid.js";
-// -----------------------------------------------------------------------------
-import styles from "./ItemSelection.module.css";
-
-// -----------------------------------------------------------------------------
-function ItemSelection({category, OnSelectedCategoryChanged})
+export function GetTopCategoriesNames()
 {
-  //
-  return (<>
-    <TextButton className={styles.backButton} onClick={()=>{ OnSelectedCategoryChanged(null); }}>
-      <MaterialIcon icon="arrow_back_ios_new"></MaterialIcon>
-      <span>Select new category</span>
-    </TextButton>
-
-    <ItemsGrid category={category}/>
-  </>);
+  return [
+    "Fonts",
+    "Elements",
+    "Backgrounds",
+  ];
 }
 
 // -----------------------------------------------------------------------------
-export default ItemSelection;
+export function GetBottomCategoriesNames()
+{
+  return [
+    "accessories",
+    "bags",
+    "beach",
+    "beauty",
+    "blazers_and_coats",
+    "blousesshirts",
+    "dresses",
+    "jewelry",
+    "monkey",
+    "pants",
+    "shoes",
+    "shorts",
+    "skirts",
+    "suitcases",
+    "sweater",
+    "tshirts",
+  ];
+}

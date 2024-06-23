@@ -9,9 +9,9 @@
 //                 +                         +                                //
 //                      O      *        '       .                             //
 //                                                                            //
-//  File      : MoodboardControlCategories.js                                 //
+//  File      : CategoryButtonInfo.js                                         //
 //  Project   : divas-client                                                  //
-//  Date      : 2024-05-02                                                    //
+//  Date      : 2024-06-22                                                    //
 //  License   : See project's COPYING.TXT for full info.                      //
 //  Author    : mateus.digital <hello@mateus.digital>                         //
 //  Copyright : mateus.digital - 2024                                         //
@@ -20,31 +20,21 @@
 //                                                                            //
 //----------------------------------------------------------------------------//
 
+// @XXX(mateusdigital): Refactor....
 // -----------------------------------------------------------------------------
-import { useRouter } from "next/router";
-import { useEffect, useState, useRef } from "react";
-// -----------------------------------------------------------------------------
-import ButtonTop    from "../CategoryButton/CategoryButtonTop";
-import ButtonBottom from "../CategoryButton/CategoryButtonBottom";
-// -----------------------------------------------------------------------------
-import styles from "./CategoriesSelection.module.css"
+export function GetTopCategoriesInfo()
+{
+  let info = {};
 
+  info["Fonts"]       = {icon: "insert_text", content: "Fonts"      };
+  info["Elements"]    = {icon: "photo_prints", content: "Elements"             };
+  info["Backgrounds"] = {icon: "background_dot_small", content: "Backgrounds"            };
 
-function _CreateControlCategory(index, type, handler) {
-  const info = GetInfoForControlCategory(type);
-  return (
-    <ButtonBottom
-      key={index}
-      icon={info.icon}
-      content={info.content}
-      handler={()=>{ handler(type); }}
-    >
-    </ButtonBottom>
-  )
+  return info;
 }
 
-
-function GetInfoForControlCategory(type)
+// -----------------------------------------------------------------------------
+export function GetBottomCategoriesInfo()
 {
   let info = {};
 
@@ -65,66 +55,5 @@ function GetInfoForControlCategory(type)
   info["sweater"]           = {icon: "insert_text", content: "sweater"          };
   info["tshirts"]           = {icon: "insert_text", content: "tshirts"          };
 
-  return info[type];
+  return info;
 }
-
-// @TODO(mateusdigital): Make this something got from the database...
-function GetBottomCategoriesTypes()
-{
-    return [
-      "accessories",
-      "bags",
-      "beach",
-      "beauty",
-      "blazers_and_coats",
-      "blousesshirts",
-      "dresses",
-      "jewelry",
-      "monkey",
-      "pants",
-      "shoes",
-      "shorts",
-      "skirts",
-      "suitcases",
-      "sweater",
-      "tshirts",
-    ];
-}
-
-
-// -----------------------------------------------------------------------------
-function Component({OnSelectedCategoryChanged})
-{
-  const _OnFontsClicked = ()=>{
-  }
-  const _OnElementsClicked = ()=>{
-  }
-  const _OnBackgroundsClicked = ()=>{
-  }
-
-  //
-  const bottom_categories_types = GetBottomCategoriesTypes();
-  return (<>
-    {/* TOP CATEGORIES MODES */}
-    <div className={styles.topCategoriesContainer}>
-      <ButtonTop icon="insert_text"          content="Fonts"       handler={_OnFontsClicked}> </ButtonTop>
-      <ButtonTop icon="photo_prints"         content="Elements"    handler={_OnElementsClicked}> </ButtonTop>
-      <ButtonTop icon="background_dot_small" content="Backgrounds" handler={_OnBackgroundsClicked}> </ButtonTop>
-    </div>
-    {/* -TOP CATEGORIES MODES */}
-
-    {/* DEFAULT CATEGORIES */}
-    <div>
-      <span>Categories</span>
-      <div className={styles.bottomCategoriesContainer}>
-        {bottom_categories_types.map((type, index) => {
-          return _CreateControlCategory(index, type, OnSelectedCategoryChanged);
-        })}
-      </div>
-    </div>
-    {/* DEFAULT CATEGORIES */}
-  </>)
-}
-
-// -----------------------------------------------------------------------------
-export default Component;

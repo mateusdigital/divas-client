@@ -29,23 +29,17 @@ import MaterialIcon from "@/components/MaterialIcon";
 import style from "./CategoryButton.module.css";
 
 // -----------------------------------------------------------------------------
-function Component({icon, content, handler})
+function CategoryButtonTop({icon, content, handler})
 {
   return (
-    <button>
-      <div className={style.categoryContainer} onClick={handler}>
-        <MaterialIcon
-          icon={icon}
-          className={style.categoryIcon}>
-        </MaterialIcon>
-
-        <span className={style.categoryTextContent}>
-          {content}
-        </span>
-      </div>
-    </button>
+    <div className={style.categoryContainer} onClick={handler}>
+      <MaterialIcon icon={icon} className={style.categoryIcon}/>
+      <span className={style.categoryTextContent}>
+        {content}
+      </span>
+    </div>
   )
 }
 
 // -----------------------------------------------------------------------------
-export default Component;
+export default CategoryButtonTop;

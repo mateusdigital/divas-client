@@ -1,7 +1,19 @@
+.contentContainer {
+  /* background-color: blueviolet; */
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
 .editorContainer {
   display: flex;
   width: 100vw;
   height: 100vh;
 
-  overflow: hidden; /* Prevents scrollbars from appearing */
+  overflow: hidden; /* Prevents scrollbar from appearing */
+}
+
+.controlsContainer {
+  /* background-color: cadetblue; */
+  width: 30%;
 }

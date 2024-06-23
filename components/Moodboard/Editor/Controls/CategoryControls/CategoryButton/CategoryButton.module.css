@@ -22,18 +22,19 @@
 
 /* -------------------------------------------------------------------------- */
 .categoryContainer {
-  background-color: blue;
+  /* background-color: blue; */
   display: flex;
   flex-direction: column;
   align-items: center;
   cursor: pointer;
 }
+
 .categoryContainer:hover {
-  background-color: green;
+  /* background-color: green; */
 }
 
 .categoryContainer:active {
-  background-color: red;
+  /* background-color: red; */
 }
 
 .categoryIcon {
@@ -41,6 +42,6 @@
 }
 
 .categoryIcon span {
-  background-color: aqua;
+  /* background-color: aqua; */
   font-size: 3rem  !important;
 }

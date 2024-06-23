@@ -1,16 +1,20 @@
 
 // -----------------------------------------------------------------------------
-import App from "@/models/App";
+import UserLogged from "@/components/Logic/UserLogged";
+import PageUrls from "@/utils/PageUrls";
+// -----------------------------------------------------------------------------
 import MoodboardEditor from "@/components/Moodboard/Editor/MoodboardEditor";
 
 
 // -----------------------------------------------------------------------------
-function MoodboardCreate()
+function Component()
 {
-  return (
-    <MoodboardEditor></MoodboardEditor>
-  )
+  return (<>
+    <UserLogged requiresLoggedUser={true} redirectTo={PageUrls.UserLogin}>
+      <MoodboardEditor></MoodboardEditor>
+    </UserLogged>
+  </>);
 }
 
 // -----------------------------------------------------------------------------
-export default MoodboardCreate;
+export default Component;

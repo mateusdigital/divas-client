@@ -22,23 +22,27 @@
 
 // -----------------------------------------------------------------------------
 import App from "@/models/App";
+// -----------------------------------------------------------------------------
+import { MoodboardEditorContextProvider } from "@/contexts/Moodboard/Editor/MoodboardEditorContext";
+// -----------------------------------------------------------------------------
 import MoodboardCanvas   from "./Canvas/MoodboardCanvas";
 import MoodboardControls from "./Controls/MoodboardControls";
 // -----------------------------------------------------------------------------
 import styles from "./MoodboardEditor.module.css";
-import { MoodboardEditorContextProvider } from "@/contexts/Moodboard/Editor/MoodboardEditorContext";
 
 
 // -----------------------------------------------------------------------------
 function MoodboardEditor()
 {
   return (
-    <div className={styles.editorContainer}>
-      <MoodboardEditorContextProvider>
-        <MoodboardCanvas></MoodboardCanvas>
-        <MoodboardControls></MoodboardControls>
-      </MoodboardEditorContextProvider>
-    </div>
+    <MoodboardEditorContextProvider>
+      <div className={styles.editorContainer}>
+        <div className={styles.contentContainer}>
+          <MoodboardCanvas className={styles.canvasContainer}></MoodboardCanvas>
+          <MoodboardControls className={styles.controlsContainer}></MoodboardControls>
+        </div>
+      </div>
+    </MoodboardEditorContextProvider>
   )
 }
 
