@@ -24,7 +24,7 @@
 import { useState } from "react";
 // -----------------------------------------------------------------------------
 import NET from "@/app/NET";
-import CachedImage from "@/components/UI/CachedImage/CachedImage"
+import CachedImage from "@/components/UI/Images/CachedImage"
 // -----------------------------------------------------------------------------
 import styles from "./Item.module.css";
 

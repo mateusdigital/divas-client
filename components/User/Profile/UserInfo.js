@@ -21,9 +21,7 @@
 //---------------------------------------------------------------------------~//
 
 // -----------------------------------------------------------------------------
-import NET from "@/app/NET";
-import CachedImage from "@/components/UI/CachedImage/CachedImage";
-
+import ProfileImage from "@/components/UI/Images/ProfileImage";
 // -----------------------------------------------------------------------------
 import styles from "./UserInfo.module.css";
 
@@ -34,11 +32,7 @@ function UserInfo({ userModel })
     <div className={styles.contentContainer}>
       {/* Photo */}
       <div className={styles.photoContainer}>
-        <CachedImage
-          className={styles.profilePhoto}
-          imageUrl={
-            NET.Make_Local_Image_Url(userModel.profilePhotoUrl)
-          }/>
+        <ProfileImage/>
       </div>
 
       <div className={styles.infoContainer}>

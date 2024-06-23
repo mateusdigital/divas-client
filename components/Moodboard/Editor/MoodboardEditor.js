@@ -29,13 +29,27 @@ import MoodboardCanvas   from "./Canvas/MoodboardCanvas";
 import MoodboardControls from "./Controls/MoodboardControls";
 // -----------------------------------------------------------------------------
 import styles from "./MoodboardEditor.module.css";
-
+import DivasLogo from "@/components/UI/DivasLogo";
+import ActionButton from "@/components/UI/Buttons/ActionButton";
+import TextButton from "@/components/UI/Buttons/TextButton";
+import ProfileImage from "@/components/UI/Images/ProfileImage";
 
 // -----------------------------------------------------------------------------
 function MoodboardEditor()
 {
   return (
     <MoodboardEditorContextProvider>
+      {/*  */}
+      <div className={styles.topBarContainer}>
+        <DivasLogo/>
+        <div>
+          <ActionButton>Publish</ActionButton>
+          <TextButton>Save Draft</TextButton>
+        </div>
+        <ProfileImage className={styles.photoContainer}/>
+      </div>
+
+      {/*  */}
       <div className={styles.editorContainer}>
         <div className={styles.contentContainer}>
           <MoodboardCanvas className={styles.canvasContainer}></MoodboardCanvas>

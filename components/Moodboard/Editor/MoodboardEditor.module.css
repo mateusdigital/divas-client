@@ -5,6 +5,18 @@
   width: 100%;
 }
 
+.topBarContainer {
+  display: flex;
+  flex-direction: row;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.photoContainer {
+  max-width: 60px;
+}
+
 .editorContainer {
   display: flex;
   width: 100vw;

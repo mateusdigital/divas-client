@@ -1,0 +1,13 @@
+/* -------------------------------------------------------------------------- */
+.photoContainer {
+  display: flex;
+  flex-direction: row;
+  max-width: 200px;
+}
+
+.photoContainerImg {
+  height: 100%;
+  width:  100%;
+  border-radius: 50%;
+  aspect-ratio: 1/1;
+}

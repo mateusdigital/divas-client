@@ -32,20 +32,6 @@
 }
 
 /* -------------------------------------------------------------------------- */
-.photoContainer {
-  display: flex;
-  flex-direction: row;
-  max-width: 200px;
-}
-
-.photoContainer img {
-  height: 100%;
-  width:  100%;
-  border-radius: 50%;
-  aspect-ratio: 1/1;
-}
-
-/* -------------------------------------------------------------------------- */
 .infoContainer {
   display: flex;
   flex-direction: column;
