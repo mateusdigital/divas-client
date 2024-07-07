@@ -26,6 +26,8 @@
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
+
+  border: var(--layout-border-color) var(--layout-border-size) var(--layout-border-style);
 }
 
 /* -------------------------------------------------------------------------- */

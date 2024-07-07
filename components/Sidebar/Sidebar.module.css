@@ -23,13 +23,31 @@
 
 /* -------------------------------------------------------------------------- */
 .contentContainer {
-  max-width: 21rem;
-  min-width: fit-content;
-  background-color: gold;
+  /* max-width: 21rem; */
+  /* min-width: fit-content; */
+  /* background-color: gold; */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
 
+
+  padding: 2rem;
+  padding-right: 3.5rem;
+  width: max-content;
 
   --text-size: 1.2rem;
-  --icon-size: 1.5rem;
+  --icon-size: 2.5rem;
+  --icon-gap: 0.7rem;
+
+  --logo-padding-left: calc(var(--icon-size) + var(--icon-gap));
+  border: var(--layout-border-color) var(--layout-border-size) var(--layout-border-style);
+}
+
+.sideBarLogo {
+  display: block;
+  width: 8rem;
+  /* padding-left: var(--logo-padding-left); */
+
 }
 
 /* -------------------------------------------------------------------------- */
@@ -46,13 +64,16 @@
 .sideBarItemContainer {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: var(--icon-gap);
 
   font-size: var(--text-size);
 
   /* background-color: blue; */
 
   color: black;
+  text-decoration: none;
+}
+.sideBarItemContainer:hover {
   text-decoration: none;
 }
 
@@ -71,5 +92,16 @@
 
   border-radius: 50%;
 
-  margin-left: 0.25rem;
+  border: var(--button-secondary-color) 3px solid;
+}
+
+/* -------------------------------------------------------------------------- */
+.sideBarItemTitle:hover {
+  text-decoration: underline solid;
+}
+
+/* -------------------------------------------------------------------------- */
+.sideBarActive {
+  color: var(--button-secondary-color);
+  font-weight: bolder;
 }

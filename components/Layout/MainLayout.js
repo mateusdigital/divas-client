@@ -29,12 +29,14 @@ import styles from "./MainLayout.module.css";
 
 
 // -----------------------------------------------------------------------------
-function MainLayout({ children }) {
+function MainLayout({ children, pageName}) {
   return (
-    <div className={styles.layoutContainer}>
-      <Sidebar/>
-      <div className={styles.contentContainer}>
-        {children}
+    <div className={styles.mainContainer}>
+      <div className={styles.layoutContainer}>
+        <Sidebar pageName={pageName}/>
+        <div className={styles.contentContainer}>
+          {children}
+        </div>
       </div>
     </div>
   );

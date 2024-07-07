@@ -24,13 +24,15 @@
 // -----------------------------------------------------------------------------
 import { useEffect, useState } from "react";
 // -----------------------------------------------------------------------------
-import CATEGORIES_BAR_NAMES from "@/models/CategoriesBarNames";
-// -----------------------------------------------------------------------------
 import styles from "./CategoriesBar.module.css";
 
 
 // -----------------------------------------------------------------------------
-function CategoriesBar({currentSelectedCategory, OnCategoryClickCallback})
+function CategoriesBar({
+  currentSelectedCategory,
+  categoriesNames,
+  onCategoryClickCallback,
+})
 {
   //
   const [selectedCategory, setSelectedCategory] = useState(currentSelectedCategory);
@@ -38,13 +40,13 @@ function CategoriesBar({currentSelectedCategory, OnCategoryClickCallback})
   //
   const _HandleCategoryClick = (category) => {
     setSelectedCategory(category);
-    OnCategoryClickCallback(category);
+    onCategoryClickCallback(category);
   };
 
   //
   return (
     <div className={styles.contentContainer}>
-      {CATEGORIES_BAR_NAMES.map((category, index) => (
+      {categoriesNames.map((category, index) => (
         <div
           key={index}
           className={styles.itemContainer}

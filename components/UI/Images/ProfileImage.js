@@ -18,15 +18,11 @@ function ProfileImage({userModel, className})
   }
 
   const class_name = className || styles.photoContainer;
-
+  const image_url = NET.Make_Local_Image_Url(userModel.profilePhotoUrl)
   //
   return (<>
     <div className={class_name}>
-      <CachedImage
-        className={styles.photoContainerImg}
-        imageUrl={
-          NET.Make_Local_Image_Url(userModel.profilePhotoUrl)
-        }/>
+      <CachedImage className={styles.photoContainerImg} imageUrl={image_url} />
     </div>
   </>);
 };

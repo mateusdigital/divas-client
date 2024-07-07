@@ -29,7 +29,7 @@ import UserLogged, { useLoggedUserContext } from "@/components/Logic/UserLogged"
 
 
 // -----------------------------------------------------------------------------
-function Content()
+function _Content()
 {
   const loggedUser = useLoggedUserContext();
   if(!loggedUser) {
@@ -37,7 +37,7 @@ function Content()
   }
 
   return (<>
-    <MainLayout>
+    <MainLayout pageName={PageUrls.UserOwnProfile}>
       <UserProfile userModel={loggedUser}/>
     </MainLayout>
   </>);
@@ -48,7 +48,7 @@ function ProfilePage()
 {
   return (
     <UserLogged requiresLoggedUser={true} redirectTo={PageUrls.UserLogin}>
-      <Content/>
+      <_Content/>
     </UserLogged>
   );
 }

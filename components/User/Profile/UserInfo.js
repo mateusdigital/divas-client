@@ -32,7 +32,7 @@ function UserInfo({ userModel })
     <div className={styles.contentContainer}>
       {/* Photo */}
       <div className={styles.photoContainer}>
-        <ProfileImage/>
+        <ProfileImage className={styles.profilePhoto}/>
       </div>
 
       <div className={styles.infoContainer}>

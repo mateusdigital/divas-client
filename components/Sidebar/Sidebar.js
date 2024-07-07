@@ -20,7 +20,8 @@
 //                                                                            //
 //---------------------------------------------------------------------------~//
 
-
+// -----------------------------------------------------------------------------
+import { useState } from "react";
 // -----------------------------------------------------------------------------
 import Link from "next/link";
 // -----------------------------------------------------------------------------
@@ -41,8 +42,13 @@ function _SidebarLink({href, children})
   if(!href){
     debugger;
   }
+
+  const active = (_PageName == href) ? styles.sideBarActive : "";
+  const class_name = `${styles.sideBarItemContainer} ${active}`;
+
   return (
-    <Link href={href} className={styles.sideBarItemContainer}>
+    <Link href={href}
+      className={class_name}>
       {children}
     </Link>
   );
@@ -63,22 +69,26 @@ function _SidebarItem({icon, children})
     </MaterialIcon>
   )
 }
+let _PageName = null;
 
 // -----------------------------------------------------------------------------
-function Content()
+function _Content({pageName})
 {
   const material_symbol_style = "material-symbols-outlined";
   const loggedUser = useLoggedUserContext();
+  const [ currentPageName, setCurrentPageName ] = useState(pageName);
 
   if(!loggedUser) {
     return null;
   }
 
+  _PageName = currentPageName;
+
   //
   return (
     <div className={styles.contentContainer}>
       {/* Logo */}
-      <DivasLogo/>
+      <DivasLogo className={styles.sideBarLogo}/>
 
       {/* Items */}
       <div className={styles.sideBarItemsContainer}>
@@ -134,11 +144,11 @@ function Content()
   );
 }
 // -----------------------------------------------------------------------------
-function Sidebar()
+function Sidebar({pageName})
 {
   return (
     <UserLogged requiresLoggedUser={true} redirectTo={PageUrls.UserLogin}>
-      <Content/>
+      <_Content pageName={pageName}/>
     </UserLogged>
   );
 }

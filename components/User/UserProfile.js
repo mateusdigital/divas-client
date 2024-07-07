@@ -5,9 +5,40 @@ import { useState, Suspense, useEffect } from "react";
 import UserInfo      from "@/components/User/Profile/UserInfo";
 import CategoriesBar from "@/components/User/Profile/CategoriesBar";
 // -----------------------------------------------------------------------------
-import CATEGORIES_BAR_NAMES from "@/models/CategoriesBarNames";
-import GetComponentForCategoryName from "@/models/CategoriesBarFactory";
+import MoodboardGrid from "../Moodboard/Grid/MoodboardGrid";
+import LikesGrid from "../Likes/Grid/LikesGrid";
 
+
+//
+// Helpers
+//
+
+// -----------------------------------------------------------------------------
+const _CATEGORIES_BAR_NAMES = [
+  "Moodboards",
+  "Likes",
+  "Collections",
+  "Uploads",
+];
+
+// -----------------------------------------------------------------------------
+function _GetComponentForCategoryName(name, userModel)
+{
+  switch (name) {
+    case "Moodboards":  return <MoodboardGrid userModel={userModel}></MoodboardGrid>;
+    case "Likes":       return <LikesGrid     userModel={userModel}></LikesGrid>;
+    case "Collections": return <div></div>;
+    case "Uploads":     return <div></div>;
+
+    default:
+      return null;
+  }
+}
+
+
+//
+// Component
+//
 
 // -----------------------------------------------------------------------------
 function UserProfile({userModel})
@@ -20,13 +51,13 @@ function UserProfile({userModel})
   const _HandleCategorySelection = (categoryName) => {
     setSelectedCategory(categoryName);
 
-    const category_component = GetComponentForCategoryName(categoryName, userModel);
+    const category_component = _GetComponentForCategoryName(categoryName, userModel);
     setCategoryComponent(category_component);
   };
 
   useEffect(()=>{
     if(userModel && !categoryComponent) {
-      _HandleCategorySelection(CATEGORIES_BAR_NAMES[0]);
+      _HandleCategorySelection(_CATEGORIES_BAR_NAMES[0]);
     }
   }, [userModel])
 
@@ -41,7 +72,9 @@ function UserProfile({userModel})
 
     <CategoriesBar
       currentSelectedCategory={selectedCategory}
-      OnCategoryClickCallback={_HandleCategorySelection}/>
+      categoriesNames={_CATEGORIES_BAR_NAMES}
+      onCategoryClickCallback={_HandleCategorySelection}
+    />
 
     <Suspense fallback={<div>Loading...</div>}>
       {categoryComponent}

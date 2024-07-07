@@ -2,7 +2,12 @@
 :root {
   --button-primary-color:  #bee2d1;
   --button-primary-color-hover:  #81a896;
-  --button-secondary-color: #fa7b90
+  --button-secondary-color: #fa7b90;
+
+
+  --layout-border-color: #c795b2;
+  --layout-border-size: 1px;
+  --layout-border-style: solid;
 }
 body {
 
@@ -33,17 +38,29 @@ a {
   text-decoration: underline dotted;
 }
 a:hover {
-    text-decoration: underline solid;
+  text-decoration: underline solid;
 }
 
+/*
+*
+*/
+
+/* -------------------------------------------------------------------------- */
 .margin-top-2 {
   margin-top: 2rem;
 }
+
 .flex-grow {
   flex:1;
   width: 100%;
 }
 
+
+/*
+*
+*/
+
+/* -------------------------------------------------------------------------- */
 input[type=file]::file-selector-button {
   margin: 0.5rem;
   margin-right: 1.5rem;
