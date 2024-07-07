@@ -22,14 +22,14 @@
 
 // -----------------------------------------------------------------------------
 import { useEffect, useState } from 'react';
-//
-import NET from '@/app/NET';
-import ToastUtils from '@/utils/Toast';
-//
-import MoodboardGridItem from './MoodboardGridItem';
-//
-import styles from "./MoodboardGrid.module.css";
+// -----------------------------------------------------------------------------
 import App from '@/models/App';
+import ToastUtils from '@/utils/Toast';
+// -----------------------------------------------------------------------------
+import EmptyGridPlaceholder from "@/components/ui/Grid/EmptyGridPlaceholder.js";
+import MoodboardGridItem from './MoodboardGridItem';
+// -----------------------------------------------------------------------------
+import styles from "./MoodboardGrid.module.css";
 
 
 // -----------------------------------------------------------------------------
@@ -61,10 +61,17 @@ function MoodboardGrid({ userModel })
   return (
     <div className={styles.moodboardGridContainer}>
       <div className={styles.moodboardGrid}>
-        {moodboards.map((moodboard) => (
-          <MoodboardGridItem key={moodboard._id} moodboardModel={moodboard} />
-        ))}
+        { moodboards.length != 0 &&
+          moodboards.map((moodboard) => (
+            <MoodboardGridItem key={moodboard._id} moodboardModel={moodboard} />
+          ))
+        }
       </div>
+
+        {
+          moodboards.length == 0 &&
+            <EmptyGridPlaceholder/>
+        }
     </div>
   );
 }

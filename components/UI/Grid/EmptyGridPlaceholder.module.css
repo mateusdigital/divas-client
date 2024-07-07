@@ -1,0 +1,14 @@
+.contentContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 4rem;
+}
+
+.icon {
+  font-size: 5rem;
+  opacity: 0.5;
+}
+.text {
+  opacity: 0.5;
+}

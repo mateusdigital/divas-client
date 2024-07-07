@@ -22,48 +22,55 @@
 
 // -----------------------------------------------------------------------------
 import { useEffect, useState } from 'react';
-//
-import NET from '@/app/NET';
-//
+// -----------------------------------------------------------------------------
+import App from '@/models/App';
+// -----------------------------------------------------------------------------
+import EmptyGridPlaceholder from "@/components/UI/Grid/EmptyGridPlaceholder.js";
 import DesignGridItem from "@/components/Moodboard/Grid/MoodboardGrid";
-//
+// -----------------------------------------------------------------------------
 import styles from "./LikesGrid.module.css";
 
 
 // -----------------------------------------------------------------------------
-function LikesGrid({ user })
+function LikesGrid({ userModel })
 {
   const [likeItems, setLikeItems] = useState([]);
 
   //
   useEffect(() => {
-    const fetchLikes = async () => {
+    const _FetchLikes = async () => {
       try {
-        const api_url  = NET.Make_API_Url("like", user._id);
-        const response = await NET.GET(api_url);
-
-        if (!response.ok) {
-          throw new Error("Failed to fetch likes");
+        if(userModel.likes.length == 0) {
+          return;
         }
 
-        const likes_data = await response.json();
-        setLikeItems(likes_data);
-      } catch (error) {
-        console.error("Error fetching design items:", error);
+        const result = await App.GetMultipleMoodboardWithIds(userModel.moodboards);
+        if(result.IsError()) {
+          ToastUtils.ResultError(result);
+          return;
+        }
+      }
+      catch(ex) {
+
       }
     };
 
-    fetchLikes();
+    _FetchLikes();
   }, []);
 
   //
   return (
     <div className={styles.designsGridContainer}>
       <div className={styles.designsGrid}>
-        {likeItems.map((likeItem) => (
-          <DesignGridItem key={likeItem._id} moodboard={likeItem} />
-        ))}
+        { likeItems.length != 0 &&
+          likeItems.map((likeItem) => (
+            <DesignGridItem key={likeItem._id} moodboard={likeItem} />
+          ))
+        }
       </div>
+      { likeItems.length == 0 &&
+          <EmptyGridPlaceholder/>
+      }
     </div>
   );
 }
