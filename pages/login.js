@@ -29,7 +29,8 @@ import PageUrls from "@/utils/PageUrls";
 import UserLogged from "@/components/Logic/UserLogged";
 // -----------------------------------------------------------------------------
 import MaterialIcon from "@/components/MaterialIcon";
-import LoginUser from "@/components/User/Login/LoginUser";
+import Panel from "@/components/UI/Containers/Panel";
+import LoginUserForm from "@/components/User/Login/LoginUserForm";
 // -----------------------------------------------------------------------------
 import styles from "./styles/LoginPage.module.css";
 
@@ -44,16 +45,16 @@ function LoginPage()
       <div className={styles.mainContainer}>
         <div className={styles.contentContainer}>
           {/*  */}
-          <div className={styles.loginContainer}>
+          <div className={styles.topContainer}>
             {/*  */}
             <div className={styles.artContainer}>
               <img src="https://placehold.co/600x400"></img>
             </div>
 
             {/*  */}
-            <div className={styles.loginUserContainer}>
-              <LoginUser/>
-            </div>
+            <Panel>
+              <LoginUserForm/>
+            </Panel>
           </div>
 
           {/*  */}
@@ -68,9 +69,8 @@ function LoginPage()
             </div>
 
             <div className={styles.socialContainer}>
-              <MaterialIcon icon="favorite"> </MaterialIcon>
-              <MaterialIcon icon="favorite"> </MaterialIcon>
-              <MaterialIcon icon="favorite"> </MaterialIcon>
+              <Link href=""><img src="/img/icons8-facebook-50.png"/></Link>
+              <Link href=""><img src="/img/icons8-instagram-50.png"/></Link>
             </div>
           </div>
         </div>

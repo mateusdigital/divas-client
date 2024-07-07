@@ -33,11 +33,13 @@ import styles from "./MoodboardGridItem.module.css";
 // -----------------------------------------------------------------------------
 function MoodboardGridItem({moodboardModel})
 {
-  const moodboard_details_url = NET.Make_Navigation_Url("moodboard", moodboardModel._id);
+  const details_url = NET.Make_Navigation_Url("moodboard", moodboardModel._id);
+  const photo_url   = NET.Make_Local_Image_Url(moodboardModel.photoUrl);
+
   return (
     <div>
-      <Link href={moodboard_details_url}>
-        <img src={moodboardModel.imageUrl}></img>
+      <Link href={details_url}>
+        <img src={photo_url}></img>
       </Link>
     </div>
   );

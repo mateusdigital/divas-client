@@ -10,7 +10,7 @@ function LabeledInput({className, type, value, onChange, children})
   //
   return (<>
     <div className={class_name}>
-      <span>{children}</span>
+      <span className={styles.inputLabel}>{children}</span>
       <Input type={type} value={value} onChange={onChange}></Input>
     </div>
   </>);

@@ -3,7 +3,7 @@ class PageUrls
   static UserOwnProfile     = "/profile";
   static UserLogin          = "/login";
   static UserForgotPassword = "/users/forgot-password";
-  static UserSignUp         = "/users/create";
+  static UserSignUp         = "/users/sign-up";
 
   static UserMessages       = "/users/messages";
 

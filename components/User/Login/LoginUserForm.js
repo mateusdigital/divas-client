@@ -31,13 +31,13 @@ import PageUrls from "@/utils/PageUrls";
 import DivasLogo from "@/components/UI/DivasLogo";
 import ActionButton from "@/components/UI/Buttons/ActionButton";
 import TextButton from "@/components/UI/Buttons/TextButton";
-import Input from "@/components/UI/Inputs/Input";
+import LabeledInput from "@/components/UI/Inputs/LabeledInput";
 // -----------------------------------------------------------------------------
-import styles from "@/components/User/styles/LoginSignup.module.css";
+import styles from "./Forms.module.css";
 
 
 // -----------------------------------------------------------------------------
-function LoginUser()
+function LoginUserForm()
 {
   //
   const [username, setUsername] = useState("");
@@ -87,31 +87,39 @@ function LoginUser()
     <div className={styles.loginContainer} >
       {/*  */}
       <div>
-          <DivasLogo></DivasLogo>
+          <DivasLogo className={styles.divasLogo}></DivasLogo>
       </div>
 
       {/*  */}
       <div>
         <div className={styles.inputContainer}>
-          <span>Username</span>
-          <Input type="text" value={username} onChange={_HandleUsernameChange}></Input>
+          <LabeledInput
+            type="text"
+            value={username}
+            onChange={_HandleUsernameChange}>
+            Username
+          </LabeledInput>
         </div>
 
         <div className={styles.inputContainer}>
-          <span>Password</span>
-          <Input type="password" value={password} onChange={_HandlePasswordChange}></Input>
+          <LabeledInput
+            type="password"
+            value={password}
+            onChange={_HandlePasswordChange}>
+            Password
+          </LabeledInput>
         </div>
       </div>
 
       {/*  */}
       <div className={styles.buttonsContainer}>
         <div>
-          <ActionButton onClick={_HandleLogin}>login</ActionButton>
-          <TextButton onClick={_HandleForgotPassword}>forgot password?</TextButton>
+          <ActionButton className="" onClick={_HandleLogin}>login</ActionButton>
+          <TextButton className="flex-grow" onClick={_HandleForgotPassword}>forgot password?</TextButton>
         </div>
         or
         <div>
-          <ActionButton onClick={_HandleSignUp}>sign up</ActionButton>
+          <ActionButton className="flex-grow" onClick={_HandleSignUp}>sign up</ActionButton>
         </div>
       </div>
     </div>
@@ -119,4 +127,4 @@ function LoginUser()
 }
 
 // -----------------------------------------------------------------------------
-export default LoginUser;
+export default LoginUserForm;

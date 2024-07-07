@@ -22,7 +22,6 @@
 
 // -----------------------------------------------------------------------------
 import { StatusCodes } from "http-status-codes";
-import Cookies from "js-cookie";
 // -----------------------------------------------------------------------------
 import NET from "@/app/NET";
 // -----------------------------------------------------------------------------
@@ -90,7 +89,7 @@ class App
     App._currentLoggedUser = user_model;
 
     if(setLoginCookie) {
-      Cookies.set("loggedUser", JSON.stringify(data), { expires: 7 });
+      user_model.SaveData();
     }
 
     return Result.Valid(App._currentLoggedUser);
@@ -100,12 +99,12 @@ class App
   static async GetCurrentLoggedUser()
   {
     if(App._currentLoggedUser == null) {
-      const cookie_user = Cookies.get("loggedUser");
+      const cookie_user = User.LoadData();
       if(!cookie_user) {
         return Result.LogicError("No logged user");
       }
 
-      App.SetCurrentLoggedUser(JSON.parse(cookie_user), false);
+      App.SetCurrentLoggedUser(cookie_user, false);
     }
 
     return Result.Valid(App._currentLoggedUser);
@@ -200,7 +199,7 @@ class App
       }
 
       const response_data  = await response.json();
-      data.profilePhotoUrl = response_data.profilePhotoPath;
+      data.profilePhotoUrl = response_data.photoPath;
     }
 
     //
@@ -228,7 +227,7 @@ class App
   {
     Assert.NotNullOrEmpty(idList);
 
-    const api_url = NET.Make_API_Url(Endpoints.Moodboard.GetMultiple, id);
+    const api_url = NET.Make_API_Url(Endpoints.Moodboard.GetMultiple, idList);
 
     const response = await NET.POST_JSON(api_url, { ids: idList });
     if(response.status != StatusCodes.OK) {
@@ -258,6 +257,55 @@ class App
     return data;
   }
 
+  // ---------------------------------------------------------------------------
+  static async PublishMoodboardItem(infoData, itemsData, photo)
+  {
+    const result = await App.GetCurrentLoggedUser();
+    if(!result.IsValid()) {
+      return result;
+    }
+
+    const user_data = result.value;
+    const full_save_data = {
+      info: infoData,
+      items: itemsData,
+      user: {
+        _id: user_data._id
+      }
+    }
+
+    //
+    {
+      const form_data = new FormData();
+      form_data.append("photo", photo, "photo-blob.png");
+
+      const api_url  = NET.Make_API_Url(Endpoints.Moodboard.UploadMoodboardPhoto);
+      const response = await NET.POST_DATA(api_url, form_data);
+
+      if(response.status != StatusCodes.CREATED) {
+        return await Result.ResponseError(response);
+      }
+
+      const response_data  = await response.json();
+      full_save_data.photoUrl = response_data.photoPath;
+    }
+
+    //
+    {
+      const api_url  = NET.Make_API_Url(Endpoints.Moodboard.Create);
+      const response = await NET.POST_JSON(api_url, full_save_data);
+
+      if(response.status != StatusCodes.CREATED) {
+        return await Result.ResponseError(response);
+      }
+
+      const json = await response.json();
+      user_data.moodboards.push(json);
+      user_data.SaveData();
+
+      return Result.Valid(json);
+    }
+  }
 
   //
   // Moodboard Items

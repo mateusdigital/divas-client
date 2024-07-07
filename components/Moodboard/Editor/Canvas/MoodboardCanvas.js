@@ -13,7 +13,7 @@ import styles from "./MoodboardCanvas.module.css";
 import EventType from "./Controls/EventType";
 import NET from "@/app/NET";
 import { FLOW_STATE_EDITING } from "../utils/FlowState";
-
+import Utils from "@/libs/mdjs/mdjs/Utils";
 
 // -----------------------------------------------------------------------------
 function MoodboardCanvas({flowState})
@@ -54,7 +54,7 @@ function MoodboardCanvas({flowState})
     });
 
     _fabric_canvas_ref.current = fabric_canvas;
-    // fabric_canvas.backgroundColor = "red";
+    _controller.SetCanvas(fabric_canvas);
 
     // Event Listeners...
     fabric_canvas.on("drop",              _HandleDrop);
@@ -91,7 +91,9 @@ function MoodboardCanvas({flowState})
     const cached_img = App.GetCachedImageForUrl(img_url);
 
     // Add image to fabric.
-    fabric.Image.fromURL(cached_img.src, (fabric_img)=>{
+    // fabric.Image.fromURL(cached_img.src, (fabric_img)=>{
+    const fabric_img = new fabric.Image(cached_img);
+    {
       const rect    = e.target.getBoundingClientRect();
       const mouse_x = e.clientX;
       const mouse_y = e.clientY;
@@ -128,8 +130,8 @@ function MoodboardCanvas({flowState})
         mtr: true, // middle top rotation enabled
       });
 
-      _controller.AddItem(fabric_canvas, fabric_img, item_model);
-    });
+      _controller.AddItem(fabric_img, item_model);
+    };
   }
 
 
@@ -178,11 +180,11 @@ function MoodboardCanvas({flowState})
     for(let item of selection.selected) {
       switch (eventType) {
         case EventType.Delete: {
-          _controller.DeleteItem(fabric_canvas, item);
+          _controller.DeleteItem(item);
         } break;
 
         case EventType.Duplicate: {
-          _controller.DuplicateItem(fabric_canvas, item);
+          _controller.DuplicateItem(item);
         } break;
 
         case EventType.Flip_Horizontal: {

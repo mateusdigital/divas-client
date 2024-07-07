@@ -19,6 +19,8 @@
 //  Description :                                                             //
 //                                                                            //
 //----------------------------------------------------------------------------//
+import Cookies from "js-cookie";
+
 
 // -----------------------------------------------------------------------------
 class User
@@ -31,6 +33,7 @@ class User
 
   // ---------------------------------------------------------------------------
   constructor({
+    _id,
     fullname,
     description,
     profilePhotoUrl,
@@ -43,6 +46,8 @@ class User
    })
   {
     // Info
+    this._id             = _id;
+
     this.fullname        = fullname;
     this.description     = description;
 
@@ -61,6 +66,20 @@ class User
 
     // Moodboard
     this.moodboards = moodboards;
+  }
+
+  SaveData()
+  {
+    Cookies.set("loggedUser", JSON.stringify(this), { expires: 7 });
+  }
+
+  static LoadData()
+  {
+      const cookie_user = Cookies.get("loggedUser");
+      if(!cookie_user) {
+        return null;
+      }
+      return JSON.parse(cookie_user);
   }
 
 

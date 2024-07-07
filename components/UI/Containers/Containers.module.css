@@ -1,0 +1,9 @@
+.panel {
+  display: flex;
+  flex-direction: row;
+  flex-shrink: 0;
+  /* flex: 1; */
+  /* background-color: cadetblue; */
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  box-shadow: 0 3px 8px 0 rgba(0,0,0,0.2);
+}

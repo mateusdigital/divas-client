@@ -21,6 +21,7 @@
 //----------------------------------------------------------------------------//
 // -----------------------------------------------------------------------------
 import { useEffect, useState, useRef } from "react";
+import Link from "next/link";
 // -----------------------------------------------------------------------------
 import App from "@/models/App";
 // -----------------------------------------------------------------------------
@@ -29,7 +30,6 @@ import ActionButton from "@/components/UI/Buttons/ActionButton";
 import TextButton from "@/components/UI/Buttons/TextButton";
 import BackButton from "@/components/UI/Buttons/BackButton.js";
 import ProfileImage from "@/components/UI/Images/ProfileImage";
-import MaterialIcon from "@/components/MaterialIcon";
 import { MoodboardEditorContextProvider, useMoodboardEditorContext } from "@/contexts/Moodboard/Editor/MoodboardEditorContext";
 // -----------------------------------------------------------------------------
 import MoodboardCanvas   from "./Canvas/MoodboardCanvas";
@@ -39,6 +39,7 @@ import MoodboardPublishControls from "./Controls/MoodboardPublishControls";
 import { FLOW_STATE_EDITING, FLOW_STATE_PUBLISH, FLOW_STATE_SAVE_DRAFT } from "./utils/FlowState";
 // -----------------------------------------------------------------------------
 import styles from "./MoodboardEditor.module.css";
+import PageUrls from "@/utils/PageUrls";
 
 // ---------------------------------------------------------------------------
 function _MoodboardControlForCurrentFlowState ({flowState, OnBackClicked}) {
@@ -106,7 +107,9 @@ function _Content()
     <div className={styles.mainContainer}>
       {/*  */}
       <div className={styles.topBarContainer}>
-        <DivasLogo/>
+        <Link href={PageUrls.UserOwnProfile}>
+          <DivasLogo/>
+        </Link>
         {( currentFlowState == FLOW_STATE_EDITING &&
           <div>
             <ActionButton onClick={_HandleOnPublishClick}>Publish</ActionButton>

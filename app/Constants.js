@@ -33,8 +33,8 @@ class Constants
   static APP_PORT = 3000;
 
   // ---------------------------------------------------------------------------
-  static EXTERNAL_IMAGES_URL = "https://mateus.digital/divas";
-  static IMAGES_URL          = "http://localhost:8080";
+  static EXTERNAL_IMAGES_URL = "http://localhost:5000/data";
+  static IMAGES_URL          = "http://localhost:5000";
 }
 
 // -----------------------------------------------------------------------------

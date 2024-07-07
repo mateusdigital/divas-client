@@ -22,7 +22,6 @@
 
 // -----------------------------------------------------------------------------
 import { useState } from "react";
-import { useRouter } from "next/router";
 // -----------------------------------------------------------------------------
 import App from "@/models/App";
 import ToastUtils from "@/utils/Toast";
@@ -32,13 +31,13 @@ import UsePageRouter from "@/utils/PageRouter";
 import DivasLogo from "@/components/UI/DivasLogo";
 import ActionButton from "@/components/UI/Buttons/ActionButton";
 import TextButton from "@/components/UI/Buttons/TextButton";
-import Input from "@/components/UI/Inputs/Input";
+import LabeledInput from "@/components/UI/Inputs/LabeledInput";
 // -----------------------------------------------------------------------------
-import styles from "@/components/User/styles/LoginSignup.module.css";
+import styles from "./Forms.module.css";
 
 
 // -----------------------------------------------------------------------------
-function CreateUser()
+function SignUpForm()
 {
   //
   const { NavigateTo } = UsePageRouter();
@@ -61,6 +60,7 @@ function CreateUser()
   const _HandleDescriptionChange     = async (e) => { setDescription(e.target.value); };
   const _HandleProfilePhotoChange    = async (e) => { setProfilePhoto(e.target.files[0]); };
 
+  //
   const _HandleSignUp = async () => {
     const data = {
       username: username,
@@ -86,36 +86,33 @@ function CreateUser()
     NavigateTo(PageUrls.UserLogin);
   }
 
+
   //
   return (<>
-    <div className={styles.loginContainer} >
+    <div className={styles.loginContainer}>
       {/*  */}
       <div>
-          <DivasLogo></DivasLogo>
+        <DivasLogo></DivasLogo>
       </div>
 
       <div>
         {/*  */}
         <div className={styles.inputContainer}>
-          <span>Username</span>
-          <Input type="text" value={username} onChange={_HandleUsernameChange}></Input>
+          <LabeledInput type="text" value={username} onChange={_HandleUsernameChange}>Username</LabeledInput>
         </div>
         {/*  */}
         <div className={styles.inputContainer}>
-          <span>Email</span>
-          <Input type="text" value={email} onChange={_HandleEmailChange}></Input>
+          <LabeledInput type="text" value={email} onChange={_HandleEmailChange}>Email</LabeledInput>
         </div>
       </div>
 
       <div>
         {/*  */}
         <div className={styles.inputContainer}>
-          <span>Password</span>
-          <Input type="text" value={password} onChange={_HandlePasswordChange}></Input>
+          <LabeledInput type="text" value={password} onChange={_HandlePasswordChange}>Password</LabeledInput>
         </div>
         <div className={styles.inputContainer}>
-          <span>Confirm Password</span>
-          <Input type="text" value={password} onChange={_HandlePasswordConfirmChange}></Input>
+          <LabeledInput type="text" value={password} onChange={_HandlePasswordConfirmChange}>Confirm Password</LabeledInput>
         </div>
       </div>
 
@@ -123,19 +120,16 @@ function CreateUser()
       <div>
         {/*  */}
         <div className={styles.inputContainer}>
-          <span>Full Name</span>
-          <Input type="text" value={fullname} onChange={_HandleFullnameChange}></Input>
+          <LabeledInput type="text" value={fullname} onChange={_HandleFullnameChange}>Full Name</LabeledInput>
         </div>
         {/*  */}
         <div className={styles.inputContainer}>
-          <span>Description</span>
-          <Input type="text" value={description} onChange={_HandleDescriptionChange}></Input>
+          <LabeledInput type="text" value={description} onChange={_HandleDescriptionChange}>Description</LabeledInput>
         </div>
       </div>
 
       <div>
         <div>
-          <span>Photo</span>
           <input type="file" onChange={_HandleProfilePhotoChange} />
         </div>
       </div>
@@ -144,13 +138,13 @@ function CreateUser()
       </div>
       {/*  */}
       <div className={styles.buttonsContainer}>
-        <ActionButton onClick={_HandleSignUp}>Sign Up</ActionButton>
+        <ActionButton className="flex-grow" onClick={_HandleSignUp}>Sign Up</ActionButton>
         or
-        <TextButton onClick={_HandleAlreadyHaveUser}>Already have user?</TextButton>
+        <TextButton className="flex-grow" onClick={_HandleAlreadyHaveUser}>Already have user?</TextButton>
       </div>
     </div>
   </>)
 }
 
 // -----------------------------------------------------------------------------
-export default CreateUser;
+export default SignUpForm;

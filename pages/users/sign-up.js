@@ -24,18 +24,26 @@
 import UserLogged from "@/components/Logic/UserLogged";
 import PageUrls from "@/utils/PageUrls";
 // -----------------------------------------------------------------------------
-import CreateUser from "@/components/User/Create/CreateUser";
+import Panel from "@/components/UI/Containers/Panel";
+import SignUpForm from "@/components/User/Login/SignUpForm";
+// -----------------------------------------------------------------------------
+import styles from "../styles/LoginPage.module.css";
+
 
 
 // -----------------------------------------------------------------------------
-function Component()
+function CreatePage()
 {
   return (<>
     <UserLogged requiresLoggedUser={false} redirectTo={PageUrls.UserOwnProfile}>
-      <CreateUser></CreateUser>
+      <div className={styles.mainContainer}>
+        <Panel className="margin-top-2">
+          <SignUpForm/>
+        </Panel>
+      </div>
     </UserLogged>
   </>);
 }
 
 // -----------------------------------------------------------------------------
-export default Component;
+export default CreatePage;

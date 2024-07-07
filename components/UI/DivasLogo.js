@@ -7,11 +7,11 @@ import { useEffect, useState, useRef} from "react";
 const IMG_SRC = "/img/divas_logo_black.png";
 
 // -----------------------------------------------------------------------------
-function DivasLogo()
+function DivasLogo({className})
 {
   //
   return (<>
-    <img src={IMG_SRC}></img>
+    <img className={className} src={IMG_SRC}></img>
   </>);
 };
 

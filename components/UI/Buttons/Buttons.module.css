@@ -27,23 +27,27 @@
 
 /* -------------------------------------------------------------------------- */
 .actionButton {
-  padding: 0.2rem 1rem;
   margin: 0.5rem;
+  padding: 10px 20px;
 
+  border-radius: 10px;
   border: none;
-  border-radius: 8px;
-  cursor: pointer;
 
-  background-color: #bee2d1;
+  background: var(--button-primary-color);
+  color:black;
+
+  cursor: pointer;
+  font-weight: bolder;
+
   transition: background-color 0.3s;
 }
 
 .actionButton:hover {
-  background-color: #a6cebb;
+  background-color: var(--button-primary-color-hover);
 }
 
 .actionButton:active {
-  background-color: #fa7b90;
+  background-color: var(--button-secondary-color);
 }
 
 /*
@@ -52,11 +56,27 @@
 
 /* -------------------------------------------------------------------------- */
 .textButton {
+  /* padding: 0.6rem 1.5rem; */
+  margin: 0.5rem;
+
   background-color: transparent;
   border: none;
   cursor: pointer;
   text-decoration: underline dotted;
+
+  transition: color 0.3s;
+
+  font-weight: bolder;
 }
+
+.textButton:hover {
+  text-decoration: underline solid;
+}
+
+.textButton:active {
+  color: var(--button-secondary-color)
+}
+
 
 /*
 *  Back Button

@@ -18,9 +18,9 @@ class CachedImageController
     }
 
     const img = new Image();
-
-    img.src    = url;
-    img.onload = onLoadCallback;
+    img.crossOrigin = "anonymous";
+    img.src         = url;
+    img.onload      = onLoadCallback;
 
     this._imageMap.set(url, img);
 

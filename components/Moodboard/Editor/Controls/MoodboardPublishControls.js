@@ -21,40 +21,67 @@
 //----------------------------------------------------------------------------//
 
 // -----------------------------------------------------------------------------
-import { useState } from "react";
+import { useRef, useState } from "react";
 // -----------------------------------------------------------------------------
-import Input from "@/components/UI/Inputs/Input";
+import App from "@/models/App.js";
+import { useMoodboardEditorContext } from "@/contexts/Moodboard/Editor/MoodboardEditorContext.js";
+import UsePageRouter from "@/utils/PageRouter.js";
+import PageUrls from "@/utils/PageUrls.js";
 // -----------------------------------------------------------------------------
-import { GetBottomCategoriesNames } from "@/models/Moodboard/UI/CategoryButtonsNames";
-import { GetBottomCategoriesInfo } from "@/models/Moodboard/UI/CategoryButtonInfo";
-import { GetTopCategoriesNames } from "@/models/Moodboard/UI/CategoryButtonsNames";
-import { GetTopCategoriesInfo } from "@/models/Moodboard/UI/CategoryButtonInfo";
-// -----------------------------------------------------------------------------
-import ButtonTop    from "./CategoryControls/CategoryButton/CategoryButtonTop.js";
-import ButtonBottom from "./CategoryControls/CategoryButton/CategoryButtonBottom.js";
-import ItemsSelection from "./ItemControls/ItemSelection/ItemSelection.js";
 import LabeledInput from "@/components/UI/Inputs/LabeledInput.js";
 import LabeledTextArea from "@/components/UI/Inputs/LabeledTextArea.js";
-// -----------------------------------------------------------------------------
-import styles from "./MoodboardEditingControls.module.css";
 import ActionButton from "@/components/UI/Buttons/ActionButton.js";
 import TextButton from "@/components/UI/Buttons/TextButton.js";
+// -----------------------------------------------------------------------------
+import styles from "./MoodboardEditingControls.module.css";
+
 
 // -----------------------------------------------------------------------------
 function MoodboardPublishControls({className})
 {
+  const _controller = useMoodboardEditorContext();
+  const _titleRef = useRef("");
+  const { NavigateTo } = UsePageRouter();
+
+  // ---------------------------------------------------------------------------
+  const _HandlePublish = async ()=>{
+    const info_data = {
+      title: "ola",
+      description: "mundo"
+    };
+
+    const save_data  = _controller.PrepareSaveData();
+    const save_photo = _controller.PrepareSavePhoto();
+
+    var result = await App.PublishMoodboardItem(info_data, save_data, save_photo);
+    if(result.IsError()) {
+      ToastUtils.ResultError(result);
+      return;
+    }
+
+    NavigateTo(PageUrls.UserOwnProfile);
+  }
+
+  // ---------------------------------------------------------------------------
+  const _HandleSave = async ()=>{
+    const save_data = _controller.PrepareSaveData();
+    await App.SaveMoodboardItem(save_data);
+  }
+
+
+  // ---------------------------------------------------------------------------
   return (<>
     <div className={className}>
       <div>
         <span>Describe your moodboard</span>
       </div>
       <div>
-        <LabeledInput>Title</LabeledInput>
+        <LabeledInput useRef={_titleRef} >Title</LabeledInput>
         <LabeledTextArea>Description</LabeledTextArea>
       </div>
       <div>
-        <ActionButton>Publish</ActionButton>
-        <TextButton>Save Draft</TextButton>
+        <ActionButton onClick={_HandlePublish}>Publish</ActionButton>
+        <TextButton onClick={_HandleSave}>Save Draft</TextButton>
       </div>
     </div>
   </>);

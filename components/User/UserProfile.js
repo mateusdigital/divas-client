@@ -1,6 +1,6 @@
 
 // -----------------------------------------------------------------------------
-import { useState, Suspense } from "react";
+import { useState, Suspense, useEffect } from "react";
 // -----------------------------------------------------------------------------
 import UserInfo      from "@/components/User/Profile/UserInfo";
 import CategoriesBar from "@/components/User/Profile/CategoriesBar";
@@ -14,7 +14,7 @@ function UserProfile({userModel})
 {
   //
   const [categoryComponent, setCategoryComponent] = useState(null);
-  const [selectedCategory, setSelectedCategory]   = useState(CATEGORIES_BAR_NAMES[0]);
+  const [selectedCategory, setSelectedCategory]   = useState(null);
 
   // Handle Category Selection
   const _HandleCategorySelection = (categoryName) => {
@@ -23,6 +23,12 @@ function UserProfile({userModel})
     const category_component = GetComponentForCategoryName(categoryName, userModel);
     setCategoryComponent(category_component);
   };
+
+  useEffect(()=>{
+    if(userModel && !categoryComponent) {
+      _HandleCategorySelection(CATEGORIES_BAR_NAMES[0]);
+    }
+  }, [userModel])
 
   // Not ready...
   if (!userModel) {
