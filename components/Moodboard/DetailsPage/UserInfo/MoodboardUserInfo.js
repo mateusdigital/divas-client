@@ -24,7 +24,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 // -----------------------------------------------------------------------------
-import App from "@/models/App";
+import UserService from "@/services/UserService";
 // -----------------------------------------------------------------------------
 import styles from "./MoodboardUserInfo.module.css";
 
@@ -35,7 +35,7 @@ function MoodboardUserInfo({moodboardModel})
   const [ownerUserModel, setOwnerUserModel] = useState(null);
   useEffect(()=>{
     const _GetUser = async ()=>{
-      const user_model = await App.GetUserWithId(moodboardModel.owner);
+      const user_model = await UserService.GetUserWithId(moodboardModel.owner);
       setOwnerUserModel(user_model);
     }
 
@@ -44,6 +44,7 @@ function MoodboardUserInfo({moodboardModel})
     }
   }, [moodboardModel.owner]);
 
+
   // Not ready...
   if(!ownerUserModel) {
     return <div>Loading...</div>;
@@ -51,7 +52,7 @@ function MoodboardUserInfo({moodboardModel})
 
   // Ready...
   return (
-    <div className={styles.moodboardInfoUserContainer}>
+    <div className={styles.container}>
       <div>
         <span>Created by: </span>
         <span>{ownerUserModel ? ownerUserModel.username : "Loading..."}</span>

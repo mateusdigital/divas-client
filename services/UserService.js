@@ -38,17 +38,22 @@ class UserService
   {
     Assert.NotNull(id);
 
-    const api_url = NET.Make_API_Url(Endpoints.UserModel.GetById, id);
+    try {
+      const api_url = NET.Make_API_Url(Endpoints.UserModel.GetById, id);
 
-    const response = await NET.GET(api_url);
-    if(response.status != StatusCodes.OK) {
-      return await Result.ResponseError(response);
+      const response = await NET.GET(api_url);
+      if(response.status != StatusCodes.OK) {
+        return await Result.ResponseError(response);
+      }
+
+      const data = await response.json();
+      const user = UserModel.CreateFromServerData(data);
+
+      return Result.Valid(user);
     }
-
-    const data = await response.json();
-    const user = UserModel.CreateFromServerData(data);
-
-    return Result.Valid(user);
+    catch(error) {
+      return Result.ExceptionError(error);
+    }
   }
 
   // ---------------------------------------------------------------------------

@@ -21,25 +21,35 @@
 //----------------------------------------------------------------------------//
 
 // -----------------------------------------------------------------------------
-//
-import MainLayout from "@/components/Layout/MainLayout";
+import React from "react";
+// -----------------------------------------------------------------------------
+import MainLayout   from "@/components/Layout/MainLayout";
 import MaterialIcon from "@/components/MaterialIcon";
-//
+// -----------------------------------------------------------------------------
 import MoodboardUserInfo from "./UserInfo/MoodboardUserInfo";
 import MoodboardComments from "./Comments/MoodboardComments";
 import MoodboardItemsCarrousel from "./ItemsCarrousel/MoodboardItemsCarrousel";
-//
+// -----------------------------------------------------------------------------
 import styles from "./MoodboardDetails.module.css";
+import CachedImage from "@/components/UI/Images/CachedImage";
+import ImageDefaults from "@/components/UI/Images/ImageDefaults";
 
 // -----------------------------------------------------------------------------
 function MoodboardDetails({moodboardModel})
 {
+  if(!moodboardModel) {
+    return;
+  }
+
   //
-  return (
+  return (<>
     <MainLayout>
       <div className={styles.moodboardContainer}>
         <div className={styles.moodboardImageContainer}>
-          <img src={moodboardModel.imageUrl}></img>
+          <CachedImage
+            imageUrl={moodboardModel.photoUrl}
+            imagePlaceholderUrl={ImageDefaults.PLACEHOLDER_URL_MOODBOARD_DETAILS}
+          />
         </div>
 
         {/* Info Container */}
@@ -103,7 +113,7 @@ function MoodboardDetails({moodboardModel})
         {/* -Items Carrousel */}
       </div>
     </MainLayout>
-  )
+  </>)
 }
 
 // -----------------------------------------------------------------------------

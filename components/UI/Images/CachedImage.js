@@ -3,14 +3,12 @@ import React, { useRef } from "react";
 // -----------------------------------------------------------------------------
 import App from "@/models/App";
 import NET from "@/app/NET";
+import Assert from "@/utils/Assert";
 
 
 // -----------------------------------------------------------------------------
-function CachedImageComponent({imageUrl, imagePlaceholderUrl, ...imageProps})
+function CachedImage({imageUrl, imagePlaceholderUrl, ...imageProps})
 {
-  //
-  const img_element = App.GetCachedImageForUrl(imageUrl, imageProps.onLoad);
-
   //
   const _HandleLoadError = (error, img) => {
     if(imagePlaceholderUrl) {
@@ -19,7 +17,15 @@ function CachedImageComponent({imageUrl, imagePlaceholderUrl, ...imageProps})
     }
   };
 
+  //
+  const final_url = imageUrl ? imageUrl : imagePlaceholderUrl;
+  Assert.NotNull(final_url);
+
   const imgRef = useRef();
+  const img_element = App.GetCachedImageForUrl(final_url, imageProps.onLoad);
+
+
+  //
   return (<>
     <img
       ref={imgRef}
@@ -33,4 +39,4 @@ function CachedImageComponent({imageUrl, imagePlaceholderUrl, ...imageProps})
 }
 
 // -----------------------------------------------------------------------------
-export default CachedImageComponent;
+export default CachedImage;

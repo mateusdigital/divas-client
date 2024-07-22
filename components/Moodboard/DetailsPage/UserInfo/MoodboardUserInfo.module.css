@@ -22,7 +22,7 @@
 
 
 /* -------------------------------------------------------------------------- */
-.moodboardInfoUserContainer {
+.container {
   display: flex;
   background-color: chartreuse;
   justify-content: space-between;
