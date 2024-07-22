@@ -21,5 +21,6 @@
     "peacock.color": "#e9aa69",
     "marquee.widgets.npm-stats.packageNames": [
         "divas-client"
-    ]
+    ],
+    "debug.javascript.unmapMissingSources": true
 }

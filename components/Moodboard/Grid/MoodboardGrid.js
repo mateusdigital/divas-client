@@ -21,6 +21,8 @@
 //---------------------------------------------------------------------------~//
 
 // -----------------------------------------------------------------------------
+import React from 'react';
+// -----------------------------------------------------------------------------
 import { useEffect, useState } from 'react';
 // -----------------------------------------------------------------------------
 import App from '@/models/App';
@@ -59,19 +61,24 @@ function MoodboardGrid({ userModel })
 
   //
   return (
-    <div className={styles.moodboardGridContainer}>
-      <div className={styles.moodboardGrid}>
+    <div className={styles.container}>
+      <div className={styles.grid}>
         { moodboards.length != 0 &&
           moodboards.map((moodboard) => (
-            <MoodboardGridItem key={moodboard._id} moodboardModel={moodboard} />
+            <MoodboardGridItem
+              key={moodboard._id}
+              moodboardModel={moodboard}
+            />
           ))
         }
       </div>
 
-        {
-          moodboards.length == 0 &&
-            <EmptyGridPlaceholder/>
-        }
+
+      {/* There's no moodboards add a placeholder */}
+      {
+        moodboards.length == 0 &&
+          <EmptyGridPlaceholder/>
+      }
     </div>
   );
 }

@@ -21,21 +21,23 @@
 //---------------------------------------------------------------------------~//
 
 // -----------------------------------------------------------------------------
+import React from "react";
+// -----------------------------------------------------------------------------
 import { useState } from "react";
 // -----------------------------------------------------------------------------
 import Link from "next/link";
 // -----------------------------------------------------------------------------
-import NET from "@/app/NET";
-// -----------------------------------------------------------------------------
 import UserLoggedContext, { useLoggedUserContext } from "@/contexts/User/UserLoggedContext";
 // -----------------------------------------------------------------------------
 import Assert from "@/utils/Assert";
-import { PageUrls } from "@/utils/PageUtils";
+import { PageUrls, usePageRouter } from "@/utils/PageUtils";
 // -----------------------------------------------------------------------------
 import DivasLogo    from "@/components/UI/DivasLogo";
+import ProfileImage from "@/components/UI/Images/ProfileImage";
 import MaterialIcon from "@/components/MaterialIcon";
 // -----------------------------------------------------------------------------
 import styles from "./Sidebar.module.css";
+import LoginService from "@/services/LoginService";
 
 
 // -----------------------------------------------------------------------------
@@ -84,6 +86,9 @@ function _Content({pageName})
   const [ currentPageName, setCurrentPageName ] = useState(pageName);
   _PageName = currentPageName;
 
+  const { NavigateTo } = usePageRouter();
+
+
   //
   return (
     <div className={styles.contentContainer}>
@@ -94,12 +99,10 @@ function _Content({pageName})
       <div className={styles.sideBarItemsContainer}>
         {/* Profile */}
         <_SidebarLink href={PageUrls.UserOwnProfile}>
-          <img
+          <ProfileImage
+            userModel={loggedUser}
             className={styles.sideBarItemProfileImage}
-            src={
-              loggedUser ? NET.Make_Local_Image_Url(loggedUser.profilePhotoTinyUrl) : ""
-            }>
-          </img>
+          />
           <span className={styles.sideBarItemTitle}>Profile</span>
         </_SidebarLink>
 
@@ -134,7 +137,7 @@ function _Content({pageName})
           href="/login"
           className={styles.sideBarItemContainer}
           onClick={()=>{
-            UserService.TryToLogoutUser();
+            LoginService.TryToLogoutUser();
             NavigateTo(PageUrls.UserLogin);
           }}
         >

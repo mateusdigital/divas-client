@@ -19,3 +19,15 @@
 /*  Description :                                                             */
 /*                                                                            */
 /*---------------------------------------------------------------------------~*/
+
+.container {
+  background-color: rebeccapurple;
+  max-width:  270px;
+  max-height: 370px;
+}
+
+.container img {
+  width: 100%;
+  height: 100%;
+
+}

@@ -22,7 +22,7 @@ body {
 }
 
 * {
-  /* outline: 1px solid magenta; */
+  outline: 1px solid magenta;
   /* all: unset; */
   margin: 0;
   padding: 0;

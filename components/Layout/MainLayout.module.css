@@ -28,7 +28,6 @@
 /*----------------------------------------------------------------------------*/
 .layoutContainer {
   display: flex;
-  height: 100vh;
   /* padding: 2rem 2rem 0 2rem; */
 
   /* background-color: red; */

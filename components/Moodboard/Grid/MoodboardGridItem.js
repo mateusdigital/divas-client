@@ -20,13 +20,16 @@
 //                                                                            //
 //---------------------------------------------------------------------------~//
 
-
 // -----------------------------------------------------------------------------
-import { useEffect, useState } from 'react';
+import React from 'react';
+// -----------------------------------------------------------------------------
 import Link from 'next/link';
-//
+// -----------------------------------------------------------------------------
 import NET from '@/app/NET';
-//
+// -----------------------------------------------------------------------------
+import CachedImage from '@/components/UI/Images/CachedImage';
+import ImageDefaults from '@/components/UI/Images/ImageDefaults';
+// -----------------------------------------------------------------------------
 import styles from "./MoodboardGridItem.module.css";
 
 
@@ -34,12 +37,15 @@ import styles from "./MoodboardGridItem.module.css";
 function MoodboardGridItem({moodboardModel})
 {
   const details_url = NET.Make_Navigation_Url("moodboard", moodboardModel._id);
-  const photo_url   = NET.Make_Local_Image_Url(moodboardModel.photoUrl);
+  const photo_url   = NET.Make_External_Image_Url(moodboardModel.photoUrl);
 
   return (
-    <div>
+    <div className={styles.container}>
       <Link href={details_url}>
-        <img src={photo_url}></img>
+        <CachedImage
+          imageUrl={photo_url}
+          imagePlaceholderUrl={ImageDefaults.PLACEHOLDER_URL_MOODBOARD_GRID_ITEM}
+        />
       </Link>
     </div>
   );
