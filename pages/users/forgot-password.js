@@ -1,27 +1,29 @@
 
 // -----------------------------------------------------------------------------
-import UserLogged from "@/components/Logic/UserLogged";
-import PageUrls from "@/utils/PageUrls";
+import { PageUrls } from "@/utils/PageUtils";
 // -----------------------------------------------------------------------------
-import Panel from "@/components/UI/Containers/Panel";
+import UserLoggedContext from "@/contexts/User/UserLoggedContext.js";
+// -----------------------------------------------------------------------------
+import Panel              from "@/components/UI/Containers/Panel";
 import ForgotPasswordForm from "@/components/User/Login/ForgotPasswordForm";
 // -----------------------------------------------------------------------------
 import styles from "../styles/LoginPage.module.css";
 
+
 // -----------------------------------------------------------------------------
-function Component()
+function ForgotPasswordPage()
 {
   return (<>
-    <UserLogged requiresLoggedUser={false} redirectTo={PageUrls.UserOwnProfile}>
+    <UserLoggedContext requiresLoggedUser={false} redirectTo={PageUrls.UserOwnProfile}>
 
       <div className={styles.mainContainer}>
         <Panel className="margin-top-2">
           <ForgotPasswordForm/>
         </Panel>
       </div>
-    </UserLogged>
+    </UserLoggedContext>
   </>);
 }
 
 // -----------------------------------------------------------------------------
-export default Component;
+export default ForgotPasswordPage;

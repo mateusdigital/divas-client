@@ -23,15 +23,20 @@ import Cookies from "js-cookie";
 
 
 // -----------------------------------------------------------------------------
-class User
+class UserModel
 {
+  //
+  // Factory
+  //
+
   // ---------------------------------------------------------------------------
   static CreateFromServerData(data)
   {
-    return new User(data)
+    return new UserModel(data)
   }
 
   // ---------------------------------------------------------------------------
+  // @Notice: Not meant to be constructed by hand.
   constructor({
     _id,
     fullname,
@@ -39,17 +44,17 @@ class User
     profilePhotoUrl,
     username,
     email,
+    password,
     followers,
     following,
     likes,
     moodboards,
-   })
-  {
+  }) {
     // Info
-    this._id             = _id;
+    this._id = _id;
 
-    this.fullname        = fullname;
-    this.description     = description;
+    this.fullname    = fullname;
+    this.description = description;
 
     // Photo
     this.profilePhotoUrl     = profilePhotoUrl;
@@ -58,6 +63,7 @@ class User
     // Login
     this.username = username;
     this.email    = email;
+    this.password = password; // @XXX:remove this password...
 
     // Social
     this.followers = followers;
@@ -68,11 +74,23 @@ class User
     this.moodboards = moodboards;
   }
 
-  SaveData()
+  NeedsFetch()
   {
-    Cookies.set("loggedUser", JSON.stringify(this), { expires: 7 });
+    return true;
   }
 
+
+  //
+  // Cookies
+  //
+
+  // ---------------------------------------------------------------------------
+  PersistData()
+  {
+    Cookies.set("loggedUser", JSON.stringify(this), { expires: 7 }); // @check: 7 what????
+  }
+
+  // ---------------------------------------------------------------------------
   static LoadData()
   {
       const cookie_user = Cookies.get("loggedUser");
@@ -82,6 +100,9 @@ class User
       return JSON.parse(cookie_user);
   }
 
+  //
+  // Helper Methods
+  //
 
   // ---------------------------------------------------------------------------
   _MakeTinyUrl(photoUrl)
@@ -91,6 +112,5 @@ class User
   }
 };
 
-
 // -----------------------------------------------------------------------------
-export default User;
+export default UserModel;

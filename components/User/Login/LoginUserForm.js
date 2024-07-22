@@ -23,14 +23,14 @@
 // -----------------------------------------------------------------------------
 import { useState } from "react";
 // -----------------------------------------------------------------------------
-import App from "@/models/App";
 import ToastUtils from "@/utils/Toast";
-import UsePageRouter from "@/utils/PageRouter";
-import PageUrls from "@/utils/PageUrls";
+import { PageUrls, usePageRouter } from "@/utils/PageUtils";
 // -----------------------------------------------------------------------------
-import DivasLogo from "@/components/UI/DivasLogo";
+import LoginService from "@/services/LoginService";
+// -----------------------------------------------------------------------------
+import DivasLogo    from "@/components/UI/DivasLogo";
 import ActionButton from "@/components/UI/Buttons/ActionButton";
-import TextButton from "@/components/UI/Buttons/TextButton";
+import TextButton   from "@/components/UI/Buttons/TextButton";
 import LabeledInput from "@/components/UI/Inputs/LabeledInput";
 // -----------------------------------------------------------------------------
 import styles from "./Forms.module.css";
@@ -44,7 +44,7 @@ function LoginUserForm()
   const [password, setPassword] = useState("");
   const [isTryingToLog, setIsTryingToLog] = useState(false);
 
-  const { NavigateTo } = UsePageRouter();
+  const { NavigateTo } = usePageRouter();
 
   //
   const _HandleUsernameChange = async (e) => { setUsername(e.target.value); };
@@ -52,14 +52,18 @@ function LoginUserForm()
 
   //
   const _HandleLogin = async () => {
-    setIsTryingToLog(true);
+    if(isTryingToLog) {
+      return;
+    }
+
+    setIsTryingToLog(true); // @Incomplete: Eventually we want the buttons to reflect the state.
 
     const data = {
       username: username,
       password: password,
     };
 
-    const result = await App.TryToLoginUserWithData(data);
+    const result = await LoginService.TryToLoginUserWithData(data);
     if(result.IsError()) {
       ToastUtils.Error(result.errorJson.message);
       setIsTryingToLog(false);
@@ -67,20 +71,11 @@ function LoginUserForm()
       return false;
     }
 
-    const user = result.value;
-    App.SetCurrentLoggedUser(user);
-    setIsTryingToLog(false);
-
     NavigateTo(PageUrls.UserOwnProfile);
   };
 
-  const _HandleForgotPassword = async () => {
-    NavigateTo(PageUrls.UserForgotPassword);
-  }
-
-  const _HandleSignUp = async () => {
-    NavigateTo(PageUrls.UserSignUp);
-  }
+  const _HandleForgotPassword = async () => { NavigateTo(PageUrls.UserForgotPassword); }
+  const _HandleSignUp         = async () => { NavigateTo(PageUrls.UserSignUp); }
 
   //
   return (<>

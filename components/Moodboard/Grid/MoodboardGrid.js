@@ -26,7 +26,7 @@ import { useEffect, useState } from 'react';
 import App from '@/models/App';
 import ToastUtils from '@/utils/Toast';
 // -----------------------------------------------------------------------------
-import EmptyGridPlaceholder from "@/components/ui/Grid/EmptyGridPlaceholder.js";
+import EmptyGridPlaceholder from "@/components/UI/Grid/EmptyGridPlaceholder.js";
 import MoodboardGridItem from './MoodboardGridItem';
 // -----------------------------------------------------------------------------
 import styles from "./MoodboardGrid.module.css";

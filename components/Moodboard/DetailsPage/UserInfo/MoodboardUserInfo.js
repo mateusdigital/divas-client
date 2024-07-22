@@ -20,17 +20,17 @@
 //                                                                            //
 //----------------------------------------------------------------------------//
 
-//
+// -----------------------------------------------------------------------------
+import React from "react";
 import { useState, useEffect } from "react";
-//
+// -----------------------------------------------------------------------------
 import App from "@/models/App";
-//
+// -----------------------------------------------------------------------------
 import styles from "./MoodboardUserInfo.module.css";
 
 // -----------------------------------------------------------------------------
 function MoodboardUserInfo({moodboardModel})
 {
-
   //
   const [ownerUserModel, setOwnerUserModel] = useState(null);
   useEffect(()=>{

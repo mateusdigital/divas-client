@@ -41,6 +41,11 @@ a:hover {
   text-decoration: underline solid;
 }
 
+span {
+  display: block;
+}
+
+
 /*
 *
 */
@@ -49,12 +54,36 @@ a:hover {
 .margin-top-2 {
   margin-top: 2rem;
 }
+.margin-bottom-2 {
+  margin-bottom: 2rem;
+}
+
+.padding-top-2 {
+  padding-top: 2rem;
+}
+.padding-bottom-2 {
+  padding-bottom: 2rem;
+}
+
+.padding-top-1 {
+  padding-top: 1rem;
+}
+.padding-bottom-1 {
+  padding-bottom: 1rem;
+}
+
+.flex {
+  display: flex;
+}
 
 .flex-grow {
   flex:1;
   width: 100%;
 }
 
+.text-center {
+  text-align: center;
+}
 
 /*
 *

@@ -21,11 +21,12 @@
 //----------------------------------------------------------------------------//
 
 // -----------------------------------------------------------------------------
-import MainLayout from "@/components/Layout/MainLayout";
+import { PageUrls } from "@/utils/PageUtils";
+// -----------------------------------------------------------------------------
+import MainLayout  from "@/components/Layout/MainLayout";
 import UserProfile from "@/components/User/UserProfile";
 // -----------------------------------------------------------------------------
-import PageUrls from "@/utils/PageUrls";
-import UserLogged, { useLoggedUserContext } from "@/components/Logic/UserLogged";
+import UserLoggedContext, { useLoggedUserContext } from "@/contexts/User/UserLoggedContext.js";
 
 
 // -----------------------------------------------------------------------------
@@ -47,9 +48,9 @@ function _Content()
 function ProfilePage()
 {
   return (
-    <UserLogged requiresLoggedUser={true} redirectTo={PageUrls.UserLogin}>
+    <UserLoggedContext requiresLoggedUser={true} redirectTo={PageUrls.UserLogin}>
       <_Content/>
-    </UserLogged>
+    </UserLoggedContext>
   );
 }
 // -----------------------------------------------------------------------------

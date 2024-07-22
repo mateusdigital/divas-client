@@ -1,24 +1,31 @@
 // -----------------------------------------------------------------------------
 import { useEffect } from "react";
-import router from "next/router";
 // -----------------------------------------------------------------------------
-import App from "@/models/App";
+import { PageUrls, usePageRouter } from "@/utils/PageUtils";
+// -----------------------------------------------------------------------------
+import LoginService from "@/services/LoginService";
 
 
 // -----------------------------------------------------------------------------
 function HomePage()
 {
+  const { NavigateTo } = usePageRouter();
+  
   //
   useEffect(() => {
-    const logged_user = App.GetCurrentLoggedUser();
-    if(logged_user) {
-      router.push("/login");
-    } else {
-      router.push("/profile");
+    const _GetCurrentLoggedUser = async ()=> {
+      const result = await LoginService.GetCurrentLoggedUser();
+      if(result.IsValid()) {
+        NavigateTo(PageUrls.UserLogin);
+      } else {
+        NavigateTo(PageUrls.UserOwnProfile);
+      }
     }
+    
+    _GetCurrentLoggedUser();
   }, []);
-
-
+  
+  //
   return (<>
   </>);
 }

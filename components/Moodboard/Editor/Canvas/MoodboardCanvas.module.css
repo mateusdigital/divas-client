@@ -1,7 +1,7 @@
 .canvasContainer {
   flex: 1;
   position: relative;
-  background-color: lightblue;
+  background-color: #fffafb;
   overflow: hidden;
 }
 

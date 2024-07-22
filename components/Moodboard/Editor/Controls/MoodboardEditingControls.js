@@ -24,6 +24,7 @@
 import { useState } from "react";
 // -----------------------------------------------------------------------------
 import Input from "@/components/UI/Inputs/Input";
+import Panel from "@/components/UI/Containers/Panel.js";
 // -----------------------------------------------------------------------------
 import { GetBottomCategoriesNames } from "@/models/Moodboard/UI/CategoryButtonsNames";
 import { GetBottomCategoriesInfo } from "@/models/Moodboard/UI/CategoryButtonInfo";
@@ -101,9 +102,10 @@ function _CategoriesSelection(_OnSelectedTopCategoryChanged, _OnSelectedBottomCa
       </div>
 
       {/*  */}
-      <div>
-        <span>Categories</span>
-        <div className={styles.bottomContainer}>
+      <div className={styles.bottomContainer}>
+        <span className="padding-bottom-1">Categories</span>
+        <div className={styles.gridContainer}>
+
           {_gBottomCategoriesNames.map((name, index) => {
             return _CreateCategoryBottomButton(
               index,

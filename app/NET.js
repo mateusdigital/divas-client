@@ -82,6 +82,7 @@ class NET
     const final_url = `${Constants.EXTERNAL_IMAGES_URL}/${suffix}`;
     return final_url;
   }
+
   // ---------------------------------------------------------------------------
   static Make_Local_Image_Url(suffix)
   {

@@ -1,16 +1,34 @@
 // -----------------------------------------------------------------------------
+import React, { useRef } from "react";
+// -----------------------------------------------------------------------------
 import App from "@/models/App";
+import NET from "@/app/NET";
 
 
 // -----------------------------------------------------------------------------
-function CachedImageComponent({imageUrl, ...imageProps})
+function CachedImageComponent({imageUrl, imagePlaceholderUrl, ...imageProps})
 {
   //
-  const img = App.GetCachedImageForUrl(imageUrl, imageProps.onLoad);
+  const img_element = App.GetCachedImageForUrl(imageUrl, imageProps.onLoad);
 
   //
+  const _HandleLoadError = (error, img) => {
+    if(imagePlaceholderUrl) {
+      img.onError = () => {}
+      img.src = NET.Make_Local_Image_Url(imagePlaceholderUrl);
+    }
+  };
+
+  const imgRef = useRef();
   return (<>
-    <img src={img.src} {...imageProps}></img>
+    <img
+      ref={imgRef}
+      src={img_element.src}
+      onError={(error)=>{
+        _HandleLoadError(error, imgRef.current);
+      }}
+      {...imageProps}
+      ></img>
   </>);
 }
 

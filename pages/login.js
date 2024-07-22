@@ -21,15 +21,13 @@
 //----------------------------------------------------------------------------//
 
 // -----------------------------------------------------------------------------
-import { useEffect } from "react";
-// -----------------------------------------------------------------------------
 import Link from "next/link";
 // -----------------------------------------------------------------------------
-import PageUrls from "@/utils/PageUrls";
-import UserLogged from "@/components/Logic/UserLogged";
+import { PageUrls } from "@/utils/PageUtils";
 // -----------------------------------------------------------------------------
-import MaterialIcon from "@/components/MaterialIcon";
-import Panel from "@/components/UI/Containers/Panel";
+import UserLoggedContext from "@/contexts/User/UserLoggedContext.js";
+// -----------------------------------------------------------------------------
+import Panel         from "@/components/UI/Containers/Panel";
 import LoginUserForm from "@/components/User/Login/LoginUserForm";
 // -----------------------------------------------------------------------------
 import styles from "./styles/LoginPage.module.css";
@@ -40,7 +38,7 @@ function LoginPage()
 {
   //
   return (<>
-    <UserLogged requiresLoggedUser={false} redirectTo={PageUrls.UserOwnProfile}>
+    <UserLoggedContext requiresLoggedUser={false} redirectTo={PageUrls.UserOwnProfile}>
       {/*  */}
       <div className={styles.mainContainer}>
         <div className={styles.contentContainer}>
@@ -75,7 +73,7 @@ function LoginPage()
           </div>
         </div>
       </div>
-    </UserLogged>
+    </UserLoggedContext>
   </>);
 }
 

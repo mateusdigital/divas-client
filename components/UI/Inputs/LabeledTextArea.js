@@ -9,7 +9,7 @@ function LabeledTextArea({className, type, value, onChange, children})
   return (<>
     <div className={class_name}>
       <span>{children}</span>
-      <textarea type={type} value={value} onChange={onChange}></textarea>
+      <textarea className={styles.mainTextArea} type={type} value={value} onChange={onChange}></textarea>
     </div>
   </>);
 };

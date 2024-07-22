@@ -45,3 +45,8 @@
   /* background-color: aqua; */
   font-size: 3rem  !important;
 }
+
+
+.categoryTextContent {
+  font-size: 0.7rem;
+}

@@ -21,11 +21,12 @@
 //----------------------------------------------------------------------------//
 
 // -----------------------------------------------------------------------------
-import UserLogged from "@/components/Logic/UserLogged";
-import PageUrls from "@/utils/PageUrls";
+import { PageUrls } from "@/utils/PageUtils";
 // -----------------------------------------------------------------------------
-import Panel from "@/components/UI/Containers/Panel";
+import Panel      from "@/components/UI/Containers/Panel";
 import SignUpForm from "@/components/User/Login/SignUpForm";
+// -----------------------------------------------------------------------------
+import UserLoggedContext from "@/contexts/User/UserLoggedContext.js";
 // -----------------------------------------------------------------------------
 import styles from "../styles/LoginPage.module.css";
 
@@ -35,13 +36,13 @@ import styles from "../styles/LoginPage.module.css";
 function CreatePage()
 {
   return (<>
-    <UserLogged requiresLoggedUser={false} redirectTo={PageUrls.UserOwnProfile}>
+    <UserLoggedContext requiresLoggedUser={false} redirectTo={PageUrls.UserOwnProfile}>
       <div className={styles.mainContainer}>
         <Panel className="margin-top-2">
           <SignUpForm/>
         </Panel>
       </div>
-    </UserLogged>
+    </UserLoggedContext>
   </>);
 }
 

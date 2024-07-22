@@ -24,9 +24,9 @@
 import { useRouter } from "next/router";
 // -----------------------------------------------------------------------------
 import { useEffect, useState } from "react";
-//
-import App from "@/models/App";
+// -----SS------------------------------------------------------------------------
 import UserProfile from "@/components/User/UserProfile";
+import UserService from "@/services/UserService";
 
 
 // -----------------------------------------------------------------------------
@@ -38,12 +38,13 @@ function ProfilePageForUser()
 
   //
   const [userModel, setUserModel] = useState(null);
+  
   useEffect(()=>{
     const _GetUser = async ()=>{
-      const user_model = await App.GetUserWithUsername(username);
+      const user_model = await UserService.GetUserWithUsername(username);
       setUserModel(user_model);
     }
-
+    
     if(username) {
       _GetUser();
     }

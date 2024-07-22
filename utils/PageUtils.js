@@ -1,4 +1,13 @@
-class PageUrls
+
+// -----------------------------------------------------------------------------
+import { useRouter } from "next/router";
+
+//
+// Page Urls
+//
+
+// -----------------------------------------------------------------------------
+export class PageUrls
 {
   static UserOwnProfile     = "/profile";
   static UserLogin          = "/login";
@@ -20,4 +29,18 @@ class PageUrls
   static SidebarMore = "/more";
 }
 
-export default PageUrls;
+
+//
+// Page Router
+//
+
+// -----------------------------------------------------------------------------
+export function usePageRouter()
+{
+  const router = useRouter();
+  const NavigateTo = (url) => {
+    router.push(url);
+  };
+
+  return { NavigateTo }
+}

@@ -1,41 +1,29 @@
 // -----------------------------------------------------------------------------
 import { useState } from "react";
 // -----------------------------------------------------------------------------
-import App from "@/models/App";
-import ToastUtils from "@/utils/Toast";
-import UsePageRouter from "@/utils/PageRouter";
-import PageUrls from "@/utils/PageUrls";
+import { PageUrls, usePageRouter} from "@/utils/PageUtils";
 // -----------------------------------------------------------------------------
-import DivasLogo from "@/components/UI/DivasLogo";
+import DivasLogo    from "@/components/UI/DivasLogo";
 import ActionButton from "@/components/UI/Buttons/ActionButton";
-import Input from "@/components/UI/Inputs/Input";
+import Input        from "@/components/UI/Inputs/Input";
 // -----------------------------------------------------------------------------
 import styles from "./Forms.module.css";
+import LabeledInput from "@/components/UI/Inputs/LabeledInput";
 
 
 // -----------------------------------------------------------------------------
 function ForgotPassword()
 {
   //
-  const [username, setUsername] = useState("");
+  const [username, setUsername]   = useState("");
   const [hasSubmit, setHasSubmit] = useState(false);
 
-  const { NavigateTo } = UsePageRouter();
+  const { NavigateTo } = usePageRouter();
 
   //
-  const _HandleUsernameChange = async (e) => {
-    setUsername(e.target.value);
-  };
-
-  //
-  const _HandleResetPassword = async () => {
-    setHasSubmit(true);
-  }
-
-  //
-  const _HandleGoBack = async() => {
-    NavigateTo(PageUrls.UserLogin);
-  }
+  const _HandleUsernameChange = async (e) => { setUsername(e.target.value); };
+  const _HandleResetPassword  = async ()  => { setHasSubmit(true); }
+  const _HandleGoBack         = async ()  => { NavigateTo(PageUrls.UserLogin); }
 
   //
   return (<>
@@ -46,29 +34,31 @@ function ForgotPassword()
       </div>
 
       {/*  */}
-
       { !hasSubmit && <>
         <div>
           <div className={styles.inputContainer}>
-            <span>Username</span>
-            <Input type="text" value={username} onChange={_HandleUsernameChange}></Input>
+            <LabeledInput
+              type="text"
+              value={username}
+              onChange={_HandleUsernameChange}>
+                Username
+            </LabeledInput>
           </div>
         </div>
 
         <div className={styles.buttonsContainer}>
-          <div>
             <ActionButton className="flex-grow" onClick={_HandleResetPassword}>Reset Password</ActionButton>
-          </div>
+            <ActionButton onClick={_HandleGoBack}>Go Back</ActionButton>
         </div>
       </>}
 
+      {/* When user already have submit the username for resetting the password */}
       { hasSubmit && <>
         <div className={styles.buttonsContainer}>
           <span>If a username was found you will received information on the email.</span>
           <ActionButton className="flex-grow" onClick={_HandleGoBack}>Go Back</ActionButton>
         </div>
       </>}
-
     </div>
   </>)
 }

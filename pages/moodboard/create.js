@@ -1,7 +1,7 @@
 
 // -----------------------------------------------------------------------------
-import UserLogged from "@/components/Logic/UserLogged";
-import PageUrls from "@/utils/PageUrls";
+import UserLoggedContext from "@/contexts/User/UserLoggedContext.js";
+import PageUrls from "@/utils/PageUtils";
 // -----------------------------------------------------------------------------
 import MoodboardEditor from "@/components/Moodboard/Editor/MoodboardEditor";
 
@@ -10,9 +10,9 @@ import MoodboardEditor from "@/components/Moodboard/Editor/MoodboardEditor";
 function Component()
 {
   return (<>
-    <UserLogged requiresLoggedUser={true} redirectTo={PageUrls.UserLogin}>
-      <MoodboardEditor></MoodboardEditor>
-    </UserLogged>
+    <UserLoggedContext requiresLoggedUser={true} redirectTo={PageUrls.UserLogin}>
+      <MoodboardEditor/>
+    </UserLoggedContext>
   </>);
 }
 

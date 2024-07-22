@@ -23,24 +23,23 @@
 // -----------------------------------------------------------------------------
 import { useState } from "react";
 // -----------------------------------------------------------------------------
-import App from "@/models/App";
 import ToastUtils from "@/utils/Toast";
-import PageUrls from "@/utils/PageUrls";
-import UsePageRouter from "@/utils/PageRouter";
+import { PageUrls, usePageRouter} from "@/utils/PageUtils";
 // -----------------------------------------------------------------------------
-import DivasLogo from "@/components/UI/DivasLogo";
+import DivasLogo    from "@/components/UI/DivasLogo";
 import ActionButton from "@/components/UI/Buttons/ActionButton";
-import TextButton from "@/components/UI/Buttons/TextButton";
+import TextButton   from "@/components/UI/Buttons/TextButton";
 import LabeledInput from "@/components/UI/Inputs/LabeledInput";
 // -----------------------------------------------------------------------------
 import styles from "./Forms.module.css";
+import UserService from "@/services/UserService";
 
 
 // -----------------------------------------------------------------------------
 function SignUpForm()
 {
   //
-  const { NavigateTo } = UsePageRouter();
+  const { NavigateTo } = usePageRouter();
 
   //
   const [username, setUsername]               = useState("");
@@ -63,28 +62,23 @@ function SignUpForm()
   //
   const _HandleSignUp = async () => {
     const data = {
-      username: username,
-      email: email,
-      password: password,
-      fullname: fullname,
-      description: description,
+      username,
+      email,
+      password,
+      fullname,
+      description,
     };
 
-    const result = await App.CreateUserWithData(data, profilePhoto);
+    const result = await UserService.CreateUserWithData(data, profilePhoto);
     if(result.IsError()) {
       ToastUtils.Error(result.errorJson.message);
       return false;
     }
 
-    const user = result.value;
-    App.SetCurrentLoggedUser(user);
-
     NavigateTo(PageUrls.UserOwnProfile);
   };
 
-  const _HandleAlreadyHaveUser = async () => {
-    NavigateTo(PageUrls.UserLogin);
-  }
+  const _HandleAlreadyHaveUser = async () => { NavigateTo(PageUrls.UserLogin); }
 
 
   //
@@ -98,21 +92,41 @@ function SignUpForm()
       <div>
         {/*  */}
         <div className={styles.inputContainer}>
-          <LabeledInput type="text" value={username} onChange={_HandleUsernameChange}>Username</LabeledInput>
+          <LabeledInput
+            type="text"
+            value={username}
+            onChange={_HandleUsernameChange}>
+              Username
+          </LabeledInput>
         </div>
         {/*  */}
         <div className={styles.inputContainer}>
-          <LabeledInput type="text" value={email} onChange={_HandleEmailChange}>Email</LabeledInput>
+          <LabeledInput
+            type="text"
+            value={email}
+            onChange={_HandleEmailChange}>
+              Email
+          </LabeledInput>
         </div>
       </div>
 
       <div>
         {/*  */}
         <div className={styles.inputContainer}>
-          <LabeledInput type="text" value={password} onChange={_HandlePasswordChange}>Password</LabeledInput>
+          <LabeledInput
+            type="text"
+            value={password}
+            onChange={_HandlePasswordChange}>
+              Password
+          </LabeledInput>
         </div>
         <div className={styles.inputContainer}>
-          <LabeledInput type="text" value={password} onChange={_HandlePasswordConfirmChange}>Confirm Password</LabeledInput>
+          <LabeledInput
+            type="text"
+            value={passwordConfirm}
+            onChange={_HandlePasswordConfirmChange}>
+            Confirm Password
+          </LabeledInput>
         </div>
       </div>
 
@@ -120,11 +134,21 @@ function SignUpForm()
       <div>
         {/*  */}
         <div className={styles.inputContainer}>
-          <LabeledInput type="text" value={fullname} onChange={_HandleFullnameChange}>Full Name</LabeledInput>
+          <LabeledInput
+            type="text"
+            value={fullname}
+            onChange={_HandleFullnameChange}>
+            Full Name
+          </LabeledInput>
         </div>
         {/*  */}
         <div className={styles.inputContainer}>
-          <LabeledInput type="text" value={description} onChange={_HandleDescriptionChange}>Description</LabeledInput>
+          <LabeledInput
+            type="text"
+            value={description}
+            onChange={_HandleDescriptionChange}>
+            Description
+          </LabeledInput>
         </div>
       </div>
 
@@ -134,13 +158,15 @@ function SignUpForm()
         </div>
       </div>
 
-      <div>
-      </div>
       {/*  */}
       <div className={styles.buttonsContainer}>
-        <ActionButton className="flex-grow" onClick={_HandleSignUp}>Sign Up</ActionButton>
+        <ActionButton className="flex-grow" onClick={_HandleSignUp}>
+          Sign Up
+        </ActionButton>
         or
-        <TextButton className="flex-grow" onClick={_HandleAlreadyHaveUser}>Already have user?</TextButton>
+        <TextButton className="flex-grow" onClick={_HandleAlreadyHaveUser}>
+          Already have user?
+        </TextButton>
       </div>
     </div>
   </>)

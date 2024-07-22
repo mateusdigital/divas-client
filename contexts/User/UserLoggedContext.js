@@ -1,22 +1,29 @@
 // -----------------------------------------------------------------------------
 import { createContext, useContext,useState, useEffect } from "react";
 // -----------------------------------------------------------------------------
-import App from "@/models/App";
 import ToastUtils from "@/utils/Toast";
-import PageUrls from "@/utils/PageUrls";
-import UsePageRouter from "@/utils/PageRouter";
-
+import { PageUrls, usePageRouter }  from "@/utils/PageUtils";
+// -----------------------------------------------------------------------------
+import LoginService from "@/services/LoginService";
 
 // -----------------------------------------------------------------------------
 const LoggedUserContext = createContext(null);
 
+// -----------------------------------------------------------------------------
 let _LoggedUser = null;
 
+
+//
+// Public
+//
+
+// -----------------------------------------------------------------------------
 export function useLoggedUserContext()
 {
   return useContext(LoggedUserContext);
 }
 
+// -----------------------------------------------------------------------------
 export function getLoggedUser()
 {
   return _LoggedUser;
@@ -24,15 +31,15 @@ export function getLoggedUser()
 
 
 // -----------------------------------------------------------------------------
-function UserLogged({requiresLoggedUser, redirectTo, children})
+function UserLoggedContext({requiresLoggedUser, redirectTo, children})
 {
   const [loggedUser, setLoggedUser] = useState(null);
-  const { NavigateTo } = UsePageRouter();
+  const { NavigateTo } = usePageRouter();
 
   //
   useEffect(()=>{
     const _GetLoggedUser = async ()=>{
-      const result = await App.GetCurrentLoggedUser();
+      const result = await LoginService.GetCurrentLoggedUser();
       if(result.IsValid()) {
         setLoggedUser(result.value);
         _LoggedUser = result.value;
@@ -63,4 +70,4 @@ function UserLogged({requiresLoggedUser, redirectTo, children})
 };
 
 // -----------------------------------------------------------------------------
-export default UserLogged;
+export default UserLoggedContext;

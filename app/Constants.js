@@ -34,7 +34,7 @@ class Constants
 
   // ---------------------------------------------------------------------------
   static EXTERNAL_IMAGES_URL = "http://localhost:5000/data";
-  static IMAGES_URL          = "http://localhost:5000";
+  static IMAGES_URL          = "http://localhost:3000";
 }
 
 // -----------------------------------------------------------------------------

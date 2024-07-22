@@ -25,12 +25,14 @@ import { useState } from "react";
 // -----------------------------------------------------------------------------
 import Link from "next/link";
 // -----------------------------------------------------------------------------
-import App from "@/models/App";
 import NET from "@/app/NET";
-import UserLogged, {useLoggedUserContext } from "@/components/Logic/UserLogged";
-import PageUrls from "@/utils/PageUrls";
 // -----------------------------------------------------------------------------
-import DivasLogo from "@/components/UI/DivasLogo";
+import UserLoggedContext, { useLoggedUserContext } from "@/contexts/User/UserLoggedContext";
+// -----------------------------------------------------------------------------
+import Assert from "@/utils/Assert";
+import { PageUrls } from "@/utils/PageUtils";
+// -----------------------------------------------------------------------------
+import DivasLogo    from "@/components/UI/DivasLogo";
 import MaterialIcon from "@/components/MaterialIcon";
 // -----------------------------------------------------------------------------
 import styles from "./Sidebar.module.css";
@@ -39,9 +41,7 @@ import styles from "./Sidebar.module.css";
 // -----------------------------------------------------------------------------
 function _SidebarLink({href, children})
 {
-  if(!href){
-    debugger;
-  }
+  Assert.NotNullOrEmpty(href);
 
   const active = (_PageName == href) ? styles.sideBarActive : "";
   const class_name = `${styles.sideBarItemContainer} ${active}`;
@@ -69,19 +69,19 @@ function _SidebarItem({icon, children})
     </MaterialIcon>
   )
 }
-let _PageName = null;
+
+
+let _PageName = null; // @Incomplete: do we need this???
 
 // -----------------------------------------------------------------------------
 function _Content({pageName})
 {
-  const material_symbol_style = "material-symbols-outlined";
   const loggedUser = useLoggedUserContext();
-  const [ currentPageName, setCurrentPageName ] = useState(pageName);
-
   if(!loggedUser) {
     return null;
   }
 
+  const [ currentPageName, setCurrentPageName ] = useState(pageName);
   _PageName = currentPageName;
 
   //
@@ -133,23 +133,26 @@ function _Content({pageName})
         <Link
           href="/login"
           className={styles.sideBarItemContainer}
-          onClick={()=>{ App.TryToLogoutUser(); }}
-          >
-          <span className={`${material_symbol_style} ${styles.sideBarItemIcon}`}>menu</span>
-          logout
+          onClick={()=>{
+            UserService.TryToLogoutUser();
+            NavigateTo(PageUrls.UserLogin);
+          }}
+        >
+          <_SidebarItem icon="menu"> logout</_SidebarItem>
         </Link>
-
       </div>
     </div>
   );
 }
+
+
 // -----------------------------------------------------------------------------
 function Sidebar({pageName})
 {
   return (
-    <UserLogged requiresLoggedUser={true} redirectTo={PageUrls.UserLogin}>
+    <UserLoggedContext requiresLoggedUser={true} redirectTo={PageUrls.UserLogin}>
       <_Content pageName={pageName}/>
-    </UserLogged>
+    </UserLoggedContext>
   );
 }
 // -----------------------------------------------------------------------------

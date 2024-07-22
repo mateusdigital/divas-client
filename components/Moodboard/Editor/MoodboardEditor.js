@@ -20,28 +20,29 @@
 //                                                                            //
 //----------------------------------------------------------------------------//
 // -----------------------------------------------------------------------------
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 // -----------------------------------------------------------------------------
-import App from "@/models/App";
+import { PageUrls } from "@/utils/PageUtils";
 // -----------------------------------------------------------------------------
-import DivasLogo from "@/components/UI/DivasLogo";
+import DivasLogo    from "@/components/UI/DivasLogo";
 import ActionButton from "@/components/UI/Buttons/ActionButton";
-import TextButton from "@/components/UI/Buttons/TextButton";
-import BackButton from "@/components/UI/Buttons/BackButton.js";
+import TextButton   from "@/components/UI/Buttons/TextButton";
+import BackButton   from "@/components/UI/Buttons/BackButtons";
 import ProfileImage from "@/components/UI/Images/ProfileImage";
+// -----------------------------------------------------------------------------
 import { MoodboardEditorContextProvider, useMoodboardEditorContext } from "@/contexts/Moodboard/Editor/MoodboardEditorContext";
 // -----------------------------------------------------------------------------
-import MoodboardCanvas   from "./Canvas/MoodboardCanvas";
+import MoodboardCanvas          from "./Canvas/MoodboardCanvas";
 import MoodboardEditingControls from "./Controls/MoodboardEditingControls";
 import MoodboardPublishControls from "./Controls/MoodboardPublishControls";
 // -----------------------------------------------------------------------------
 import { FLOW_STATE_EDITING, FLOW_STATE_PUBLISH, FLOW_STATE_SAVE_DRAFT } from "./utils/FlowState";
 // -----------------------------------------------------------------------------
 import styles from "./MoodboardEditor.module.css";
-import PageUrls from "@/utils/PageUrls";
 
-// ---------------------------------------------------------------------------
+
+// -----------------------------------------------------------------------------
 function _MoodboardControlForCurrentFlowState ({flowState, OnBackClicked}) {
   if(flowState == FLOW_STATE_EDITING) {
     return (<>
@@ -52,7 +53,7 @@ function _MoodboardControlForCurrentFlowState ({flowState, OnBackClicked}) {
   }
 
   const element = (flowState == FLOW_STATE_SAVE_DRAFT)
-    ? (<MoodboardEditingControls className={styles.controlsContentContainer}/>)
+    ? (<MoodboardEditingControls className={styles.controlsContentContainer}/>) // @Incomplete: Set the correct element.
     : (<MoodboardPublishControls className={styles.controlsContentContainer}/>);
 
   return (<>
@@ -68,11 +69,13 @@ function _Content()
 {
   const _controller = useMoodboardEditorContext();
 
+  //
   const [ currentFlowState, setCurrentFlowState ] = useState(FLOW_STATE_EDITING);
   const [ currentFlowElement, setCurrentFlowElement ] = useState((
     <_MoodboardControlForCurrentFlowState flowState={currentFlowState}/>
   ));
 
+  //
   useEffect(()=>{
     const element = (<>
       <_MoodboardControlForCurrentFlowState
@@ -88,15 +91,9 @@ function _Content()
   //
 
   // ---------------------------------------------------------------------------
-  const _HandleOnEditingClick = ()=>{
-    setCurrentFlowState(FLOW_STATE_EDITING);
-  }
-  const _HandleOnPublishClick = ()=>{
-    setCurrentFlowState(FLOW_STATE_PUBLISH);
-  }
-  const _HandleOnSaveDraftClick = ()=>{
-    setCurrentFlowState(FLOW_STATE_SAVE_DRAFT);
-  }
+  const _HandleOnEditingClick   = ()=>{ setCurrentFlowState(FLOW_STATE_EDITING); }
+  const _HandleOnPublishClick   = ()=>{ setCurrentFlowState(FLOW_STATE_PUBLISH); }
+  const _HandleOnSaveDraftClick = ()=>{ setCurrentFlowState(FLOW_STATE_SAVE_DRAFT); }
 
   //
   // Component
@@ -110,12 +107,14 @@ function _Content()
         <Link href={PageUrls.UserOwnProfile}>
           <DivasLogo/>
         </Link>
+
         {( currentFlowState == FLOW_STATE_EDITING &&
           <div>
             <ActionButton onClick={_HandleOnPublishClick}>Publish</ActionButton>
             <TextButton onClick={_HandleOnSaveDraftClick}>Save Draft</TextButton>
           </div>
         )}
+
         <ProfileImage className={styles.photoContainer}/>
       </div>
 
@@ -138,7 +137,7 @@ function MoodboardEditor()
 {
   return (
     <MoodboardEditorContextProvider>
-      <_Content></_Content>
+      <_Content/>
     </MoodboardEditorContextProvider>
   )
 }
