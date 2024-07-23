@@ -21,11 +21,16 @@
 //----------------------------------------------------------------------------//
 
 // -----------------------------------------------------------------------------
+import React from "react";
+// -----------------------------------------------------------------------------
 import { useRef } from "react";
 // -----------------------------------------------------------------------------
 import { useMoodboardEditorContext } from "@/contexts/Moodboard/Editor/MoodboardEditorContext.js";
 // -----------------------------------------------------------------------------
 import { PageUrls, usePageRouter } from "@/utils/PageUtils.js";
+import ToastUtils from "@/utils/Toast";
+// -----------------------------------------------------------------------------
+import MoodboardService from "@/services/MoodboardService";
 // -----------------------------------------------------------------------------
 import LabeledInput    from "@/components/UI/Inputs/LabeledInput.js";
 import LabeledTextArea from "@/components/UI/Inputs/LabeledTextArea.js";
@@ -39,7 +44,8 @@ import styles from "./MoodboardEditingControls.module.css";
 function MoodboardPublishControls({className})
 {
   //
-  const _titleRef = useRef("");
+  const _titleRef       = useRef();
+  const _descriptionRef = useRef();
 
   const _moodboardController = useMoodboardEditorContext();
   const { NavigateTo } = usePageRouter();
@@ -47,11 +53,11 @@ function MoodboardPublishControls({className})
 
   // ---------------------------------------------------------------------------
   const _HandlePublish = async ()=>{
-    const info_data = { // @Incomplete: Add the correct data.
-      title: "ola",
-      description: "mundo"
-    };
 
+    const title       = _titleRef.current.value;
+    const description = _descriptionRef.current.value;
+
+    const info_data = { title, description };
     const save_data  = _moodboardController.PrepareSaveDataForUpload ();
     const save_photo = _moodboardController.PrepareSavePhotoForUpload();
 
@@ -73,7 +79,7 @@ function MoodboardPublishControls({className})
   // ---------------------------------------------------------------------------
   const _HandleSave = async () => {
     const save_data = _moodboardController.PrepareSaveDataForUpload();
-    var result = await MoodboardService.SaveMoodboardItem(save_data);
+    const result    = await MoodboardService.SaveMoodboardItem(save_data);
 
     if(result.IsError()) {
       ToastUtils.ResultError(result);
@@ -92,8 +98,8 @@ function MoodboardPublishControls({className})
         <span>Describe your moodboard</span>
       </div>
       <div>
-        <LabeledInput useRef={_titleRef}>Title</LabeledInput>
-        <LabeledTextArea>Description</LabeledTextArea>
+        <LabeledInput ref={_titleRef}>Title</LabeledInput>
+        <LabeledTextArea ref={_descriptionRef}>Description</LabeledTextArea>
       </div>
       <div className="flex">
         <ActionButton className="flex-grow" onClick={_HandlePublish}>Publish</ActionButton>

@@ -52,8 +52,12 @@ class MoodboardCanvasController
     });
   }
 
+  //
+  // Serialization
+  //
+
   // ---------------------------------------------------------------------------
-  PrepareSaveData()
+  PrepareSaveDataForUpload()
   {
     const objects = this.fabric_canvas.getObjects();
     const arr = [];
@@ -69,10 +73,11 @@ class MoodboardCanvasController
     return arr;
   }
 
-  PrepareSavePhoto()
+  // ---------------------------------------------------------------------------
+  PrepareSavePhotoForUpload()
   {
     const data_url = this.fabric_canvas.toDataURL({ format: "png" });
-    const blob = Utils.DataURLToBlob(data_url);
+    const blob     = Utils.DataURLToBlob(data_url);
 
     return blob;
   }

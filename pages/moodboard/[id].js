@@ -21,12 +21,13 @@
 //----------------------------------------------------------------------------//
 
 // -----------------------------------------------------------------------------
+import React from "react";
+import { useEffect, useState } from "react";
+// -----------------------------------------------------------------------------
 import { useRouter } from "next/router";
 // -----------------------------------------------------------------------------
-import { useEffect, useState } from "react";
-//
-import App from "@/models/App";
 import MoodboardDetails from "@/components/Moodboard/DetailsPage/MoodboardDetails";
+import MoodboardService from "@/services/MoodboardService";
 
 
 // -----------------------------------------------------------------------------
@@ -40,7 +41,7 @@ function MoodboardDetailsPageForId()
   const [moodboardModel, setMoodboardModel] = useState(null);
   useEffect(()=>{
     const _GetMoodboard = async ()=>{
-      const moodboard_model = await App.GetMoodboardWithId(id);
+      const moodboard_model = await MoodboardService.GetMoodboardWithId(id);
       setMoodboardModel(moodboard_model);
     }
 

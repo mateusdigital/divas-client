@@ -25,10 +25,11 @@ import React from 'react';
 // -----------------------------------------------------------------------------
 import { useEffect, useState } from 'react';
 // -----------------------------------------------------------------------------
-import App from '@/models/App';
 import ToastUtils from '@/utils/Toast';
 // -----------------------------------------------------------------------------
 import EmptyGridPlaceholder from "@/components/UI/Grid/EmptyGridPlaceholder.js";
+import MoodboardService from "@/services/MoodboardService";
+// -----------------------------------------------------------------------------
 import MoodboardGridItem from './MoodboardGridItem';
 // -----------------------------------------------------------------------------
 import styles from "./MoodboardGrid.module.css";
@@ -47,7 +48,7 @@ function MoodboardGrid({ userModel })
         return;
       }
 
-      const result = await App.GetMultipleMoodboardWithIds(userModel.moodboards);
+      const result = await MoodboardService.GetMultipleMoodboardWithIds(userModel.moodboards);
       if(result.IsError()) {
         ToastUtils.ResultError(result);
         return;
@@ -63,7 +64,8 @@ function MoodboardGrid({ userModel })
   return (
     <div className={styles.container}>
       <div className={styles.grid}>
-        { moodboards.length != 0 &&
+        {
+          moodboards.length != 0 &&
           moodboards.map((moodboard) => (
             <MoodboardGridItem
               key={moodboard._id}

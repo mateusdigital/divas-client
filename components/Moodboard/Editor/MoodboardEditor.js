@@ -28,7 +28,7 @@ import { PageUrls } from "@/utils/PageUtils";
 import DivasLogo    from "@/components/UI/DivasLogo";
 import ActionButton from "@/components/UI/Buttons/ActionButton";
 import TextButton   from "@/components/UI/Buttons/TextButton";
-import BackButton   from "@/components/UI/Buttons/BackButtons";
+import BackButton   from "@/components/UI/Buttons/BackButton";
 import ProfileImage from "@/components/UI/Images/ProfileImage";
 // -----------------------------------------------------------------------------
 import { MoodboardEditorContextProvider, useMoodboardEditorContext } from "@/contexts/Moodboard/Editor/MoodboardEditorContext";

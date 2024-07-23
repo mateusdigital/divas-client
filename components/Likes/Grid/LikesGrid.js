@@ -21,9 +21,12 @@
 //---------------------------------------------------------------------------~//
 
 // -----------------------------------------------------------------------------
+import React from 'react';
+// -----------------------------------------------------------------------------
 import { useEffect, useState } from 'react';
 // -----------------------------------------------------------------------------
-import App from '@/models/App';
+import MoodboardService from "@/services/MoodboardService";
+import ToastUtils from '@/utils/Toast';
 // -----------------------------------------------------------------------------
 import EmptyGridPlaceholder from "@/components/UI/Grid/EmptyGridPlaceholder.js";
 import DesignGridItem from "@/components/Moodboard/Grid/MoodboardGrid";
@@ -39,21 +42,16 @@ function LikesGrid({ userModel })
   //
   useEffect(() => {
     const _FetchLikes = async () => {
-      try {
-        if(userModel.likes.length == 0) {
-          return;
-        }
-
-        const result = await App.GetMultipleMoodboardWithIds(userModel.moodboards);
-        if(result.IsError()) {
-          ToastUtils.ResultError(result);
-          return;
-        }
+      if(userModel.likes.length == 0) {
+        return;
       }
-      catch(ex) {
 
+      const result = await MoodboardService.GetMultipleMoodboardWithIds(userModel.moodboards);
+      if(result.IsError()) {
+        ToastUtils.ResultError(result);
+        return;
       }
-    };
+    }
 
     _FetchLikes();
   }, []);
