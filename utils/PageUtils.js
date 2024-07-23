@@ -9,23 +9,30 @@ import { useRouter } from "next/router";
 // -----------------------------------------------------------------------------
 export class PageUrls
 {
+  // User
   static UserOwnProfile     = "/profile";
+  static UserOtherProfile   = "/users/:id";
   static UserLogin          = "/login";
   static UserForgotPassword = "/users/forgot-password";
   static UserSignUp         = "/users/sign-up";
 
   static UserMessages       = "/users/messages";
 
+  // Feed
   static FeedUser           = "/feed/user";
   static FeedMain           = "/feed/main";
 
-  static DocsHelp      = "doc/help";
-  static DocsTerms     = "doc/terms";
+  // Docs
+  static DocsHelp      = "/doc/help";
+  static DocsTerms     = "/doc/terms";
   static DocsPrivacy   ="/doc/privacy";
   static DocsCopyright ="/doc/copyright";
 
-  static MoodboardCreate = "/moodboard/create";
+  // Moodboard
+  static MoodboardCreate  = "/moodboard/create";
+  static MoodboardDetails = "/moodboard/:id";
 
+  // Sidebar
   static SidebarMore = "/more";
 }
 

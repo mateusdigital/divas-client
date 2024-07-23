@@ -1,36 +1,24 @@
-//~---------------------------------------------------------------------------//
-//                               *       +                                    //
-//                         "                  |                               //
-//                     ()    .-.,="``"=.    - o -                             //
-//                           "=/_       \     |                               //
-//                        *   |  "=._    |                                    //
-//                             \     `=./`,        "                          //
-//                          .   "=.__.=" `="      *                           //
-//                 +                         +                                //
-//                      O      *        "       .                             //
-//                                                                            //
-//  File      : [username].js                                                 //
-//  Project   : divas-client                                                  //
-//  Date      : 2024-03-25                                                    //
-//  License   : See project"s COPYING.TXT for full info.                      //
-//  Author    : mateus.digital <hello@mateus.digital>                         //
-//  Copyright : mateus.digital - 2024                                         //
-//                                                                            //
-//  Description :                                                             //
-//                                                                            //
-//---------------------------------------------------------------------------~//
+"use client";
 
 // -----------------------------------------------------------------------------
-import { useRouter } from "next/router";
-// -----------------------------------------------------------------------------
+import React from "react";
 import { useEffect, useState } from "react";
-// -----SS------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
+import { useRouter, } from "next/router";
+// -----------------------------------------------------------------------------
+import { PageUrls } from "@/utils/PageUtils";
+// -----------------------------------------------------------------------------
+import MainLayout  from "@/components/Layout/MainLayout";
 import UserProfile from "@/components/User/UserProfile";
+// -----------------------------------------------------------------------------
+import UserLoggedContext, { useLoggedUserContext } from "@/contexts/User/UserLoggedContext.js";
+// -----------------------------------------------------------------------------
 import UserService from "@/services/UserService";
+import ToastUtils from "@/utils/Toast";
 
 
 // -----------------------------------------------------------------------------
-function ProfilePageForUser()
+function _Content()
 {
   //
   const router = useRouter();
@@ -38,13 +26,19 @@ function ProfilePageForUser()
 
   //
   const [userModel, setUserModel] = useState(null);
-  
+
   useEffect(()=>{
     const _GetUser = async ()=>{
-      const user_model = await UserService.GetUserWithUsername(username);
+      const result = await UserService.GetUserWithUsername(username);
+      if(!result.IsValid()) {
+        ToastUtils.ResultError(result);
+        return;
+      }
+
+      const user_model = result.value;
       setUserModel(user_model);
     }
-    
+
     if(username) {
       _GetUser();
     }
@@ -55,9 +49,22 @@ function ProfilePageForUser()
     return <div>Loading...</div>;
   }
 
-  // Ready...
-  return <UserProfile userModel={userModel}></UserProfile>
+  return (<>
+    <MainLayout pageName={PageUrls.UserOtherProfile}>
+      <UserProfile userModel={userModel}/>
+    </MainLayout>
+  </>);
 }
 
 // -----------------------------------------------------------------------------
-export default ProfilePageForUser;
+function ProfilePageForOtherUser()
+{
+  return (
+    <UserLoggedContext requiresLoggedUser={true} redirectTo={PageUrls.UserLogin}>
+      <_Content/>
+    </UserLoggedContext>
+  );
+}
+
+// -----------------------------------------------------------------------------
+export default ProfilePageForOtherUser;

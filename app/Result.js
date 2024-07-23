@@ -1,3 +1,4 @@
+const DIVAS_DEBUG = 1;
 
 // -----------------------------------------------------------------------------
 class Result
@@ -31,6 +32,9 @@ class Result
   // ---------------------------------------------------------------------------
   static ExceptionError(error)
   {
+    if(DIVAS_DEBUG) {
+      throw error;
+    }
     return new Result(null, error, { message: error.message });
   }
 

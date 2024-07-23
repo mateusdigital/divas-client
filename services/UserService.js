@@ -20,7 +20,7 @@ class UserService
     Assert.NotNull(username);
 
     // @Incomplete: Maybe cache???
-    const api_url = NET.Make_API_Url(Endpoints.UserModel.GetByUsername, username);
+    const api_url = NET.Make_API_Url(Endpoints.User.GetByUsername, username);
 
     const response = await NET.GET(api_url);
     if(response.status != StatusCodes.OK) {
@@ -39,7 +39,7 @@ class UserService
     Assert.NotNull(id);
 
     try {
-      const api_url = NET.Make_API_Url(Endpoints.UserModel.GetById, id);
+      const api_url = NET.Make_API_Url(Endpoints.User.GetById, id);
 
       const response = await NET.GET(api_url);
       if(response.status != StatusCodes.OK) {

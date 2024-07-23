@@ -67,12 +67,13 @@ class NET
   }
 
   // ---------------------------------------------------------------------------
-  static Make_Navigation_Url(endpoint, data)
+  static Make_Navigation_Url(endpoint, ...data)
   {
-    const base_url = `${Constants.APP_URL}:${Constants.APP_PORT}/${endpoint}`;
-    const final_url = (data) ? `${base_url}/${data}` : `${base_url}`;
+    const base_url  = `${Constants.APP_URL}:${Constants.APP_PORT}`;
+    const replaced  = NET._ReplaceArgs(endpoint, ...data);
+    const final_url = `${base_url}/${replaced}`;
 
-    console.log(`API: ${final_url}`);
+    console.log(`Navigation: ${final_url}`);
     return final_url;
   }
 

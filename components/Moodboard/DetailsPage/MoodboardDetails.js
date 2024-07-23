@@ -30,9 +30,10 @@ import MoodboardUserInfo from "./UserInfo/MoodboardUserInfo";
 import MoodboardComments from "./Comments/MoodboardComments";
 import MoodboardItemsCarrousel from "./ItemsCarrousel/MoodboardItemsCarrousel";
 // -----------------------------------------------------------------------------
-import styles from "./MoodboardDetails.module.css";
-import CachedImage from "@/components/UI/Images/CachedImage";
+import CachedImage   from "@/components/UI/Images/CachedImage";
 import ImageDefaults from "@/components/UI/Images/ImageDefaults";
+// -----------------------------------------------------------------------------
+import styles from "./MoodboardDetails.module.css";
 
 // -----------------------------------------------------------------------------
 function MoodboardDetails({moodboardModel})
@@ -44,8 +45,9 @@ function MoodboardDetails({moodboardModel})
   //
   return (<>
     <MainLayout>
-      <div className={styles.moodboardContainer}>
-        <div className={styles.moodboardImageContainer}>
+      <div className={styles.container}>
+        {/* Moodboard Image */}
+        <div className={styles.imageContainer}>
           <CachedImage
             imageUrl={moodboardModel.photoUrl}
             imagePlaceholderUrl={ImageDefaults.PLACEHOLDER_URL_MOODBOARD_DETAILS}
@@ -53,9 +55,8 @@ function MoodboardDetails({moodboardModel})
         </div>
 
         {/* Info Container */}
-        <div className={styles.moodboardInfoContainer}>
-          <MoodboardUserInfo moodboardModel={moodboardModel}>
-          </MoodboardUserInfo>
+        <div className={styles.infoContainer}>
+          <MoodboardUserInfo moodboardModel={moodboardModel}/>
 
           {/* Design Item Info */}
           <div className={styles.moodboardItemInfoContainer}>
@@ -106,12 +107,12 @@ function MoodboardDetails({moodboardModel})
           {/* -Other */}
         </div>
         {/* -Info Container */}
-
-        {/* Items Carrousel */}
-        <MoodboardItemsCarrousel moodboardModel={moodboardModel}>
-        </MoodboardItemsCarrousel>
-        {/* -Items Carrousel */}
       </div>
+
+      {/* Items Carrousel */}
+      <MoodboardItemsCarrousel moodboardModel={moodboardModel}>
+      </MoodboardItemsCarrousel>
+      {/* -Items Carrousel */}
     </MainLayout>
   </>)
 }
