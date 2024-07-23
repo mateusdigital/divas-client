@@ -38,9 +38,11 @@ import styles from "./MoodboardGridItem.module.css";
 // -----------------------------------------------------------------------------
 function MoodboardGridItem({moodboardModel})
 {
+  //
   const details_url = NET.Make_Navigation_Url(PageUrls.MoodboardDetails, moodboardModel._id);
   const photo_url   = NET.Make_External_Image_Url(moodboardModel.photoUrl);
 
+  //
   return (
     <div className={styles.container}>
       <Link href={details_url}>

@@ -34,12 +34,36 @@ import CachedImage   from "@/components/UI/Images/CachedImage";
 import ImageDefaults from "@/components/UI/Images/ImageDefaults";
 // -----------------------------------------------------------------------------
 import styles from "./MoodboardDetails.module.css";
+import TextButton from "@/components/UI/Buttons/TextButton";
 
 // -----------------------------------------------------------------------------
 function MoodboardDetails({moodboardModel})
 {
   if(!moodboardModel) {
     return;
+  }
+
+  //
+  const moodboard_title = (moodboardModel.title)
+    ? moodboardModel.title
+    : "Untitled...";
+
+
+  //
+  const _HandleAddCollection = ()=>{
+
+  }
+
+  const _HandleShareClicked = ()=>{
+
+  }
+
+  const _HandleCommentsClicked = ()=>{
+
+  }
+
+  const _HandleLikeClicked = ()=>{
+
   }
 
   //
@@ -59,48 +83,55 @@ function MoodboardDetails({moodboardModel})
           <MoodboardUserInfo moodboardModel={moodboardModel}/>
 
           {/* Design Item Info */}
-          <div className={styles.moodboardItemInfoContainer}>
-            <span className={styles.moodboardItemTitle}>
-              {moodboardModel.title ? moodboardModel.title : "Untitled..."}
+          <div className={styles.itemInfoContainer}>
+            <span className={styles.itemInfoTitle}>
+              {moodboard_title}
             </span>
-            <span className={styles.moodboardItemDescription}>
+
+            <span className={styles.itemInfoDescription}>
               {moodboardModel.description}
             </span>
           </div>
           {/* -Design Item Info */}
 
+
           {/* Comments  */}
-          <MoodboardComments moodboardModel={moodboardModel}>
-          </MoodboardComments>
+          <div>
+            <MoodboardComments moodboardModel={moodboardModel}/>
+          </div>
           {/* -Comments */}
 
-          {/* Other */}
-          <div className={styles.moodboardOtherContainer}>
-            {/* Collection Button */}
-            <button>
-              Add to collection
-            </button>
 
-            <div className={styles.moodboardStatsContainer}>
+          {/* Other */}
+          <div className={styles.otherContainer}>
+            {/* Collection Button */}
+            <TextButton onClick={_HandleAddCollection}>Add to Collection</TextButton>
+
+            <div className={styles.statsContainer}>
               {/* Share Button */}
-              <button>
-                <MaterialIcon className={styles.moodboardOtherStat} icon="share">
-                </MaterialIcon>
-              </button>
+              <MaterialIcon
+                className={styles.statIcon}
+                icon="share"
+                onClick={_HandleShareClicked}
+              />
 
               {/* Comments Button */}
-              <button>
-                <MaterialIcon className={styles.moodboardOtherStat} icon="chat_bubble">
-                    {moodboardModel.commentsCount}
-                </MaterialIcon>
-              </button>
+              <MaterialIcon
+                className={styles.statIcon}
+                icon="chat_bubble"
+                onClick={_HandleCommentsClicked}
+              >
+                {moodboardModel.commentsCount}
+              </MaterialIcon>
 
               {/* Likes button */}
-              <button>
-                <MaterialIcon className={styles.moodboardOtherStat} icon="favorite">
-                    {moodboardModel.likesCount}
-                </MaterialIcon>
-              </button>
+              <MaterialIcon
+                className={styles.statIcon}
+                icon="favorite"
+                onClick={_HandleLikeClicked}
+              >
+                {moodboardModel.likesCount}
+              </MaterialIcon>
 
             </div>
           </div>

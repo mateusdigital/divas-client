@@ -10,18 +10,11 @@
   --layout-border-style: solid;
 }
 
+/*
+*
+*/
 
-body {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-
-  display: block;
-  width: 100vw;
-  height: 100vh;
-  font-style: normal;
-}
-
+/* -------------------------------------------------------------------------- */
 * {
   outline: 1px solid magenta;
   /* all: unset; */
@@ -34,6 +27,24 @@ body {
   font-optical-sizing: auto;
 }
 
+
+/*
+*  Tags
+*/
+
+/* -------------------------------------------------------------------------- */
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+
+  display: block;
+  width: 100vw;
+  height: 100vh;
+  font-style: normal;
+}
+
+/* -------------------------------------------------------------------------- */
 a {
   color: black;
   text-decoration: underline dotted;
@@ -42,9 +53,11 @@ a:hover {
   text-decoration: underline solid;
 }
 
+/* -------------------------------------------------------------------------- */
 span {
   display: block;
 }
+
 
 
 /*
@@ -59,6 +72,7 @@ span {
   margin-bottom: 2rem;
 }
 
+/* -------------------------------------------------------------------------- */
 .padding-top-2 {
   padding-top: 2rem;
 }
@@ -66,6 +80,7 @@ span {
   padding-bottom: 2rem;
 }
 
+/* -------------------------------------------------------------------------- */
 .padding-top-1 {
   padding-top: 1rem;
 }
@@ -73,6 +88,11 @@ span {
   padding-bottom: 1rem;
 }
 
+/*
+*  Flex
+*/
+
+/* -------------------------------------------------------------------------- */
 .flex {
   display: flex;
 }
@@ -82,9 +102,17 @@ span {
   width: 100%;
 }
 
+/* -------------------------------------------------------------------------- */
 .text-center {
   text-align: center;
 }
+
+/* -------------------------------------------------------------------------- */
+.clickable {
+  cursor: pointer;
+}
+
+
 
 /*
 *

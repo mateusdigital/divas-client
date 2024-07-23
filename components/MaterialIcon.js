@@ -20,17 +20,29 @@
 //                                                                            //
 //----------------------------------------------------------------------------//
 
-
-const SYMBOL_STYLE = "material-symbols-outlined";
+// -----------------------------------------------------------------------------
+import React from "react";
 
 // -----------------------------------------------------------------------------
-function MaterialIcon({icon, iconStyle, className, children})
+const SYMBOL_STYLE = "material-symbols-outlined";
+
+
+
+// -----------------------------------------------------------------------------
+function MaterialIcon({icon, iconStyle, className, onClick, children})
 {
+  //
   iconStyle = iconStyle || "";
   className = className || "";
 
+  //
+  if(onClick) {
+    className += " clickable";
+  }
+
+  //
   return (
-    <div className={className}>
+    <div className={className} onClick={onClick}>
       <span className={`${SYMBOL_STYLE} ${iconStyle}`}>{icon}</span>
       {children}
     </div>

@@ -22,15 +22,17 @@
 
 /* -------------------------------------------------------------------------- */
 .container {
-  background-color: green;
+  /* background-color: green; */
   display: flex;
   justify-content: center;
   width: fit-content;
+  margin-left: 2rem;
+  margin-right: 2rem;
 }
 
 /* -------------------------------------------------------------------------- */
 .imageContainer {
-  background-color: greenyellow;
+  /* background-color: greenyellow; */
 }
 
 .imageContainer img {
@@ -46,7 +48,7 @@
 }
 
 /* -------------------------------------------------------------------------- */
-.moodboardInfoUserContainer {
+.itemInfoContainer {
   display: flex;
   background-color: chartreuse;
   justify-content: space-between;
@@ -61,36 +63,46 @@
 }
 
 /* -------------------------------------------------------------------------- */
-.moodboardItemInfoContainer {
+.itemInfoContainer {
   display: flex;
+
   flex-direction: column;
+  align-items: stretch;
+
   background-color: red;
   text-align: center;
 }
 
-.moodboardItemTitle {
+.itemInfoTitle {
   background-color: blue;
   font-size: 2rem;
 }
 
-.moodboardItemDescription {
+.itemInfoDescription {
 
 }
 
 
 /* -------------------------------------------------------------------------- */
-.moodboardOtherContainer {
+.otherContainer {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.moodboardStatsContainer {
+.statsContainer {
   display: flex;
-  background-color: rebeccapurple;
+  align-items: flex-start;
+
+  gap: 0.5rem;
 }
 
-.moodboardOtherStat {
+.statsButton {
+  background: red;
+  border: none;
+}
+
+.statIcon {
   display: flex;
   flex-direction: column;
   text-align: center;
