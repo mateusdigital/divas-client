@@ -40,6 +40,11 @@ import styles from "./Sidebar.module.css";
 import LoginService from "@/services/LoginService";
 
 
+
+// -----------------------------------------------------------------------------
+let _PageName = null; // @Incomplete: do we need this???
+
+
 // -----------------------------------------------------------------------------
 function _SidebarLink({href, children})
 {
@@ -59,6 +64,7 @@ function _SidebarLink({href, children})
 // -----------------------------------------------------------------------------
 function _SidebarItem({icon, children})
 {
+        
   return (
     <MaterialIcon
       className={styles.sideBarItemContainer}
@@ -73,8 +79,6 @@ function _SidebarItem({icon, children})
 }
 
 
-let _PageName = null; // @Incomplete: do we need this???
-
 // -----------------------------------------------------------------------------
 function _Content({pageName})
 {
@@ -82,7 +86,8 @@ function _Content({pageName})
   if(!loggedUser) {
     return null;
   }
-
+  
+  //
   const [ currentPageName, setCurrentPageName ] = useState(pageName);
   _PageName = currentPageName;
 

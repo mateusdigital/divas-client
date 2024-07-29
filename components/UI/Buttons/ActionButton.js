@@ -4,19 +4,17 @@ import _Button from "./_Button";
 import styles from "./Buttons.module.css";
 
 // -----------------------------------------------------------------------------
-function ActionButton({children, onClick, className})
+function ActionButton(props)
 {
-  const class_name = `${styles.actionButton} ${className}`;
+  //
+  const class_name = `${styles.actionButton} ${props.className}`;
 
   //
-  return (<>
-    <_Button
-      className={class_name}
-      onClick={onClick}
-    >
-      {children}
+  return (
+    <_Button {...props} className={class_name}>
+      {props.children}
     </_Button>
-  </>);
+  );
 };
 
 // -----------------------------------------------------------------------------

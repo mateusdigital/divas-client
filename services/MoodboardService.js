@@ -115,16 +115,16 @@ class MoodboardService
     Assert.NotNull(category);
 
     // Lazy load the controller.
-    if(!App._moodboardItemsController) {
-      App._moodboardItemsController = new MoodboardItemsController();
+    if(!MoodboardService._moodboardItemsController) {
+      MoodboardService._moodboardItemsController = new MoodboardItemsController();
     }
 
     // We already fetched that data???
-    if(!App._moodboardItemsController.HasItemsForCategory(category)) {
-      await App._moodboardItemsController.FetchItemsForCategory(category);
+    if(!MoodboardService._moodboardItemsController.HasItemsForCategory(category)) {
+      await MoodboardService._moodboardItemsController.FetchItemsForCategory(category);
     }
 
-    return App._moodboardItemsController.GetItemsForCategory(category);
+    return MoodboardService._moodboardItemsController.GetItemsForCategory(category);
   }
 
 }

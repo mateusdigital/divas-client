@@ -21,17 +21,16 @@
 //----------------------------------------------------------------------------//
 
 // -----------------------------------------------------------------------------
-import { useState } from "react";
+import {useState} from "react";
 // -----------------------------------------------------------------------------
 import Input from "@/components/UI/Inputs/Input";
-import Panel from "@/components/UI/Containers/Panel.js";
 // -----------------------------------------------------------------------------
-import { GetBottomCategoriesNames } from "@/models/Moodboard/UI/CategoryButtonsNames";
-import { GetBottomCategoriesInfo } from "@/models/Moodboard/UI/CategoryButtonInfo";
-import { GetTopCategoriesNames } from "@/models/Moodboard/UI/CategoryButtonsNames";
-import { GetTopCategoriesInfo } from "@/models/Moodboard/UI/CategoryButtonInfo";
+import {GetBottomCategoriesNames} from "@/models/Moodboard/UI/CategoryButtonsNames";
+import {GetBottomCategoriesInfo} from "@/models/Moodboard/UI/CategoryButtonInfo";
+import {GetTopCategoriesNames} from "@/models/Moodboard/UI/CategoryButtonsNames";
+import {GetTopCategoriesInfo} from "@/models/Moodboard/UI/CategoryButtonInfo";
 // -----------------------------------------------------------------------------
-import ButtonTop    from "./CategoryControls/CategoryButton/CategoryButtonTop.js";
+import ButtonTop from "./CategoryControls/CategoryButton/CategoryButtonTop.js";
 import ButtonBottom from "./CategoryControls/CategoryButton/CategoryButtonBottom.js";
 import ItemsSelection from "./ItemControls/ItemSelection/ItemSelection.js";
 // -----------------------------------------------------------------------------
@@ -46,7 +45,8 @@ const _gTopCategoriesNames = GetTopCategoriesNames();
 const _gTopCategoriesInfo  = GetTopCategoriesInfo();
 
 // -----------------------------------------------------------------------------
-function _CreateCategoryTopButton(index, name, handler) {
+function _CreateCategoryTopButton(index, name, handler)
+{
   const info = _gTopCategoriesInfo[name];
 
   return (
@@ -54,14 +54,17 @@ function _CreateCategoryTopButton(index, name, handler) {
       key={index}
       icon={info.icon}
       content={info.content}
-      handler={()=>{ handler(name); }}
+      handler={() => {
+        handler(name);
+      }}
     />
-  )
+  );
 }
 
 
 // -----------------------------------------------------------------------------
-function _CreateCategoryBottomButton(index, name, handler) {
+function _CreateCategoryBottomButton(index, name, handler)
+{
   const info = _gBottomCategoriesInfo[name];
 
   return (
@@ -69,9 +72,11 @@ function _CreateCategoryBottomButton(index, name, handler) {
       key={index}
       icon={info.icon}
       content={info.content}
-      handler={()=>{ handler(name); }}
+      handler={() => {
+        handler(name);
+      }}
     />
-  )
+  );
 }
 
 
@@ -80,9 +85,12 @@ function _CreateCategoryBottomButton(index, name, handler) {
 //
 
 // -----------------------------------------------------------------------------
-function _CategoriesSelection(_OnSelectedTopCategoryChanged, _OnSelectedBottomCategoryChanged)
+function _CategoriesSelection(
+  _OnSelectedTopCategoryChanged,
+  _OnSelectedBottomCategoryChanged
+)
 {
-  return (<>
+  return (
     <div className={styles.contentContainer}>
       {/*  */}
       <div className={styles.inputContainer}>
@@ -115,19 +123,19 @@ function _CategoriesSelection(_OnSelectedTopCategoryChanged, _OnSelectedBottomCa
           })}
         </div>
       </div>
-
     </div>
-  </>);
-};
+  );
+}
 
 // -----------------------------------------------------------------------------
 function _ItemsSelection(currentSelectedCategory, OnSelectedCategoryChanged)
 {
-  return (<>
+  return (
     <ItemsSelection
       category={currentSelectedCategory}
-      OnSelectedCategoryChanged={OnSelectedCategoryChanged}/>
-  </>);
+      OnSelectedCategoryChanged={OnSelectedCategoryChanged}
+    />
+  );
 }
 
 
@@ -138,25 +146,25 @@ function MoodboardEditingControls({className})
   const [currentSelectedCategory, setCurrentSelectedCategory] = useState(null);
 
   // @TODO(mateusdigital): Make the items selection different for the top categories.
-  const _OnSelectedCategoryChanged = (category)=>{
+  const _OnSelectedCategoryChanged       = (category) => {
     setCurrentSelectedCategory(category);
   };
-  const _OnSelectedTopCategoryChanged = (category)=>{
+  const _OnSelectedTopCategoryChanged    = (category) => {
     setCurrentSelectedCategory(category);
-  }
-  const _OnSelectedBottomCategoryChanged = (category)=>{
+  };
+  const _OnSelectedBottomCategoryChanged = (category) => {
     setCurrentSelectedCategory(category);
-  }
+  };
 
   //
-  return (<>
+  return (
     <div className={className}>
-      { currentSelectedCategory
-        ? _ItemsSelection(currentSelectedCategory, _OnSelectedCategoryChanged)
-        : _CategoriesSelection(_OnSelectedTopCategoryChanged, _OnSelectedBottomCategoryChanged)
+      {currentSelectedCategory
+       ? _ItemsSelection(currentSelectedCategory, _OnSelectedCategoryChanged)
+       : _CategoriesSelection(_OnSelectedTopCategoryChanged, _OnSelectedBottomCategoryChanged)
       }
     </div>
-  </>);
+  );
 }
 
 // -----------------------------------------------------------------------------

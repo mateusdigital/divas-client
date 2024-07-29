@@ -4,19 +4,16 @@ import _Button from "./_Button";
 import styles from "./Buttons.module.css";
 
 // -----------------------------------------------------------------------------
-function TextButton({children, onClick, className})
+function TextButton(props)
 {
-  const class_name = `${styles.textButton} ${className}`;
+  const class_name = `${styles.textButton} ${props.className}`;
 
   //
-  return (<>
-    <_Button
-      className={class_name}
-      onClick={onClick}
-    >
-      {children}
+  return (
+    <_Button {...props} className={class_name}>
+      {props.children}
     </_Button>
-  </>);
+  );
 };
 
 // -----------------------------------------------------------------------------

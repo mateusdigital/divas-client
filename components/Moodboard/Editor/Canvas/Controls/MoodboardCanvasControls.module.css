@@ -1,6 +1,6 @@
 .controlsContainer {
   display: flex;
-  gap: 1rem;
+  /* gap: 1rem; */
   position: absolute;
   left: 50%;
   transform: translate(-50%, 0%);
@@ -9,7 +9,12 @@
 }
 
 .tooltipContainer {
-  display: none;
+  font-size: 80%;
+  white-space: nowrap;
+  background-color: #4c4c4c;
+  color: white;
+  border-radius: 2rem;
+  padding: 2px 4px;
 }
 
 
@@ -17,16 +22,18 @@
   /* padding: 1rem; */
   /* background-color: red; */
   background-color: transparent;
-  border:  2px dotted transparent;
+
+  border: 2px dotted transparent;
   border-radius: 8px;
-  padding: 4px;
+
+  padding:4px;
 }
 
 .canvasControl:hover {
-  border:  2px dotted black;
+  /* border:  2px dotted black; */
 }
 
 /* -------------------------------------------------------------------------- */
 .canvasControlIcon {
-  font-size: 2.5rem !important;
+  font-size: 2rem !important;
 }

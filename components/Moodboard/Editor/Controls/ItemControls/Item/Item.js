@@ -21,10 +21,11 @@
 //----------------------------------------------------------------------------//
 
 // -----------------------------------------------------------------------------
-import { useState } from "react";
+import {useState} from "react";
 // -----------------------------------------------------------------------------
 import NET from "@/app/NET";
-import CachedImage from "@/components/UI/Images/CachedImage"
+import CachedImage from "@/components/UI/Images/CachedImage";
+import {useMoodboardEditorContext} from "@/contexts/Moodboard/Editor/MoodboardEditorContext.js";
 // -----------------------------------------------------------------------------
 import styles from "./Item.module.css";
 
@@ -34,6 +35,7 @@ function ItemComponent({itemModel})
 {
   //
   const [loaded, setLoaded] = useState(false);
+  const moodboard_controler = useMoodboardEditorContext();
 
   //
   const _HandleDragStart = (event) => {
@@ -41,28 +43,42 @@ function ItemComponent({itemModel})
 
     event.dataTransfer.clearData();
     event.dataTransfer.setData("text/plain", JSON.stringify(itemModel));
-  }
+  };
+
 
   //
-  return (<>
+  return (
     <div className={styles.contentContainer}>
       {/* Placeholder */}
       {!loaded && <div className="@TODO">Loading...</div>}
 
       {/* Image */}
       <CachedImage
-        style={{ display: loaded ? "block" : "none" }}
+        style={{display: loaded ? "block" : "none"}}
+
         imageUrl={
           NET.Make_External_Image_Url(itemModel.imageUrl)
         }
         onLoad={() => {
           setLoaded(true);
         }}
+
         draggable={true}
         onDragStart={_HandleDragStart}
+
+        onDoubleClick={(event)=>{
+          moodboard_controler.XXX_AddExternalImage(
+            itemModel,
+            {
+              mouseX: -1,
+              mouseY: -1,
+              ...event
+            }
+          )
+        }}
       />
     </div>
-  </>);
+  );
 }
 
 // -----------------------------------------------------------------------------

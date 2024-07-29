@@ -21,9 +21,6 @@
 //----------------------------------------------------------------------------//
 
 // -----------------------------------------------------------------------------
-import MaterialIcon from "@/components/MaterialIcon";
-import ActionButton from "@/components/UI/Buttons/ActionButton.js";
-import TextButton from "@/components/UI/Buttons/TextButton.js";
 import BackButton from "@/components/UI/Buttons/BackButton.js";
 // -----------------------------------------------------------------------------
 import ItemsGrid from "../ItemsGrid/ItemsGrid.js";
@@ -34,17 +31,19 @@ import styles from "./ItemSelection.module.css";
 function ItemSelection({category, OnSelectedCategoryChanged})
 {
   //
-  return (<>
+  return (
     <div className={styles.container}>
-      <BackButton onClick={()=>{
-        OnSelectedCategoryChanged(null)
-      }}>
+      <BackButton
+        onClick={() => {
+          OnSelectedCategoryChanged(null);
+        }}
+      >
         Select new category
       </BackButton>
 
       <ItemsGrid category={category}/>
     </div>
-  </>);
+  );
 }
 
 // -----------------------------------------------------------------------------

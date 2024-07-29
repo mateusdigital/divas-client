@@ -21,13 +21,16 @@
 //----------------------------------------------------------------------------//
 
 // -----------------------------------------------------------------------------
-import { useRouter } from "next/router";
-import { useEffect, useState, useRef } from "react";
+import React from "react";
 // -----------------------------------------------------------------------------
-import App from "@/models/App.js"
+import {useEffect, useState, useRef} from "react";
+// -----------------------------------------------------------------------------
+import MoodboardService from "@/services/MoodboardService.js";
 // -----------------------------------------------------------------------------
 import Item from "../Item/Item.js";
+// -----------------------------------------------------------------------------
 import styles from "./ItemsGrid.module.css";
+
 
 // -----------------------------------------------------------------------------
 function ItemsGrid({category})
@@ -36,31 +39,33 @@ function ItemsGrid({category})
   const [items, setItems] = useState(null);
 
   //
-  useEffect(()=>{
-    const _GetItems = async ()=>{
-      const value = await App.GetMoodboardItemsForCategory(category);
+  useEffect(() => {
+    const _GetItems = async () => {
+      const value = await MoodboardService.GetMoodboardItemsForCategory(category);
       setItems(value);
-    }
+    };
 
-    if(category) {
+    if (category) {
       _GetItems();
     }
   }, [category]);
 
 
   //
-  if(!items) {
-    return (<><span>Loading...</span></>)
-  };
+  if (!items) {
+    return (
+      <span>Loading...</span>
+    );
+  }
 
   //
-  return (<>
+  return (
     <div className={styles.gridContainer}>
       {items.map((data, index) => {
-        return <Item key={index} itemModel={data}></Item>
+        return <Item key={index} itemModel={data}></Item>;
       })}
     </div>
-  </>);
+  );
 }
 
 // -----------------------------------------------------------------------------

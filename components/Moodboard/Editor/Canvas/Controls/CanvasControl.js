@@ -1,20 +1,35 @@
 // -----------------------------------------------------------------------------
+import React, { useState } from "react";
+// -----------------------------------------------------------------------------
 import MaterialIcon from "@/components/MaterialIcon";
 // -----------------------------------------------------------------------------
 import styles from "./MoodboardCanvasControls.module.css";
-import ActionButton from "@/components/UI/Buttons/ActionButton";
 
 
 // -----------------------------------------------------------------------------
 function CanvasControl({icon, children, onClick})
 {
+  // 
+  const [isHover, setHover] = useState(false);
+  
+  //  
+  const _HandleHover = (value) => { setHover(value); }
+
+  //
   return (<>
-    <button className={styles.canvasControl} onClick={onClick}>
-      <MaterialIcon iconStyle={styles.canvasControlIcon} icon={icon}>
-        <div className={styles.tooltipContainer}>
+    <button
+      className={styles.canvasControl}
+      onClick={onClick}
+      onMouseEnter={()=>{ _HandleHover(true); }}
+      onMouseLeave={()=>{ _HandleHover(false); }}
+    >
+      <MaterialIcon iconStyle={styles.canvasControlIcon} icon={icon}/>
+        <div className={isHover
+            ? styles.tooltipContainer
+            : `${styles.tooltipContainer} hidden`
+          }>
           {children}
         </div>
-      </MaterialIcon>
     </button>
   </>)
 }

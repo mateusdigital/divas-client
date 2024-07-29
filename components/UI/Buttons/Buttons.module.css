@@ -50,6 +50,12 @@
   background-color: var(--button-secondary-color);
 }
 
+.actionButton:disabled {
+  background-color: lightgray;
+  color: gray;
+  cursor: default;
+}
+
 /*
 *  Text Button
 */
@@ -75,6 +81,11 @@
 
 .textButton:active {
   color: var(--button-secondary-color)
+}
+
+.textButton:disabled {
+  color: gray;
+  cursor: default;
 }
 
 

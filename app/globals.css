@@ -112,7 +112,13 @@ span {
   cursor: pointer;
 }
 
+.invisible {
+  display: none;
+}
 
+.hidden {
+  visibility:collapse;
+}
 
 /*
 *
