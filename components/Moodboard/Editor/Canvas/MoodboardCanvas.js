@@ -62,7 +62,8 @@ function MoodboardCanvas({flowState, xxx_OnCanvasHasChanged})
     fabric_canvas.on("drop", _HandleDrop);
     fabric_canvas.on("selection:created", _HandleOnSelection);
     fabric_canvas.on("selection:cleared", _HandleOnDeselection);
-
+    fabric_canvas.on("object:moving", xxx_OnCanvasHasChanged);
+    fabric_canvas.on("object:scaling", xxx_OnCanvasHasChanged);
     window.addEventListener("resize", _ResizeCanvas);
 
     return () => {
@@ -92,9 +93,7 @@ function MoodboardCanvas({flowState, xxx_OnCanvasHasChanged})
 
     const item_model = MoodboardItemModel.CreateFromData(data);
     _controller.XXX_AddExternalImage(item_model, e);
-  }
-
-
+  };
 
 
   //

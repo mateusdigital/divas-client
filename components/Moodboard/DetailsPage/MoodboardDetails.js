@@ -23,14 +23,14 @@
 // -----------------------------------------------------------------------------
 import React from "react";
 // -----------------------------------------------------------------------------
-import MainLayout   from "@/components/Layout/MainLayout";
+import MainLayout from "@/components/Layout/MainLayout";
 import MaterialIcon from "@/components/MaterialIcon";
 // -----------------------------------------------------------------------------
 import MoodboardUserInfo from "./UserInfo/MoodboardUserInfo";
 import MoodboardComments from "./Comments/MoodboardComments";
 import MoodboardItemsCarrousel from "./ItemsCarrousel/MoodboardItemsCarrousel";
 // -----------------------------------------------------------------------------
-import CachedImage   from "@/components/UI/Images/CachedImage";
+import CachedImage from "@/components/UI/Images/CachedImage";
 import ImageDefaults from "@/components/UI/Images/ImageDefaults";
 // -----------------------------------------------------------------------------
 import styles from "./MoodboardDetails.module.css";
@@ -39,35 +39,35 @@ import TextButton from "@/components/UI/Buttons/TextButton";
 // -----------------------------------------------------------------------------
 function MoodboardDetails({moodboardModel})
 {
-  if(!moodboardModel) {
+  if (!moodboardModel) {
     return;
   }
 
   //
-  const moodboard_title = (moodboardModel.title)
-    ? moodboardModel.title
-    : "Untitled...";
+  const moodboard_title = moodboardModel.title
+                          ? moodboardModel.title
+                          : "Untitled...";
 
 
   //
-  const _HandleAddCollection = ()=>{
+  const _HandleAddCollection = () => {
 
-  }
+  };
 
-  const _HandleShareClicked = ()=>{
+  const _HandleShareClicked = () => {
 
-  }
+  };
 
-  const _HandleCommentsClicked = ()=>{
+  const _HandleCommentsClicked = () => {
 
-  }
+  };
 
-  const _HandleLikeClicked = ()=>{
+  const _HandleLikeClicked = () => {
 
-  }
+  };
 
   //
-  return (<>
+  return (
     <MainLayout>
       <div className={styles.container}>
         {/* Moodboard Image */}
@@ -132,7 +132,6 @@ function MoodboardDetails({moodboardModel})
               >
                 {moodboardModel.likesCount}
               </MaterialIcon>
-
             </div>
           </div>
           {/* -Other */}
@@ -141,11 +140,10 @@ function MoodboardDetails({moodboardModel})
       </div>
 
       {/* Items Carrousel */}
-      <MoodboardItemsCarrousel moodboardModel={moodboardModel}>
-      </MoodboardItemsCarrousel>
+      <MoodboardItemsCarrousel moodboardModel={moodboardModel}/>
       {/* -Items Carrousel */}
     </MainLayout>
-  </>)
+  );
 }
 
 // -----------------------------------------------------------------------------

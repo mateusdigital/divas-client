@@ -53,10 +53,10 @@ function MoodboardPublishControls({className})
 
   // ---------------------------------------------------------------------------
   const _HandlePublish = async () => {
-    const title       = _titleRef.current.value;
-    const description = _descriptionRef.current.value;
+    _moodboardController.title       = _titleRef.current.value;
+    _moodboardController.description = _descriptionRef.current.value;
 
-    const info_data  = {title, description};
+    const info_data  = _moodboardController.PrepareSaveInfoForUpload();
     const save_data  = _moodboardController.PrepareSaveDataForUpload();
     const save_photo = _moodboardController.PrepareSavePhotoForUpload();
 
@@ -77,23 +77,34 @@ function MoodboardPublishControls({className})
 
   // ---------------------------------------------------------------------------
   const _HandleSave = async () => {
-    const save_data = _moodboardController.PrepareSaveDataForUpload();
-    const result    = await MoodboardService.SaveMoodboardItem(save_data);
-
-    if (result.IsError()) {
-      ToastUtils.ResultError(result);
-      // @Incomplete: Save the moodboard somewhere and retry later so user doesn't lose the work...
+    if (!_moodboardController) {
       return;
     }
 
-    NavigateTo(PageUrls.UserOwnProfile);
+    const info_data  = _moodboardController.PrepareSaveInfoForUpload();
+    const save_data  = _moodboardController.PrepareSaveDataForUpload();
+    const save_photo = _moodboardController.PrepareSavePhotoForUpload();
+
+    const result = await MoodboardService.SaveDraftMoodboardItem(
+      info_data,
+      save_data,
+      save_photo
+    );
+
+    console.log("------------------------");
+    if (result.IsError()) {
+      ToastUtils.ResultError(result);
+    } else {
+      ToastUtils.Success("Moodboard saved...");
+      _moodboardController._id = result.value._id;
+      _moodboardController.SetSaved();
+    }
   };
 
 
   // ---------------------------------------------------------------------------
   return (
-    <>
-      <div className={className}>
+    <div className={className}>
         <div className="text-center">
           <span>Describe your moodboard</span>
         </div>
@@ -102,11 +113,15 @@ function MoodboardPublishControls({className})
           <LabeledTextArea ref={_descriptionRef}>Description</LabeledTextArea>
         </div>
         <div className="flex">
-          <ActionButton className="flex-grow" onClick={_HandlePublish}>Publish</ActionButton>
+          <ActionButton
+            className="flex-grow"
+            onClick={_HandlePublish}
+          >
+            Publish
+          </ActionButton>
           <TextButton onClick={_HandleSave}>Save Draft</TextButton>
         </div>
       </div>
-    </>
   );
 }
 

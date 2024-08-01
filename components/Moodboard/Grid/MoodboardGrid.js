@@ -48,7 +48,7 @@ function MoodboardGrid({ userModel })
         return;
       }
 
-      const result = await MoodboardService.GetMultipleMoodboardWithIds(userModel.moodboards);
+      const result = await MoodboardService.GetAllForUserId(userModel._id);
       if(result.IsError()) {
         ToastUtils.ResultError(result);
         return;

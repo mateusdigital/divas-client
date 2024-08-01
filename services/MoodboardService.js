@@ -5,6 +5,7 @@ import { StatusCodes } from "http-status-codes";
 import NET    from "@/app/NET";
 import Result from "@/app/Result";
 import Assert from "@/utils/Assert";
+import {Asset} from "next/dist/compiled/@next/font/dist/google/index.js";
 // -----------------------------------------------------------------------------
 import LoginService from "./LoginService";
 import MoodboardItemsController from "@/controllers/Moodboard/MoodboardItemsController"
@@ -18,6 +19,23 @@ class MoodboardService
   //
   // Moodboard
   //
+
+
+  // ---------------------------------------------------------------------------
+  static async GetAllForUserId(userId)
+  {
+    Assert.NotNullOrEmpty(userId);
+
+    const api_url = NET.Make_API_Url(Endpoints.Moodboard.GetAll, userId);
+
+    const response = await NET.GET(api_url, { owner: userId });
+    if(response.status != StatusCodes.OK) {
+      return await Result.ResponseError(response);
+    }
+
+    const data = await response.json();
+    return Result.Valid(data);
+  }
 
   // ---------------------------------------------------------------------------
   static async GetMultipleMoodboardWithIds(idList)
@@ -52,6 +70,38 @@ class MoodboardService
     // @TODO(mateusdigital): Create model for moodboard.
     const data = await response.json();
     return data;
+  }
+
+  // ---------------------------------------------------------------------------
+  static async SaveDraftMoodboardItem(infoData, itemsData, photo)
+  {
+    const result = await LoginService.GetCurrentLoggedUser();
+    if (!result.IsValid()) {
+      return result;
+    }
+
+    //
+    const user_model     = result.value;
+    const full_save_data = {
+      info:  infoData,
+      items: itemsData,
+      user:  {
+        _id: user_model._id
+      }
+    }
+
+    //
+    {
+      const api_url  = NET.Make_API_Url(Endpoints.Moodboard.SaveDraft);
+      const response = await NET.POST_JSON(api_url, full_save_data);
+
+      if(response.status != StatusCodes.CREATED) {
+        return await Result.ResponseError(response);
+      }
+
+      const json = await response.json();
+      return Result.Valid(json);
+    }
   }
 
   // ---------------------------------------------------------------------------
@@ -127,6 +177,21 @@ class MoodboardService
     return MoodboardService._moodboardItemsController.GetItemsForCategory(category);
   }
 
+  static async GetCommentsFor(model)
+  {
+    Assert.NotNull(model);
+
+    const api_url = NET.Make_API_Url(Endpoints.Moodboard.Comments.GetAll, id);
+
+    const response = await NET.GET(api_url);
+    if(response.status != StatusCodes.OK) {
+      return null;
+    }
+
+    // @TODO(mateusdigital): Create model for moodboard.
+    const data = await response.json();
+    return data;
+  }
 }
 
 export default MoodboardService;

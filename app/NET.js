@@ -22,15 +22,28 @@
 
 // -----------------------------------------------------------------------------
 import Constants from "./Constants";
+import Debug from "../libs/mdjs/mdjs/Debug.js";
+
+async function safe_fetch(url, options)
+{
+  try {
+    return await fetch(url, options);
+  }
+  catch (error) {
+    Debug.Exception(`Failed to perform safe_fetch: (${url})`, error);
+    debugger;
+    return null;
+  }
+}
 
 // -----------------------------------------------------------------------------
 class NET
 {
   // ---------------------------------------------------------------------------
-  static SERVER_URL  = Constants.SERVER_URL
+  static SERVER_URL  = Constants.SERVER_URL;
   static SERVER_PORT = Constants.SERVER_PORT;
 
-  static APP_URL  = Constants.APP_URL
+  static APP_URL  = Constants.APP_URL;
   static APP_PORT = Constants.APP_PORT;
 
   static _ReplaceArgs(url, ...args)
@@ -39,15 +52,16 @@ class NET
     const replaced   = [];
 
     let arg_index = 0;
-    for(let i = 0; i < components.length; ++i) {
+    for (let i = 0; i < components.length; ++i) {
       const component = components[i];
-      if(component.startsWith(":")) {
-        if(arg_index < args.length) {
+      if (component.startsWith(":")) {
+        if (arg_index < args.length) {
           const value = args[arg_index];
           replaced.push(value);
           ++arg_index;
         }
-      } else if(component.length != 0) {
+      }
+      else if (component.length != 0) {
         replaced.push(component);
       }
     }
@@ -98,12 +112,7 @@ class NET
   // ---------------------------------------------------------------------------
   static async GET(url)
   {
-    try {
-      return fetch(url);
-    } catch(ex) {
-      console.log(`ex: ${ex}`);
-      debugger;
-    }
+    return safe_fetch(url);
   }
 
   //
@@ -115,33 +124,35 @@ class NET
   {
     const base_options = {
       method: "POST",
-      body:  data
+      body:   data
     };
-    const full_options = {...base_options, ...options };
 
-    return fetch(url, full_options);
+    const full_options = {...base_options, ...options};
+    return safe_fetch(url, full_options);
   }
 
   // ---------------------------------------------------------------------------
   static async POST_JSON(url, jsonObject, options)
   {
     const base_options = {
-      method: "POST",
+      method:  "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(jsonObject),
+      body:    JSON.stringify(jsonObject),
     };
-    const full_options = {...base_options, ...options };
-    return fetch(url, full_options);
+
+    const full_options = {...base_options, ...options};
+    return safe_fetch(url, full_options);
   }
 
   // ---------------------------------------------------------------------------
   static async POST(url, options)
   {
-    const base_options = { method: "POST", };
-    const full_options = {...base_options, ...options };
-    return fetch(url, full_options);
+    const base_options = {method: "POST",};
+    const full_options = {...base_options, ...options};
+
+    return safe_fetch(url, full_options);
   }
 }
 

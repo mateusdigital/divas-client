@@ -20,9 +20,10 @@
 //                                                                            //
 //----------------------------------------------------------------------------//
 // -----------------------------------------------------------------------------
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 // -----------------------------------------------------------------------------
 import {PageUrls, usePageRouter} from "@/utils/PageUtils";
+import ToastUtils from "@/utils/Toast.js";
 // -----------------------------------------------------------------------------
 import Link from "@/components/Link";
 import DivasLogo from "@/components/UI/DivasLogo";
@@ -30,6 +31,8 @@ import ActionButton from "@/components/UI/Buttons/ActionButton";
 import TextButton from "@/components/UI/Buttons/TextButton";
 import BackButton from "@/components/UI/Buttons/BackButton";
 import ProfileImage from "@/components/UI/Images/ProfileImage";
+// -----------------------------------------------------------------------------
+import MoodboardService from "@/services/MoodboardService.js";
 // -----------------------------------------------------------------------------
 import {
   MoodboardEditorContextProvider, useMoodboardEditorContext
@@ -39,7 +42,7 @@ import MoodboardCanvas from "./Canvas/MoodboardCanvas";
 import MoodboardEditingControls from "./Controls/MoodboardEditingControls";
 import MoodboardPublishControls from "./Controls/MoodboardPublishControls";
 // -----------------------------------------------------------------------------
-import {FLOW_STATE_EDITING, FLOW_STATE_PUBLISH, FLOW_STATE_SAVE_DRAFT} from "./utils/FlowState";
+import {FLOW_STATE_EDITING, FLOW_STATE_PUBLISH} from "./utils/FlowState";
 import useUnsavedChangesWarning from "./utils/UnsavedChangesWarning.js";
 // -----------------------------------------------------------------------------
 import styles from "./MoodboardEditor.module.css";
@@ -50,52 +53,46 @@ function _MoodboardControlForCurrentFlowState({flowState, OnBackClicked})
 {
   if (flowState == FLOW_STATE_EDITING) {
     return (
-      <>
-        <div className={styles.controlsContainer}>
-          <MoodboardEditingControls className={styles.controlsContentContainer}/>
-        </div>
-      </>
+      <div className={styles.controlsContainer}>
+        <MoodboardEditingControls className={styles.controlsContentContainer}/>
+      </div>
     );
   }
 
-  const element = flowState == FLOW_STATE_SAVE_DRAFT ?
-                  <MoodboardEditingControls className={styles.controlsContentContainer}/> :
-                  <MoodboardPublishControls className={styles.controlsContentContainer}/>;
-
   return (
-    <>
-      <div className={styles.controlsContainer}>
-        <BackButton onClick={OnBackClicked}>Back</BackButton>
-        {element}
-      </div>
-    </>
+    <div className={styles.controlsContainer}>
+      <BackButton onClick={OnBackClicked}>Back</BackButton>
+      <MoodboardPublishControls className={styles.controlsContentContainer}/> :
+    </div>
   );
 }
 
 // -----------------------------------------------------------------------------
 function _Content()
 {
-  const _controller  = useMoodboardEditorContext();
-  const {NavigateTo} = usePageRouter();
+  const moodboardController = useMoodboardEditorContext();
+  const {NavigateTo}        = usePageRouter();
 
   //
-  const [currentFlowState, setCurrentFlowState]     = useState(FLOW_STATE_EDITING);
+  const [currentFlowState, setCurrentFlowState]     = useState(
+    FLOW_STATE_EDITING
+  );
   const [currentFlowElement, setCurrentFlowElement] = useState((
     <_MoodboardControlForCurrentFlowState flowState={currentFlowState}/>
   ));
 
+  const [isMoodboardClean, setIsMoodboardClean] = useState(true);
   const [isMoodboardEmpty, setIsMoodboardEmpty] = useState(true);
 
+  const _saveDraftSpanRef = useRef();
 
   //
   useEffect(() => {
     const element = (
-      <>
-        <_MoodboardControlForCurrentFlowState
-          flowState={currentFlowState}
-          OnBackClicked={_HandleOnEditingClick}
-        />
-      </>
+      <_MoodboardControlForCurrentFlowState
+        flowState={currentFlowState}
+        OnBackClicked={_HandleOnEditingClick}
+      />
     );
     setCurrentFlowElement(element);
   }, [currentFlowState]);
@@ -114,12 +111,38 @@ function _Content()
     setCurrentFlowState(FLOW_STATE_PUBLISH);
   };
 
-  const _HandleOnSaveDraftClick = () => {
-    setCurrentFlowState(FLOW_STATE_SAVE_DRAFT);
+  const _HandleOnSaveDraftClick = async () => {
+    // @duplicate: on moodboardpublishcontrols.js
+    if (!moodboardController) {
+      return;
+    }
+
+    const info_data  = moodboardController.PrepareSaveInfoForUpload();
+    const save_data  = moodboardController.PrepareSaveDataForUpload();
+    const save_photo = moodboardController.PrepareSavePhotoForUpload();
+
+    const result = await MoodboardService.SaveDraftMoodboardItem(
+      info_data,
+      save_data,
+      save_photo
+    );
+
+    console.log("------------------------");
+    if (result.IsError()) {
+      ToastUtils.ResultError(result);
+    } else {
+      ToastUtils.Success("Moodboard saved...");
+      moodboardController._id = result.value._id;
+      moodboardController.SetSaved();
+
+      _saveDraftSpanRef.current.innerText = "Save Draft";
+
+      setIsMoodboardClean(true);
+    }
   };
 
   const _HandleOnProfileClick = (event) => {
-    if (_controller.IsSaved()) {
+    if (moodboardController.IsSaved()) {
       NavigateTo(PageUrls.UserOwnProfile);
       return;
     }
@@ -127,9 +150,6 @@ function _Content()
     const confirmed = window.confirm("Are you sure you want to proceed?");
     if (confirmed) {
       NavigateTo(PageUrls.UserOwnProfile);
-    }
-    else {
-      setCurrentFlowState(FLOW_STATE_SAVE_DRAFT);
     }
   };
 
@@ -158,10 +178,10 @@ function _Content()
               </ActionButton>
 
               <TextButton
-                disabled={isMoodboardEmpty}
+                disabled={isMoodboardClean}
                 onClick={_HandleOnSaveDraftClick}
               >
-                Save Draft
+                <span ref={_saveDraftSpanRef}>Save Draft</span>
               </TextButton>
             </div>
           )}
@@ -177,8 +197,22 @@ function _Content()
             <MoodboardCanvas
               className={styles.canvasContainer}
               flowState={currentFlowState}
-              xxx_OnCanvasHasChanged={()=>{
-                setIsMoodboardEmpty(_controller.IsEmpty());
+              xxx_OnCanvasHasChanged={() => {
+                const is_empty = moodboardController.IsEmpty();
+
+                setIsMoodboardClean(false);
+                setIsMoodboardEmpty(is_empty);
+
+                if(is_empty) {
+                  if(_saveDraftSpanRef.current && _saveDraftSpanRef.current.innerText) {
+                    _saveDraftSpanRef.current.innerText = "Save Draft";
+                  }
+                } else {
+                  if(_saveDraftSpanRef.current && _saveDraftSpanRef.current.innerText) {
+                    _saveDraftSpanRef.current.innerText = "Save Draft *";
+                  }
+                }
+                moodboardController.SetSaved(false);
               }}
             />
             {currentFlowElement}

@@ -13,6 +13,10 @@ class MoodboardCanvasController
   // ---------------------------------------------------------------------------
   constructor()
   {
+    this._id         = null;
+    this.title       = null;
+    this.description = null;
+
     this._items = [];
 
     this._isSaved      = false;
@@ -36,13 +40,16 @@ class MoodboardCanvasController
   }
 
   // ---------------------------------------------------------------------------
-  SetSaved()
+  SetSaved(saved = true)
   {
-    this._isSaved = true;
-    if (this.xxx_OnCanvasHasChanged) {
-      this.xxx_OnCanvasHasChanged();
+    if(this._isSaved != saved) {
+      this._isSaved = saved;
+      if (this.xxx_OnCanvasHasChanged) {
+        this.xxx_OnCanvasHasChanged();
+      }
     }
   }
+
 
   // ---------------------------------------------------------------------------
   SetCanvas(fabric_canvas)
@@ -103,6 +110,16 @@ class MoodboardCanvasController
   //
   // Serialization
   //
+
+  // ---------------------------------------------------------------------------
+  PrepareSaveInfoForUpload()
+  {
+    return {
+      _id: this._id,
+      title: this.title,
+      description: this.description
+    };
+  }
 
   // ---------------------------------------------------------------------------
   PrepareSaveDataForUpload()

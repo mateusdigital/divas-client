@@ -36,6 +36,11 @@ class ToastUtils
   {
     ToastUtils.Error(result.errorJson.message);
   }
+
+  static Success(msg)
+  {
+    toast(msg);
+  }
 }
 
 // -----------------------------------------------------------------------------

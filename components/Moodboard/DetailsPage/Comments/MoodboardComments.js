@@ -20,12 +20,26 @@
 //                                                                            //
 //----------------------------------------------------------------------------//
 
-//
+// -----------------------------------------------------------------------------
+import {useEffect} from "react";
+// -----------------------------------------------------------------------------
+import MoodboardService from "@/services/MoodboardService.js";
 import styles from "./MoodboardComments.module.css";
 
 // -----------------------------------------------------------------------------
 function MoodboardComments({moodboardModel})
 {
+  useEffect(() => {
+    const _FetchComments = async ()=>{
+      const result = MoodboardService.GetCommentsFor(moodboardModel);
+    }
+
+    if(moodboardModel) {
+      _FetchComments()
+    }
+  }, [moodboardModel]);
+
+
   // Ready...
   return (
     <div className={styles.moodboardCommentsContainer}>
