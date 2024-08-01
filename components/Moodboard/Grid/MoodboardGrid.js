@@ -36,14 +36,13 @@ import styles from "./MoodboardGrid.module.css";
 
 
 // -----------------------------------------------------------------------------
-function MoodboardGrid({ userModel })
+function MoodboardGrid({ userModel, fetchMoodboardsFunc })
 {
   //
   const [moodboards, setMoodboards] = useState([]);
 
-  //
-  useEffect(() => {
-    const _FetchMoodboards = async () => {
+  if(!fetchMoodboardsFunc) {
+    fetchMoodboardsFunc = async (userModel, setMoodboardsFunc) => {
       if(userModel.moodboards.length == 0) {
         return;
       }
@@ -54,10 +53,13 @@ function MoodboardGrid({ userModel })
         return;
       }
 
-      setMoodboards(result.value);
+      setMoodboardsFunc(result.value);
     };
+  }
 
-    _FetchMoodboards();
+  //
+  useEffect(() => {
+    fetchMoodboardsFunc(userModel, setMoodboards);
   }, [userModel.moodboards]);
 
   //

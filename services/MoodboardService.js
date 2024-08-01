@@ -37,6 +37,23 @@ class MoodboardService
   }
 
   // ---------------------------------------------------------------------------
+  static async GetAllLikedByUser(userId)
+  {
+    Assert.NotNullOrEmpty(userId);
+
+    const api_url = NET.Make_API_Url(Endpoints.Moodboard.GetLikedByUser, userId);
+
+    const response = await NET.GET(api_url, { owner: userId });
+    if(response.status != StatusCodes.OK) {
+      return await Result.ResponseError(response);
+    }
+
+    const data = await response.json();
+    return Result.Valid(data);
+  }
+
+
+  // ---------------------------------------------------------------------------
   static async GetMultipleMoodboardWithIds(idList)
   {
     Assert.NotNullOrEmpty(idList);

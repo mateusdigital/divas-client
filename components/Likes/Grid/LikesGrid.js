@@ -22,55 +22,31 @@
 
 // -----------------------------------------------------------------------------
 import React from 'react';
-// -----------------------------------------------------------------------------
 import { useEffect, useState } from 'react';
 // -----------------------------------------------------------------------------
-import MoodboardService from "@/services/MoodboardService";
 import ToastUtils from '@/utils/Toast';
 // -----------------------------------------------------------------------------
-import EmptyGridPlaceholder from "@/components/UI/Grid/EmptyGridPlaceholder.js";
-import DesignGridItem from "@/components/Moodboard/Grid/MoodboardGrid";
-// -----------------------------------------------------------------------------
-import styles from "./LikesGrid.module.css";
-
+import MoodboardGrid from '@/components/Moodboard/Grid/MoodboardGrid';
+import MoodboardService from "@/services/MoodboardService";
 
 // -----------------------------------------------------------------------------
 function LikesGrid({ userModel })
 {
-  const [likeItems, setLikeItems] = useState([]);
-
-  //
-  useEffect(() => {
-    const _FetchLikes = async () => {
-      if(userModel.likes.length == 0) {
-        return;
-      }
-
-      const result = await MoodboardService.GetMultipleMoodboardWithIds(userModel.moodboards);
+    const _FetchMoodboards = async (userModel, setMoodboardsFunc) => {
+      const result = await MoodboardService.GetAllLikedByUser(userModel._id);
       if(result.IsError()) {
         ToastUtils.ResultError(result);
         return;
       }
-    }
 
-    _FetchLikes();
-  }, []);
-
-  //
-  return (
-    <div className={styles.designsGridContainer}>
-      <div className={styles.designsGrid}>
-        { likeItems.length != 0 &&
-          likeItems.map((likeItem) => (
-            <DesignGridItem key={likeItem._id} moodboard={likeItem} />
-          ))
-        }
-      </div>
-      { likeItems.length == 0 &&
-          <EmptyGridPlaceholder/>
-      }
-    </div>
-  );
+      setMoodboardsFunc(result.value);
+    };
+  // ---------------------------------------------------------------------------
+  return (<>
+    <MoodboardGrid
+      userModel={userModel}
+      fetchMoodboardsFunc={_FetchMoodboards}/>
+  </>)
 }
 
 // -----------------------------------------------------------------------------
