@@ -36,3 +36,8 @@
 
   /* background-color: green; */
 }
+
+.userName {
+  font-size: 110%;
+  font-weight: bold;
+}

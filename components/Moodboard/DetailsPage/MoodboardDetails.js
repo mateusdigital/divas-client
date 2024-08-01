@@ -27,7 +27,7 @@ import MainLayout from "@/components/Layout/MainLayout";
 import MaterialIcon from "@/components/MaterialIcon";
 import TextButton from "@/components/UI/Buttons/TextButton";
 // -----------------------------------------------------------------------------
-import UserLoggedContext from "@/contexts/User/UserLoggedContext";
+import UserLoggedContext, { useLoggedUserContext } from "@/contexts/User/UserLoggedContext";
 import { PageUrls } from "@/utils/PageUtils";
 // -----------------------------------------------------------------------------
 import MoodboardUserInfo from "./UserInfo/MoodboardUserInfo";
@@ -38,9 +38,11 @@ import CachedImage from "@/components/UI/Images/CachedImage";
 import ImageDefaults from "@/components/UI/Images/ImageDefaults";
 // -----------------------------------------------------------------------------
 import styles from "./MoodboardDetails.module.css";
+import MoodboardService from "@/services/MoodboardService";
+import ToastUtils from "@/utils/Toast";
 
 // -----------------------------------------------------------------------------
-function MoodboardDetails({moodboardModel})
+function _Content({moodboardModel})
 {
   if (!moodboardModel) {
     return;
@@ -54,9 +56,11 @@ function MoodboardDetails({moodboardModel})
 
   // ---------------------------------------------------------------------------
   const moodboardCommentsRef = useRef();
+  const userModel = useLoggedUserContext();
+
   const [commentsCount, setCommentsCount] = useState(moodboardModel.commentsCount);
   const [likesCount, setLikesCount] = useState(moodboardModel.likesCount);
-
+  const [likeButtonClassName, setLikeButtonClassName] = useState(styles.statIcon);
 
   // ---------------------------------------------------------------------------
   const _HandleAddCollection = () => {
@@ -71,8 +75,26 @@ function MoodboardDetails({moodboardModel})
 
   };
 
-  const _HandleLikeClicked = () => {
+  const _HandleLikeClicked = async () => {
+    const result = await MoodboardService.ToggleLikeForMoodboardWithId({
+      moodboardId: moodboardModel._id,
+      ownerId: userModel._id,
+      targetUserId: moodboardModel.owner
+    });
 
+    if(!result.IsValid()) {
+      ToastUtils.ResultError(result);
+      return;
+    }
+
+    const value = result.value;
+    setLikesCount(value.likesCount);
+
+    if(value.isLiked) {
+      setLikeButtonClassName(`${styles.statIcon} ${styles.likedIcon}`);
+    } else {
+      setLikeButtonClassName(`${styles.statIcon}`);
+    }
   };
 
   const _HandleCommentsChanged = (count)=>{
@@ -81,85 +103,92 @@ function MoodboardDetails({moodboardModel})
 
   //
   return (
-    <MainLayout>
-      <UserLoggedContext requiresLoggedUser={true} redirectTo={PageUrls.UserLogin}>
-        <div className={styles.container}>
-          {/* Moodboard Image */}
-          <div className={styles.imageContainer}>
-            <CachedImage
-              imageUrl={moodboardModel.photoUrl}
-              imagePlaceholderUrl={ImageDefaults.PLACEHOLDER_URL_MOODBOARD_DETAILS}
-            />
-          </div>
-
-          {/* Info Container */}
-          <div className={styles.infoContainer}>
-            <MoodboardUserInfo moodboardModel={moodboardModel}/>
-
-            {/* Design Item Info */}
-            <div className={styles.itemInfoContainer}>
-              <span className={styles.itemInfoTitle}>
-                {moodboard_title}
-              </span>
-
-              <span className={styles.itemInfoDescription}>
-                {moodboardModel.description}
-              </span>
-            </div>
-            {/* -Design Item Info */}
-
-            {/* Other */}
-            <div className={styles.otherContainer}>
-              {/* Collection Button */}
-              <TextButton onClick={_HandleAddCollection}>Add to Collection</TextButton>
-
-              <div className={styles.statsContainer}>
-                {/* Share Button */}
-                <MaterialIcon
-                  className={styles.statIcon}
-                  icon="share"
-                  onClick={_HandleShareClicked}
-                />
-
-                {/* Comments Button */}
-                <MaterialIcon
-                  className={styles.statIcon}
-                  icon="chat_bubble"
-                  onClick={_HandleCommentsClicked}
-                >
-                  {commentsCount}
-                </MaterialIcon>
-
-                {/* Likes button */}
-                <MaterialIcon
-                  className={styles.statIcon}
-                  icon="favorite"
-                  onClick={_HandleLikeClicked}
-                >
-                  {likesCount}
-                </MaterialIcon>
-              </div>
-            </div>
-            {/* -Other */}
-
-            {/* Comments  */}
-            <MoodboardComments
-              moodboardModel={moodboardModel}
-              onCommentsChanged={_HandleCommentsChanged}
-            />
-            {/* -Comments */}
-
-          </div>
-          {/* -Info Container */}
+    <>
+      <div className={styles.container}>
+        {/* Moodboard Image */}
+        <div className={styles.imageContainer}>
+          <CachedImage
+            imageUrl={moodboardModel.photoUrl}
+            imagePlaceholderUrl={ImageDefaults.PLACEHOLDER_URL_MOODBOARD_DETAILS}
+          />
         </div>
 
-        {/* Items Carrousel */}
-        <MoodboardItemsCarrousel moodboardModel={moodboardModel}/>
-        {/* -Items Carrousel */}
-      </UserLoggedContext>
-    </MainLayout>
-  );
+        {/* Info Container */}
+        <div className={styles.infoContainer}>
+          <MoodboardUserInfo moodboardModel={moodboardModel}/>
+
+          {/* Design Item Info */}
+          <div className={styles.itemInfoContainer}>
+            <span className={styles.itemInfoTitle}>
+              {moodboard_title}
+            </span>
+
+            <span className={styles.itemInfoDescription}>
+              {moodboardModel.description}
+            </span>
+          </div>
+          {/* -Design Item Info */}
+
+          {/* Other */}
+          <div className={styles.otherContainer}>
+            {/* Collection Button */}
+            <TextButton onClick={_HandleAddCollection}>Add to Collection</TextButton>
+
+            <div className={styles.statsContainer}>
+              {/* Share Button */}
+              <MaterialIcon
+                className={styles.statIcon}
+                icon="share"
+                onClick={_HandleShareClicked}
+              />
+
+              {/* Comments Button */}
+              <MaterialIcon
+                className={styles.statIcon}
+                icon="chat_bubble"
+                onClick={_HandleCommentsClicked}
+              >
+                {commentsCount}
+              </MaterialIcon>
+
+              {/* Likes button */}
+              <MaterialIcon
+                className={likeButtonClassName}
+                icon="favorite"
+                onClick={_HandleLikeClicked}
+              >
+                {likesCount}
+              </MaterialIcon>
+            </div>
+          </div>
+          {/* -Other */}
+
+          {/* Comments  */}
+          <MoodboardComments
+            moodboardModel={moodboardModel}
+            onCommentsChanged={_HandleCommentsChanged}
+          />
+          {/* -Comments */}
+
+        </div>
+        {/* -Info Container */}
+      </div>
+
+      {/* Items Carrousel */}
+      <MoodboardItemsCarrousel moodboardModel={moodboardModel}/>
+      {/* -Items Carrousel */}
+  </>);
 }
 
+function MoodboardDetails({moodboardModel})
+{
+  return (
+    <MainLayout>
+      <UserLoggedContext requiresLoggedUser={true} redirectTo={PageUrls.UserLogin}>
+        <_Content moodboardModel={moodboardModel}/>
+      </UserLoggedContext>
+    </MainLayout>
+  )
+}
 // -----------------------------------------------------------------------------
 export default MoodboardDetails;

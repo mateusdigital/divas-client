@@ -32,7 +32,7 @@ async function safe_fetch(url, options)
   catch (error) {
     Debug.Exception(`Failed to perform safe_fetch: (${url})`, error);
     debugger;
-    return null;
+    return { status: 999 };
   }
 }
 

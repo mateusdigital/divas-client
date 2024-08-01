@@ -26,6 +26,10 @@ class Result
         return new Result(null, error, { message: `${error.url} - ${error.statusText});` });
       }
 
+      if(error.status == 999) {
+        return new Result(null, error, { message: `safe_fetch error;` });
+      }
+
       debugger;
     }
   }

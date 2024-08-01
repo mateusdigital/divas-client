@@ -5,7 +5,6 @@ import { StatusCodes } from "http-status-codes";
 import NET    from "@/app/NET";
 import Result from "@/app/Result";
 import Assert from "@/utils/Assert";
-import {Asset} from "next/dist/compiled/@next/font/dist/google/index.js";
 // -----------------------------------------------------------------------------
 import LoginService from "./LoginService";
 import MoodboardItemsController from "@/controllers/Moodboard/MoodboardItemsController"
@@ -211,6 +210,24 @@ class MoodboardService
     // @TODO(mateusdigital): Create model for moodboard.
     const data = await response.json();
     return Result.Valid(data);
+  }
+
+  //
+  // Likes
+  //
+
+  // ---------------------------------------------------------------------------
+  static async ToggleLikeForMoodboardWithId(likeData)
+  {
+    const api_url  = NET.Make_API_Url(Endpoints.MoodboardLike.Toggle);
+    const response = await NET.POST_JSON(api_url, likeData);
+
+    if(response.status != StatusCodes.OK) {
+      return await Result.ResponseError(response);
+    }
+
+    const json = await response.json();
+    return Result.Valid(json);
   }
 }
 

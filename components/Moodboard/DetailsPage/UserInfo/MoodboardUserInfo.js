@@ -75,7 +75,7 @@ function MoodboardUserInfo({moodboardModel})
     <div className={styles.container}>
       <div>
         <span>Created by: </span>
-        <span><Link href={profile_url}>{username}</Link></span>
+        <span className={styles.userName}><Link href={profile_url}>{username}</Link></span>
       </div>
       <div>
         <ActionButton>Follow</ActionButton>
