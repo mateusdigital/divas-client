@@ -23,12 +23,15 @@
 // -----------------------------------------------------------------------------
 import React, { useRef, useState } from "react";
 // -----------------------------------------------------------------------------
+import { PageUrls } from "@/utils/PageUtils";
+import ToastUtils from "@/utils/Toast";
+// -----------------------------------------------------------------------------
 import MainLayout from "@/components/Layout/MainLayout";
 import MaterialIcon from "@/components/MaterialIcon";
 import TextButton from "@/components/UI/Buttons/TextButton";
 // -----------------------------------------------------------------------------
 import UserLoggedContext, { useLoggedUserContext } from "@/contexts/User/UserLoggedContext";
-import { PageUrls } from "@/utils/PageUtils";
+import MoodboardService from "@/services/MoodboardService";
 // -----------------------------------------------------------------------------
 import MoodboardUserInfo from "./UserInfo/MoodboardUserInfo";
 import MoodboardComments from "./Comments/MoodboardComments";
@@ -38,8 +41,6 @@ import CachedImage from "@/components/UI/Images/CachedImage";
 import ImageDefaults from "@/components/UI/Images/ImageDefaults";
 // -----------------------------------------------------------------------------
 import styles from "./MoodboardDetails.module.css";
-import MoodboardService from "@/services/MoodboardService";
-import ToastUtils from "@/utils/Toast";
 
 // -----------------------------------------------------------------------------
 function _Content({moodboardModel})

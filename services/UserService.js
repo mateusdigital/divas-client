@@ -99,6 +99,20 @@ class UserService
       return Result.Valid(user);
     }
   }
+
+  // ---------------------------------------------------------------------------
+  static async ToggleFollowUser(followData)
+  {
+    const api_url  = NET.Make_API_Url(Endpoints.User.ToggleFollow);
+    const response = await NET.POST_JSON(api_url, followData);
+
+    if(response.status != StatusCodes.OK) {
+      return await Result.ResponseError(response);
+    }
+
+    const json = await response.json();
+    return Result.Valid(json);
+  }
 }
 
 // -----------------------------------------------------------------------------

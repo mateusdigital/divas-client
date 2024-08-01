@@ -1,20 +1,23 @@
 // -----------------------------------------------------------------------------
+import React from 'react';
+import { forwardRef } from 'react';
+// -----------------------------------------------------------------------------
 import styles from "./Buttons.module.css";
 
 // -----------------------------------------------------------------------------
-function _Button({children, onClick, className, disabled})
-{
+const _Button = forwardRef((props, ref) => {
   //
   return (
     <button
-      disabled={disabled}
-      className={className}
-      onClick={onClick}
+      ref={ref}
+      disabled={props.disabled}
+      className={props.className}
+      onClick={props.onClick}
     >
-      {children}
+      {props.children}
     </button>
-  );
-};
+  )
+});
 
 // -----------------------------------------------------------------------------
 export default _Button;

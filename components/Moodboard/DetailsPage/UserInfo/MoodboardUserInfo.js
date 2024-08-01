@@ -21,26 +21,31 @@
 //----------------------------------------------------------------------------//
 
 // -----------------------------------------------------------------------------
-import React from "react";
+import React, { useRef } from "react";
 // -----------------------------------------------------------------------------
 import Link from "next/link";
 import { useState, useEffect } from "react";
 // -----------------------------------------------------------------------------
 import NET from "@/app/NET";
+// -----------------------------------------------------------------------------
 import ToastUtils from "@/utils/Toast";
+import { PageUrls } from "@/utils/PageUtils";
+// -----------------------------------------------------------------------------
 import UserService from "@/services/UserService";
 import ActionButton from "@/components/UI/Buttons/ActionButton";
 // -----------------------------------------------------------------------------
 import Endpoints from "@/divas-shared/shared/API/Endpoints";
 // -----------------------------------------------------------------------------
 import styles from "./MoodboardUserInfo.module.css";
-import { PageUrls } from "@/utils/PageUtils";
+import { useLoggedUserContext } from "@/contexts/User/UserLoggedContext";
 
 // -----------------------------------------------------------------------------
 function MoodboardUserInfo({moodboardModel})
 {
   //
+  const followButtonRef = useRef();
   const [ownerUserModel, setOwnerUserModel] = useState(null);
+  const loggedUser = useLoggedUserContext();
 
   //
   useEffect(()=>{
@@ -60,6 +65,33 @@ function MoodboardUserInfo({moodboardModel})
     }
   }, [moodboardModel.owner]);
 
+  //
+  const _HandleFollowClicked = async () =>{
+    const result = await UserService.ToggleFollowUser({
+      userId: loggedUser._id,
+      targetId: ownerUserModel._id
+    });
+
+    if(!result.IsValid()) {
+      ToastUtils.ResultError(result);
+      return;
+    }
+
+    const value = result.value;
+    followButtonRef.current.innerText = (value.isFollowing)
+      ? "Unfollow"
+      : "Follow";
+  }
+
+  function _CalculateFollowButtonText()
+  {
+    const targetId = ownerUserModel._id;
+    if(loggedUser.following.includes(targetId)) {
+      return "Unfollow"
+    }
+    return "Follow";
+  }
+
 
   // Not ready...
   if(!ownerUserModel) {
@@ -67,7 +99,6 @@ function MoodboardUserInfo({moodboardModel})
   }
 
   // Ready...
-
   const username    = ownerUserModel.username;
   const profile_url = NET.Make_Navigation_Url(PageUrls.UserOtherProfile, username);
 
@@ -78,7 +109,19 @@ function MoodboardUserInfo({moodboardModel})
         <span className={styles.userName}><Link href={profile_url}>{username}</Link></span>
       </div>
       <div>
-        <ActionButton>Follow</ActionButton>
+        {
+          (
+            ownerUserModel && ownerUserModel._id &&
+            loggedUser && loggedUser._id
+          ) &&
+          (
+            <ActionButton
+              ref={followButtonRef}
+              onClick={_HandleFollowClicked}>
+              {_CalculateFollowButtonText()}
+            </ActionButton>
+          )
+        }
       </div>
     </div>
   );
