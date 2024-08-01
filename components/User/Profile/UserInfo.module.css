@@ -57,9 +57,20 @@
 .namesContainer {
   display: flex;
   flex-direction: row;
+  justify-content: space-between
+}
+
+.namesContainerLeft {
+  display: flex;
+  flex-direction: row;
   align-items: center;
   gap: 1rem;
   font-size: 1rem;
+  background-color: blueviolet;
+}
+
+.namesContainerRight {
+  background-color: cyan;
 }
 
 .fullname {

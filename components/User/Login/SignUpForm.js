@@ -85,7 +85,8 @@ function SignUpForm()
       return false;
     }
 
-    NavigateTo(PageUrls.UserOwnProfile);
+    /// @XXX: Can't use PageUrls.
+    NavigateTo("/profile");
   };
 
   const _HandleAlreadyHaveUser = async () => {

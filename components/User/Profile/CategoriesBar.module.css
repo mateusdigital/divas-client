@@ -25,9 +25,14 @@
 .contentContainer{
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
+  justify-content: center;
+  gap: 1rem;
 
+  width: 100%;
   border: var(--layout-border-color) var(--layout-border-size) var(--layout-border-style);
+  margin: 1rem 0rem;
+
+  /* background-color: red; */
 }
 
 /* -------------------------------------------------------------------------- */

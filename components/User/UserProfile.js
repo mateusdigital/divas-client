@@ -16,9 +16,10 @@ import LikesGrid from "../Likes/Grid/LikesGrid";
 // -----------------------------------------------------------------------------
 const _CATEGORIES_BAR_NAMES = [
   "Moodboards",
+  "Drafts",
   "Likes",
-  "Collections",
-  "Uploads",
+  "Followers",
+  "Following"
 ];
 
 // -----------------------------------------------------------------------------
@@ -27,8 +28,8 @@ function _GetComponentForCategoryName(name, userModel)
   switch (name) {
     case "Moodboards":  return <MoodboardGrid userModel={userModel}></MoodboardGrid>;
     case "Likes":       return <LikesGrid     userModel={userModel}></LikesGrid>;
-    case "Collections": return <div></div>;
-    case "Uploads":     return <div></div>;
+    case "Drafts": return <div></div>;
+    // case "Uploads":     return <div></div>;
 
     default:
       return null;

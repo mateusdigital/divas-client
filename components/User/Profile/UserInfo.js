@@ -21,13 +21,25 @@
 //---------------------------------------------------------------------------~//
 
 // -----------------------------------------------------------------------------
+import React from "react";
+// -----------------------------------------------------------------------------
 import ProfileImage from "@/components/UI/Images/ProfileImage";
 // -----------------------------------------------------------------------------
 import styles from "./UserInfo.module.css";
+import TextButton from "@/components/UI/Buttons/TextButton";
+import { useLoggedUserContext } from "@/contexts/User/UserLoggedContext";
 
 // -----------------------------------------------------------------------------
 function UserInfo({ userModel })
 {
+  if(!userModel) {
+    return;
+  }
+
+  const loggedUser = useLoggedUserContext();
+  const isLoggedUser = (loggedUser && loggedUser._id == userModel._id);
+
+
   return (
     <div className={styles.contentContainer}>
       {/* Photo */}
@@ -38,8 +50,16 @@ function UserInfo({ userModel })
       <div className={styles.infoContainer}>
         {/* User - Fullname / handle */}
         <div className={styles.namesContainer}>
-          <span className={styles.fullname}>{userModel.fullname}</span>
-          <span className={styles.username}>@{userModel.username}</span>
+          <div className={styles.namesContainerLeft}>
+            <span className={styles.fullname}>{userModel.fullname}</span>
+            <span className={styles.username}>@{userModel.username}</span>
+          </div>
+
+          { isLoggedUser &&
+            <TextButton className={styles.namesContainerRight}>
+                Edit Profile
+            </TextButton>
+          }
         </div>
 
         {/* Stats */}

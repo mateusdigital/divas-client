@@ -90,6 +90,11 @@ class UserModel
     Cookies.set("loggedUser", JSON.stringify(this), { expires: 7 }); // @check: 7 what????
   }
 
+  DeleteData()
+  {
+    Cookies.remove("loggedUser");
+  }
+
   // ---------------------------------------------------------------------------
   static LoadData()
   {
