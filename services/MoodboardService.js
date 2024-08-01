@@ -73,7 +73,7 @@ class MoodboardService
   }
 
   // ---------------------------------------------------------------------------
-  static async SaveDraftMoodboardItem(infoData, itemsData, photo)
+  static async SaveDraftMoodboardItem(infoData, itemsData)
   {
     const result = await LoginService.GetCurrentLoggedUser();
     if (!result.IsValid()) {
@@ -177,20 +177,40 @@ class MoodboardService
     return MoodboardService._moodboardItemsController.GetItemsForCategory(category);
   }
 
-  static async GetCommentsFor(model)
-  {
-    Assert.NotNull(model);
+  //
+  // Comments
+  //
 
-    const api_url = NET.Make_API_Url(Endpoints.Moodboard.Comments.GetAll, id);
+  // ---------------------------------------------------------------------------
+  static async AddCommentToMoodboardWithId(commentData)
+  {
+    const api_url  = NET.Make_API_Url(Endpoints.MoodboardComment.Create);
+    const response = await NET.POST_JSON(api_url, commentData);
+
+    if(response.status != StatusCodes.CREATED) {
+      return await Result.ResponseError(response);
+    }
+
+    const json = await response.json();
+    return Result.Valid(json);
+  }
+
+
+  // ---------------------------------------------------------------------------
+  static async GetCommentsForMoodboardWithId(moodboardId)
+  {
+    Assert.NotNull(moodboardId);
+
+    const api_url = NET.Make_API_Url(Endpoints.MoodboardComment.GetAll, moodboardId);
 
     const response = await NET.GET(api_url);
     if(response.status != StatusCodes.OK) {
-      return null;
+      return Result.ResponseError(response);
     }
 
     // @TODO(mateusdigital): Create model for moodboard.
     const data = await response.json();
-    return data;
+    return Result.Valid(data);
   }
 }
 

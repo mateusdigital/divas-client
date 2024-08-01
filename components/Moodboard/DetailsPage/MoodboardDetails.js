@@ -21,10 +21,14 @@
 //----------------------------------------------------------------------------//
 
 // -----------------------------------------------------------------------------
-import React from "react";
+import React, { useRef, useState } from "react";
 // -----------------------------------------------------------------------------
 import MainLayout from "@/components/Layout/MainLayout";
 import MaterialIcon from "@/components/MaterialIcon";
+import TextButton from "@/components/UI/Buttons/TextButton";
+// -----------------------------------------------------------------------------
+import UserLoggedContext from "@/contexts/User/UserLoggedContext";
+import { PageUrls } from "@/utils/PageUtils";
 // -----------------------------------------------------------------------------
 import MoodboardUserInfo from "./UserInfo/MoodboardUserInfo";
 import MoodboardComments from "./Comments/MoodboardComments";
@@ -34,7 +38,6 @@ import CachedImage from "@/components/UI/Images/CachedImage";
 import ImageDefaults from "@/components/UI/Images/ImageDefaults";
 // -----------------------------------------------------------------------------
 import styles from "./MoodboardDetails.module.css";
-import TextButton from "@/components/UI/Buttons/TextButton";
 
 // -----------------------------------------------------------------------------
 function MoodboardDetails({moodboardModel})
@@ -45,11 +48,17 @@ function MoodboardDetails({moodboardModel})
 
   //
   const moodboard_title = moodboardModel.title
-                          ? moodboardModel.title
-                          : "Untitled...";
+    ? moodboardModel.title
+    : "Untitled...";
 
 
-  //
+  // ---------------------------------------------------------------------------
+  const moodboardCommentsRef = useRef();
+  const [commentsCount, setCommentsCount] = useState(moodboardModel.commentsCount);
+  const [likesCount, setLikesCount] = useState(moodboardModel.likesCount);
+
+
+  // ---------------------------------------------------------------------------
   const _HandleAddCollection = () => {
 
   };
@@ -66,82 +75,88 @@ function MoodboardDetails({moodboardModel})
 
   };
 
+  const _HandleCommentsChanged = (count)=>{
+    setCommentsCount(count);
+  }
+
   //
   return (
     <MainLayout>
-      <div className={styles.container}>
-        {/* Moodboard Image */}
-        <div className={styles.imageContainer}>
-          <CachedImage
-            imageUrl={moodboardModel.photoUrl}
-            imagePlaceholderUrl={ImageDefaults.PLACEHOLDER_URL_MOODBOARD_DETAILS}
-          />
-        </div>
-
-        {/* Info Container */}
-        <div className={styles.infoContainer}>
-          <MoodboardUserInfo moodboardModel={moodboardModel}/>
-
-          {/* Design Item Info */}
-          <div className={styles.itemInfoContainer}>
-            <span className={styles.itemInfoTitle}>
-              {moodboard_title}
-            </span>
-
-            <span className={styles.itemInfoDescription}>
-              {moodboardModel.description}
-            </span>
+      <UserLoggedContext requiresLoggedUser={true} redirectTo={PageUrls.UserLogin}>
+        <div className={styles.container}>
+          {/* Moodboard Image */}
+          <div className={styles.imageContainer}>
+            <CachedImage
+              imageUrl={moodboardModel.photoUrl}
+              imagePlaceholderUrl={ImageDefaults.PLACEHOLDER_URL_MOODBOARD_DETAILS}
+            />
           </div>
-          {/* -Design Item Info */}
 
+          {/* Info Container */}
+          <div className={styles.infoContainer}>
+            <MoodboardUserInfo moodboardModel={moodboardModel}/>
 
-          {/* Comments  */}
-          <div>
-            <MoodboardComments moodboardModel={moodboardModel}/>
-          </div>
-          {/* -Comments */}
+            {/* Design Item Info */}
+            <div className={styles.itemInfoContainer}>
+              <span className={styles.itemInfoTitle}>
+                {moodboard_title}
+              </span>
 
-
-          {/* Other */}
-          <div className={styles.otherContainer}>
-            {/* Collection Button */}
-            <TextButton onClick={_HandleAddCollection}>Add to Collection</TextButton>
-
-            <div className={styles.statsContainer}>
-              {/* Share Button */}
-              <MaterialIcon
-                className={styles.statIcon}
-                icon="share"
-                onClick={_HandleShareClicked}
-              />
-
-              {/* Comments Button */}
-              <MaterialIcon
-                className={styles.statIcon}
-                icon="chat_bubble"
-                onClick={_HandleCommentsClicked}
-              >
-                {moodboardModel.commentsCount}
-              </MaterialIcon>
-
-              {/* Likes button */}
-              <MaterialIcon
-                className={styles.statIcon}
-                icon="favorite"
-                onClick={_HandleLikeClicked}
-              >
-                {moodboardModel.likesCount}
-              </MaterialIcon>
+              <span className={styles.itemInfoDescription}>
+                {moodboardModel.description}
+              </span>
             </div>
-          </div>
-          {/* -Other */}
-        </div>
-        {/* -Info Container */}
-      </div>
+            {/* -Design Item Info */}
 
-      {/* Items Carrousel */}
-      <MoodboardItemsCarrousel moodboardModel={moodboardModel}/>
-      {/* -Items Carrousel */}
+            {/* Other */}
+            <div className={styles.otherContainer}>
+              {/* Collection Button */}
+              <TextButton onClick={_HandleAddCollection}>Add to Collection</TextButton>
+
+              <div className={styles.statsContainer}>
+                {/* Share Button */}
+                <MaterialIcon
+                  className={styles.statIcon}
+                  icon="share"
+                  onClick={_HandleShareClicked}
+                />
+
+                {/* Comments Button */}
+                <MaterialIcon
+                  className={styles.statIcon}
+                  icon="chat_bubble"
+                  onClick={_HandleCommentsClicked}
+                >
+                  {commentsCount}
+                </MaterialIcon>
+
+                {/* Likes button */}
+                <MaterialIcon
+                  className={styles.statIcon}
+                  icon="favorite"
+                  onClick={_HandleLikeClicked}
+                >
+                  {likesCount}
+                </MaterialIcon>
+              </div>
+            </div>
+            {/* -Other */}
+
+            {/* Comments  */}
+            <MoodboardComments
+              moodboardModel={moodboardModel}
+              onCommentsChanged={_HandleCommentsChanged}
+            />
+            {/* -Comments */}
+
+          </div>
+          {/* -Info Container */}
+        </div>
+
+        {/* Items Carrousel */}
+        <MoodboardItemsCarrousel moodboardModel={moodboardModel}/>
+        {/* -Items Carrousel */}
+      </UserLoggedContext>
     </MainLayout>
   );
 }

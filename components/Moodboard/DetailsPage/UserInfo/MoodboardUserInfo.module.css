@@ -24,7 +24,7 @@
 /* -------------------------------------------------------------------------- */
 .container {
   display: flex;
-  background-color: chartreuse;
+  /* background-color: chartreuse; */
   justify-content: space-between;
   align-items: center;
 }
@@ -34,5 +34,5 @@
   display: flex;
   flex-direction: column;
 
-  background-color: green;
+  /* background-color: green; */
 }
