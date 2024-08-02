@@ -146,6 +146,41 @@ class UserService
     }
   }
 
+
+  // ---------------------------------------------------------------------------
+  static async UpdateUserWithData(data, photo)
+  {
+    //
+    if(photo) {
+      const form_data = new FormData();
+      form_data.append("photo", photo);
+
+      const api_url  = NET.Make_API_Url(Endpoints.User.UploadProfilePhoto);
+      const response = await NET.POST_DATA(api_url, form_data);
+
+      if(response.status != StatusCodes.CREATED) {
+        return await Result.ResponseError(response);
+      }
+
+      const response_data  = await response.json();
+      data.profilePhotoUrl = response_data.photoPath;
+    }
+
+    //
+    {
+      const api_url  = NET.Make_API_Url(Endpoints.User.Update, data.userId);
+      const response = await NET.PATCH_JSON(api_url, data);
+
+      if(response.status != StatusCodes.OK) {
+        return await Result.ResponseError(response);
+      }
+
+      const json = await response.json();
+      return Result.Valid(json);
+    }
+  }
+
+
   // ---------------------------------------------------------------------------
   static async ToggleFollowUser(followData)
   {

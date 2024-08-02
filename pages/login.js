@@ -28,7 +28,7 @@ import { PageUrls } from "@/utils/PageUtils";
 import UserLoggedContext from "@/contexts/User/UserLoggedContext.js";
 // -----------------------------------------------------------------------------
 import Panel         from "@/components/UI/Containers/Panel";
-import LoginUserForm from "@/components/User/Login/LoginUserForm";
+import LoginUserForm from "@/components/User/Forms/LoginUserForm";
 // -----------------------------------------------------------------------------
 import styles from "./styles/LoginPage.module.css";
 

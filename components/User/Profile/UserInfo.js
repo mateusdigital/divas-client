@@ -28,6 +28,8 @@ import ProfileImage from "@/components/UI/Images/ProfileImage";
 import styles from "./UserInfo.module.css";
 import TextButton from "@/components/UI/Buttons/TextButton";
 import { useLoggedUserContext } from "@/contexts/User/UserLoggedContext";
+import Link from "next/link";
+import { PageUrls } from "@/utils/PageUtils";
 
 // -----------------------------------------------------------------------------
 function UserInfo({ userModel })
@@ -35,11 +37,11 @@ function UserInfo({ userModel })
   if(!userModel) {
     return;
   }
-
-  const loggedUser = useLoggedUserContext();
+  //
+  const loggedUser   = useLoggedUserContext();
   const isLoggedUser = (loggedUser && loggedUser._id == userModel._id);
 
-
+  //
   return (
     <div className={styles.contentContainer}>
       {/* Photo */}
@@ -56,9 +58,9 @@ function UserInfo({ userModel })
           </div>
 
           { isLoggedUser &&
-            <TextButton className={styles.namesContainerRight}>
+            <Link href={PageUrls.EditProfile} className={styles.namesContainerRight}>
                 Edit Profile
-            </TextButton>
+            </Link>
           }
         </div>
 

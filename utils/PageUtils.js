@@ -18,6 +18,9 @@ export class PageUrls
 
   static UserMessages       = "/users/messages";
 
+  //
+  static EditProfile = "/edit-profile";
+
   // Feed
   static FeedUser           = "/feed/user";
   static FeedMain           = "/feed/main";

@@ -151,6 +151,20 @@ class NET
     return safe_fetch(url, full_options);
   }
 
+  static async PATCH_JSON(url, jsonObject, options)
+  {
+    const base_options = {
+      method:  "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body:    JSON.stringify(jsonObject),
+    };
+
+    const full_options = {...base_options, ...options};
+    return safe_fetch(url, full_options);
+  }
+
   // ---------------------------------------------------------------------------
   static async POST(url, options)
   {
