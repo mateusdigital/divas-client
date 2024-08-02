@@ -1,0 +1,14 @@
+
+/*----------------------------------------------------------------------------*/
+.container {
+  display: flex;
+  justify-content: center;
+}
+
+/*----------------------------------------------------------------------------*/
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin: 0rem 1rem;
+}

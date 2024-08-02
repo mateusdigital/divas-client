@@ -36,6 +36,21 @@ class MoodboardService
     return Result.Valid(data);
   }
 
+  static async GetAllDraftsByUser(userId)
+  {
+    Assert.NotNullOrEmpty(userId);
+
+    const api_url = NET.Make_API_Url(Endpoints.Moodboard.GetUserDrafts, userId);
+
+    const response = await NET.GET(api_url, { owner: userId });
+    if(response.status != StatusCodes.OK) {
+      return await Result.ResponseError(response);
+    }
+
+    const data = await response.json();
+    return Result.Valid(data);
+  }
+
   // ---------------------------------------------------------------------------
   static async GetAllLikedByUser(userId)
   {

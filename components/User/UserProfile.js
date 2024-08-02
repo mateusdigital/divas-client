@@ -1,12 +1,16 @@
 
 // -----------------------------------------------------------------------------
+import React from "react";
 import { useState, Suspense, useEffect } from "react";
 // -----------------------------------------------------------------------------
 import UserInfo      from "@/components/User/Profile/UserInfo";
 import CategoriesBar from "@/components/User/Profile/CategoriesBar";
 // -----------------------------------------------------------------------------
 import MoodboardGrid from "../Moodboard/Grid/MoodboardGrid";
-import LikesGrid from "../Likes/Grid/LikesGrid";
+import DraftsGrid from "../CategoriesViews/Drafts/Grid/DraftsGrid";
+import LikesGrid from "../CategoriesViews/Likes/Grid/LikesGrid";
+import FollowersGrid from "../CategoriesViews/Users/Grid/FollowersGrid";
+import FollowingGrid from "../CategoriesViews/Users/Grid/FollowingGrid";
 
 
 //
@@ -26,12 +30,13 @@ const _CATEGORIES_BAR_NAMES = [
 function _GetComponentForCategoryName(name, userModel)
 {
   switch (name) {
-    case "Moodboards":  return <MoodboardGrid userModel={userModel}></MoodboardGrid>;
-    case "Likes":       return <LikesGrid     userModel={userModel}></LikesGrid>;
-    case "Drafts": return <div></div>;
-    // case "Uploads":     return <div></div>;
-
+    case "Moodboards":  return <MoodboardGrid userModel={userModel}/>;
+    case "Likes":       return <LikesGrid     userModel={userModel}/>;
+    case "Drafts":      return <DraftsGrid    userModel={userModel}/>;
+    case "Followers":   return <FollowersGrid userModel={userModel}/>;
+    case "Following":   return <FollowingGrid userModel={userModel}/>;
     default:
+      debugger;
       return null;
   }
 }
@@ -44,9 +49,10 @@ function _GetComponentForCategoryName(name, userModel)
 // -----------------------------------------------------------------------------
 function UserProfile({userModel})
 {
+  console.log(userModel.username);
   //
   const [categoryComponent, setCategoryComponent] = useState(null);
-  const [selectedCategory, setSelectedCategory]   = useState(null);
+  const [selectedCategory, setSelectedCategory]   = useState("Moodboards");
 
   // Handle Category Selection
   const _HandleCategorySelection = (categoryName) => {
@@ -57,8 +63,10 @@ function UserProfile({userModel})
   };
 
   useEffect(()=>{
-    if(userModel && !categoryComponent) {
-      _HandleCategorySelection(_CATEGORIES_BAR_NAMES[0]);
+    console.log("model changd");
+    if(userModel) {
+      const name = selectedCategory || _CATEGORIES_BAR_NAMES[0]
+      _HandleCategorySelection(name);
     }
   }, [userModel])
 
@@ -76,8 +84,7 @@ function UserProfile({userModel})
       categoriesNames={_CATEGORIES_BAR_NAMES}
       onCategoryClickCallback={_HandleCategorySelection}
     />
-
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense>
       {categoryComponent}
     </Suspense>
   </>);

@@ -48,25 +48,30 @@ class NET
 
   static _ReplaceArgs(url, ...args)
   {
-    const components = url.split("/");
-    const replaced   = [];
+    try {
+      const components = url.split("/");
+      const replaced   = [];
 
-    let arg_index = 0;
-    for (let i = 0; i < components.length; ++i) {
-      const component = components[i];
-      if (component.startsWith(":")) {
-        if (arg_index < args.length) {
-          const value = args[arg_index];
-          replaced.push(value);
-          ++arg_index;
+      let arg_index = 0;
+      for (let i = 0; i < components.length; ++i) {
+        const component = components[i];
+        if (component.startsWith(":")) {
+          if (arg_index < args.length) {
+            const value = args[arg_index];
+            replaced.push(value);
+            ++arg_index;
+          }
+        }
+        else if (component.length != 0) {
+          replaced.push(component);
         }
       }
-      else if (component.length != 0) {
-        replaced.push(component);
-      }
-    }
 
-    return replaced.join("/");
+      return replaced.join("/");
+    }
+    catch(error) {
+      debugger;
+    }
   }
 
   // ---------------------------------------------------------------------------

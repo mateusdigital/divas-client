@@ -55,6 +55,52 @@ class UserService
       return Result.ExceptionError(error);
     }
   }
+  //
+  // Followers / Following
+  //
+
+  // ---------------------------------------------------------------------------
+  static async GetAllFollowingOfUser(userId)
+  {
+    Assert.NotNull(userId);
+
+    try {
+      const api_url = NET.Make_API_Url( Endpoints.User.GetFollowing, userId);
+
+      const response = await NET.GET(api_url);
+      if(response.status != StatusCodes.OK) {
+        return await Result.ResponseError(response);
+      }
+
+      const data = await response.json();
+      return Result.Valid(data);
+    }
+    catch(error) {
+      return Result.ExceptionError(error);
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  static async GetAllFollowersOfUser(userId)
+  {
+    Assert.NotNull(userId);
+
+    try {
+      const api_url = NET.Make_API_Url(Endpoints.User.GetFollowers, userId);
+
+      const response = await NET.GET(api_url);
+      if(response.status != StatusCodes.OK) {
+        return await Result.ResponseError(response);
+      }
+
+      const data = await response.json();
+      return Result.Valid(data);
+    }
+    catch(error) {
+      return Result.ExceptionError(error);
+    }
+  }
+
 
   // ---------------------------------------------------------------------------
   static async CreateUserWithData(data, photo)
