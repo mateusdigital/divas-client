@@ -11,6 +11,7 @@ const LoggedUserContext = createContext(null);
 
 // -----------------------------------------------------------------------------
 let _LoggedUser = null;
+let _XXX_BLOW_IT_UP  = true;
 
 
 //
@@ -24,9 +25,9 @@ export function useLoggedUserContext()
 }
 
 // -----------------------------------------------------------------------------
-export function getLoggedUser()
+export function InvalidateLoggedUserContext()
 {
-  return _LoggedUser;
+  _XXX_BLOW_IT_UP  = true;
 }
 
 
@@ -37,27 +38,33 @@ function UserLoggedContext({requiresLoggedUser, redirectTo, children})
   const { NavigateTo } = usePageRouter();
 
   //
-  useEffect(()=>{
-    const _GetLoggedUser = async ()=>{
-      const result = await LoginService.GetCurrentLoggedUser();
-      if(result.IsValid()) {
-        setLoggedUser(result.value);
-        _LoggedUser = result.value;
+  const _GetLoggedUser = async ()=>{
+    const result = await LoginService.GetCurrentLoggedUser();
+    if(result.IsValid()) {
+      setLoggedUser(result.value);
+      _LoggedUser = result.value;
 
-        if(!requiresLoggedUser) {
-          NavigateTo(redirectTo);
-        }
+      if(!requiresLoggedUser) {
+        NavigateTo(redirectTo);
       }
-      else {
-        if(requiresLoggedUser) {
-          ToastUtils.ResultError(result);
-          NavigateTo(PageUrls.UserLogin);
-        }
+    }
+    else {
+      if(requiresLoggedUser) {
+        ToastUtils.ResultError(result);
+        NavigateTo(PageUrls.UserLogin);
       }
     }
 
+    _XXX_BLOW_IT_UP = false;
+  }
+
+  useEffect(()=>{
     _GetLoggedUser();
   }, []);
+
+  if(_XXX_BLOW_IT_UP) {
+    _GetLoggedUser();
+  }
 
 
 

@@ -12,7 +12,7 @@ import TextButton from "@/components/UI/Buttons/TextButton";
 import LabeledInput from "@/components/UI/Inputs/LabeledInput";
 // -----------------------------------------------------------------------------
 import UserService from "@/services/UserService";
-import { useLoggedUserContext } from "@/contexts/User/UserLoggedContext";
+import { InvalidateLoggedUserContext, useLoggedUserContext } from "@/contexts/User/UserLoggedContext";
 // -----------------------------------------------------------------------------
 import styles from "./Forms.module.css";
 
@@ -104,6 +104,7 @@ function EditUserForm()
       ToastUtils.Success("Profile saved...");
     }
 
+    InvalidateLoggedUserContext();
     NavigateTo("/profile");
   };
 
