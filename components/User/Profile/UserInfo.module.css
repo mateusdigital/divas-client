@@ -70,7 +70,9 @@
 }
 
 .namesContainerRight {
-  background-color: cyan;
+  display: flex;
+  align-items: center;
+  /* background-color: cyan; */
 }
 
 .fullname {

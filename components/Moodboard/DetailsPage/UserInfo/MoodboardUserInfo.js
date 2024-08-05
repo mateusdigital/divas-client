@@ -111,8 +111,9 @@ function MoodboardUserInfo({moodboardModel})
       <div>
         {
           (
-            ownerUserModel && ownerUserModel._id &&
-            loggedUser && loggedUser._id
+            (ownerUserModel && ownerUserModel._id) &&
+            (loggedUser && loggedUser._id) &&
+            (loggedUser._id != ownerUserModel._id)
           ) &&
           (
             <ActionButton

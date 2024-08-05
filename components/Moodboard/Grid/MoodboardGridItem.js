@@ -35,7 +35,7 @@ import ImageDefaults from '@/components/UI/Images/ImageDefaults';
 import styles from "./MoodboardGridItem.module.css";
 
 
-// -----------------------------------------------------------------------------
+// ------------------------------------------n-----------------------------------
 function MoodboardGridItem({moodboardModel})
 {
   //

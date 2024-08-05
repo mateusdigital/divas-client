@@ -65,17 +65,15 @@ function _Content({moodboardModel})
 
   // ---------------------------------------------------------------------------
   const _HandleAddCollection = () => {
-
   };
 
   const _HandleShareClicked = () => {
-
   };
 
   const _HandleCommentsClicked = () => {
-
   };
 
+  //
   const _HandleLikeClicked = async () => {
     const result = await MoodboardService.ToggleLikeForMoodboardWithId({
       moodboardId: moodboardModel._id,
@@ -101,6 +99,7 @@ function _Content({moodboardModel})
   const _HandleCommentsChanged = (count)=>{
     setCommentsCount(count);
   }
+
 
   //
   return (
@@ -133,7 +132,9 @@ function _Content({moodboardModel})
           {/* Other */}
           <div className={styles.otherContainer}>
             {/* Collection Button */}
-            <TextButton onClick={_HandleAddCollection}>Add to Collection</TextButton>
+            <TextButton onClick={_HandleAddCollection}>
+              Add to Collection
+            </TextButton>
 
             <div className={styles.statsContainer}>
               {/* Share Button */}
@@ -170,7 +171,6 @@ function _Content({moodboardModel})
             onCommentsChanged={_HandleCommentsChanged}
           />
           {/* -Comments */}
-
         </div>
         {/* -Info Container */}
       </div>

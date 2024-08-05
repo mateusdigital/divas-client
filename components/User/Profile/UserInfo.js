@@ -58,7 +58,9 @@ function UserInfo({ userModel })
           </div>
 
           { isLoggedUser &&
-            <Link href={PageUrls.EditProfile} className={styles.namesContainerRight}>
+            <Link
+              href={PageUrls.EditProfile}
+              className={styles.namesContainerRight}>
                 Edit Profile
             </Link>
           }

@@ -22,9 +22,9 @@ function ProfileImage({userModel, className})
   }
 
   const class_name = `${className}  ${styles.photoContainer}`;
-  const image_url  = NET.Make_Local_Image_Url(userModel.profilePhotoUrl)
+  const image_url  = NET.Make_External_Image_Url(userModel.profilePhotoUrl)
   const image_alt  = `Profile image for: ${userModel.username}`;
-  
+
   //
   return (<>
     <div className={class_name}>
