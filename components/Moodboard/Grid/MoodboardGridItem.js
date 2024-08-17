@@ -23,9 +23,8 @@
 // -----------------------------------------------------------------------------
 import React from 'react';
 // -----------------------------------------------------------------------------
-import Link from 'next/link';
-// -----------------------------------------------------------------------------
 import NET from '@/app/NET';
+import _Link from '@/components/Link';
 // -----------------------------------------------------------------------------
 import { PageUrls } from '@/utils/PageUtils';
 // -----------------------------------------------------------------------------
@@ -36,7 +35,7 @@ import styles from "./MoodboardGridItem.module.css";
 
 
 // ------------------------------------------n-----------------------------------
-function MoodboardGridItem({moodboardModel})
+function MoodboardGridItem({moodboardModel, onClick})
 {
   //
   const details_url = NET.Make_Navigation_Url(PageUrls.MoodboardDetails, moodboardModel._id);
@@ -45,12 +44,17 @@ function MoodboardGridItem({moodboardModel})
   //
   return (
     <div className={styles.container}>
-      <Link href={details_url}>
+
+
+      <_Link
+        href={details_url}
+        onClick={(href, event, )=>{ onClick(href, event, moodboardModel); }}
+      >
         <CachedImage
           imageUrl={photo_url}
           imagePlaceholderUrl={ImageDefaults.PLACEHOLDER_URL_MOODBOARD_GRID_ITEM}
         />
-      </Link>
+      </_Link>
     </div>
   );
 }

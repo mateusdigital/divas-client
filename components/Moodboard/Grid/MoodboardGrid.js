@@ -36,7 +36,7 @@ import styles from "./MoodboardGrid.module.css";
 
 
 // -----------------------------------------------------------------------------
-function MoodboardGrid({ userModel, fetchMoodboardsFunc })
+function MoodboardGrid({ userModel, fetchMoodboardsFunc, onClick })
 {
   //
   const [moodboards, setMoodboards] = useState([]);
@@ -72,6 +72,7 @@ function MoodboardGrid({ userModel, fetchMoodboardsFunc })
             <MoodboardGridItem
               key={moodboard._id}
               moodboardModel={moodboard}
+              onClick={onClick}
             />
           ))
         }

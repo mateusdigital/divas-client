@@ -153,7 +153,8 @@ class MoodboardCanvasController
     const e = event;
 
     // Get the image.
-    const img_url    = NET.Make_External_Image_Url(itemModel.imageUrl);
+    const XXX_image_url = ("items/" + itemModel.imageUrl);
+    const img_url    = NET.Make_External_Image_Url(XXX_image_url);
     const cached_img = App.GetCachedImageForUrl(img_url);
 
     // Add image to fabric.

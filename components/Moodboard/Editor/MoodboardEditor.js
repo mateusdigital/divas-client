@@ -19,7 +19,9 @@
 //  Description :                                                             //
 //                                                                            //
 //----------------------------------------------------------------------------//
+
 // -----------------------------------------------------------------------------
+import React from "react";
 import {useEffect, useRef, useState} from "react";
 // -----------------------------------------------------------------------------
 import {PageUrls, usePageRouter} from "@/utils/PageUtils";
@@ -68,13 +70,12 @@ function _MoodboardControlForCurrentFlowState({flowState, OnBackClicked})
 }
 
 // -----------------------------------------------------------------------------
-function _Content()
+function _Content({moodboardController})
 {
-  const moodboardController = useMoodboardEditorContext();
-  const {NavigateTo}        = usePageRouter();
+  const {NavigateTo} = usePageRouter();
 
   //
-  const [currentFlowState, setCurrentFlowState]     = useState(
+  const [currentFlowState, setCurrentFlowState] = useState(
     FLOW_STATE_EDITING
   );
   const [currentFlowElement, setCurrentFlowElement] = useState((
@@ -160,67 +161,77 @@ function _Content()
 
   // ---------------------------------------------------------------------------
   return (
-    <>
-      <div className={styles.mainContainer}>
-        {/*  */}
-        <div className={styles.topBarContainer}>
-          <Link href={PageUrls.UserOwnProfile}>
-            <DivasLogo/>
-          </Link>
+    <div className={styles.mainContainer}>
+      {/*  */}
+      <div className={styles.topBarContainer}>
+        <Link href={PageUrls.UserOwnProfile}>
+          <DivasLogo/>
+        </Link>
 
-          {(
-            currentFlowState == FLOW_STATE_EDITING && <div>
-              <ActionButton
-                disabled={isMoodboardEmpty}
-                onClick={_HandleOnPublishClick}
-              >
-                Publish
-              </ActionButton>
+        {(
+          (currentFlowState == FLOW_STATE_EDITING)
+            &&
+          <div>
+            <ActionButton
+              disabled={isMoodboardEmpty}
+              onClick={_HandleOnPublishClick}
+            >
+              Publish
+            </ActionButton>
 
-              <TextButton
-                disabled={isMoodboardClean}
-                onClick={_HandleOnSaveDraftClick}
-              >
-                <span ref={_saveDraftSpanRef}>Save Draft</span>
-              </TextButton>
-            </div>
-          )}
-
-          <Link onClick={_HandleOnProfileClick}>
-            <ProfileImage className={styles.photoContainer}/>
-          </Link>
-        </div>
-
-        {/*  */}
-        <div className={styles.editorContainer}>
-          <div className={styles.editorContentContainer}>
-            <MoodboardCanvas
-              className={styles.canvasContainer}
-              flowState={currentFlowState}
-              xxx_OnCanvasHasChanged={() => {
-                const is_empty = moodboardController.IsEmpty();
-
-                setIsMoodboardClean(false);
-                setIsMoodboardEmpty(is_empty);
-
-                if(is_empty) {
-                  if(_saveDraftSpanRef.current && _saveDraftSpanRef.current.innerText) {
-                    _saveDraftSpanRef.current.innerText = "Save Draft";
-                  }
-                } else {
-                  if(_saveDraftSpanRef.current && _saveDraftSpanRef.current.innerText) {
-                    _saveDraftSpanRef.current.innerText = "Save Draft *";
-                  }
-                }
-                moodboardController.SetSaved(false);
-              }}
-            />
-            {currentFlowElement}
+            <TextButton
+              disabled={isMoodboardClean}
+              onClick={_HandleOnSaveDraftClick}
+            >
+              <span ref={_saveDraftSpanRef}>Save Draft</span>
+            </TextButton>
           </div>
+        )}
+
+        <Link onClick={_HandleOnProfileClick}>
+          <ProfileImage className={styles.photoContainer}/>
+        </Link>
+      </div>
+
+      {/*  */}
+      <div className={styles.editorContainer}>
+        <div className={styles.editorContentContainer}>
+          <MoodboardCanvas
+            className={styles.canvasContainer}
+            flowState={currentFlowState}
+            xxx_OnCanvasHasChanged={() => {
+              const is_empty = moodboardController.IsEmpty();
+
+              setIsMoodboardClean(false);
+              setIsMoodboardEmpty(is_empty);
+
+              if(is_empty) {
+                if(_saveDraftSpanRef.current && _saveDraftSpanRef.current.innerText) {
+                  _saveDraftSpanRef.current.innerText = "Save Draft";
+                }
+              } else {
+                if(_saveDraftSpanRef.current && _saveDraftSpanRef.current.innerText) {
+                  _saveDraftSpanRef.current.innerText = "Save Draft *";
+                }
+              }
+              moodboardController.SetSaved(false);
+            }}
+          />
+          {currentFlowElement}
         </div>
       </div>
-    </>
+    </div>
   );
+}
+
+// -----------------------------------------------------------------------------
+function _Container({moodboardController}) {
+  const _moodboardController = useMoodboardEditorContext();
+
+  if(moodboardController) {
+    return (<_Content moodboardController/>);
+  }
+  return (<_Content _moodboardController/>);
 }
 
 // -----------------------------------------------------------------------------
@@ -228,7 +239,7 @@ function MoodboardEditor()
 {
   return (
     <MoodboardEditorContextProvider>
-      <_Content/>
+      <_Container/>
     </MoodboardEditorContextProvider>
   );
 }

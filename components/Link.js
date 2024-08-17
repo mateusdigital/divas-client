@@ -7,13 +7,13 @@ function _Link({href, onClick, children, ...rest})
   const handleClick = (e) => {
     if (onClick) {
       e.preventDefault(); // Prevent default link behavior if onClick is provided
-      onClick(e); // Call the onClick handler
+      onClick(href, e); // Call the onClick handler
     }
   };
 
   return (
     <div onClick={handleClick} style={{cursor: "pointer"}}>
-      {href ? (
+      { (href && !handleClick) ? (
         <Link href={href} {...rest}>
           {children}
         </Link>

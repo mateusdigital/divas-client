@@ -21,6 +21,7 @@
 //----------------------------------------------------------------------------//
 
 // -----------------------------------------------------------------------------
+import React from "react";
 import {useState} from "react";
 // -----------------------------------------------------------------------------
 import NET from "@/app/NET";
@@ -34,8 +35,8 @@ import styles from "./Item.module.css";
 function ItemComponent({itemModel})
 {
   //
-  const [loaded, setLoaded] = useState(false);
-  const moodboard_controler = useMoodboardEditorContext();
+  const [loaded, setLoaded]  = useState(false);
+  const moodboard_controller = useMoodboardEditorContext();
 
   //
   const _HandleDragStart = (event) => {
@@ -45,6 +46,7 @@ function ItemComponent({itemModel})
     event.dataTransfer.setData("text/plain", JSON.stringify(itemModel));
   };
 
+  const XXX_image_url = NET.Make_External_Image_Url("items/" + itemModel.imageUrl)
 
   //
   return (
@@ -57,7 +59,7 @@ function ItemComponent({itemModel})
         style={{display: loaded ? "block" : "none"}}
 
         imageUrl={
-          NET.Make_External_Image_Url(itemModel.imageUrl)
+          XXX_image_url
         }
         onLoad={() => {
           setLoaded(true);
@@ -67,7 +69,7 @@ function ItemComponent({itemModel})
         onDragStart={_HandleDragStart}
 
         onDoubleClick={(event)=>{
-          moodboard_controler.XXX_AddExternalImage(
+          moodboard_controller.XXX_AddExternalImage(
             itemModel,
             {
               mouseX: -1,
