@@ -37,7 +37,7 @@ import ProfileImage from "@/components/UI/Images/ProfileImage";
 import MoodboardService from "@/services/MoodboardService.js";
 // -----------------------------------------------------------------------------
 import {
-  MoodboardEditorContextProvider, useMoodboardEditorContext
+  MoodboardEditorContextProvider, useMoodboardEditorController
 } from "@/contexts/Moodboard/Editor/MoodboardEditorContext";
 // -----------------------------------------------------------------------------
 import MoodboardCanvas from "./Canvas/MoodboardCanvas";
@@ -48,6 +48,8 @@ import {FLOW_STATE_EDITING, FLOW_STATE_PUBLISH} from "./utils/FlowState";
 import useUnsavedChangesWarning from "./utils/UnsavedChangesWarning.js";
 // -----------------------------------------------------------------------------
 import styles from "./MoodboardEditor.module.css";
+import Assert from "@/utils/Assert";
+import { useLoggedUserContext } from "@/contexts/User/UserLoggedContext";
 
 
 // -----------------------------------------------------------------------------
@@ -70,14 +72,30 @@ function _MoodboardControlForCurrentFlowState({flowState, OnBackClicked})
 }
 
 // -----------------------------------------------------------------------------
-function _Content({moodboardController})
+function _Content({moodboardModel})
 {
+  // ---------------------------------------------------------------------------
+  const editorController = useMoodboardEditorController();
+  if(!editorController) {
+    return;
+  }
+
+
+  if(!editorController.moodboardModel || editorController.moodboardModel._id != moodboardModel?._id) {
+    if(moodboardModel) {
+      editorController.EditExisting(moodboardModel);
+    } else {
+      editorController.EditNew();
+    }
+  }
+
+  // ---------------------------------------------------------------------------
   const {NavigateTo} = usePageRouter();
 
-  //
   const [currentFlowState, setCurrentFlowState] = useState(
     FLOW_STATE_EDITING
   );
+
   const [currentFlowElement, setCurrentFlowElement] = useState((
     <_MoodboardControlForCurrentFlowState flowState={currentFlowState}/>
   ));
@@ -108,42 +126,34 @@ function _Content({moodboardController})
     setCurrentFlowState(FLOW_STATE_EDITING);
   };
 
+  // ---------------------------------------------------------------------------
   const _HandleOnPublishClick = () => {
     setCurrentFlowState(FLOW_STATE_PUBLISH);
   };
 
+  // ---------------------------------------------------------------------------
   const _HandleOnSaveDraftClick = async () => {
     // @duplicate: on moodboardpublishcontrols.js
-    if (!moodboardController) {
+    const save_data = editorController.canvasController.Serialize();
+    const result = await MoodboardService.SaveDraftMoodboard(save_data);
+    if (result.IsError()) {
+      ToastUtils.ResultError(result);
       return;
     }
 
-    const info_data  = moodboardController.PrepareSaveInfoForUpload();
-    const save_data  = moodboardController.PrepareSaveDataForUpload();
-    const save_photo = moodboardController.PrepareSavePhotoForUpload();
+    ToastUtils.Success("Moodboard saved...");
 
-    const result = await MoodboardService.SaveDraftMoodboardItem(
-      info_data,
-      save_data,
-      save_photo
-    );
+    editorController.moodboardModel._id = result.value._id;
+    editorController.canvasController.SetSaved();
 
-    console.log("------------------------");
-    if (result.IsError()) {
-      ToastUtils.ResultError(result);
-    } else {
-      ToastUtils.Success("Moodboard saved...");
-      moodboardController._id = result.value._id;
-      moodboardController.SetSaved();
+    _saveDraftSpanRef.current.innerText = "Save Draft";
 
-      _saveDraftSpanRef.current.innerText = "Save Draft";
-
-      setIsMoodboardClean(true);
-    }
+    setIsMoodboardClean(true);
   };
 
-  const _HandleOnProfileClick = (event) => {
-    if (moodboardController.IsSaved()) {
+  // ---------------------------------------------------------------------------
+  const _HandleOnProfileClick = () => {
+    if (editorController.canvasController.IsSaved()) {
       NavigateTo(PageUrls.UserOwnProfile);
       return;
     }
@@ -154,6 +164,24 @@ function _Content({moodboardController})
     }
   };
 
+  // ---------------------------------------------------------------------------
+  const _HandleDeleteClick = async () => {
+    const confirmed = window.confirm("Are you sure you want to proceed?");
+    if (!confirmed) {
+      return;
+    }
+
+    const moodboard_id = moodboardModel._id;
+    const result = await MoodboardService.DeleteMoodboardWithId(moodboard_id);
+
+    if (result.IsError()) {
+      ToastUtils.ResultError(result);
+      return;
+    }
+
+    ToastUtils.Success("Moodboard deleted...");
+    NavigateTo(PageUrls.UserOwnProfile);
+  };
 
   //
   // Component
@@ -169,23 +197,38 @@ function _Content({moodboardController})
         </Link>
 
         {(
-          (currentFlowState == FLOW_STATE_EDITING)
-            &&
-          <div>
-            <ActionButton
-              disabled={isMoodboardEmpty}
-              onClick={_HandleOnPublishClick}
-            >
-              Publish
-            </ActionButton>
+          (currentFlowState == FLOW_STATE_EDITING) &&
+            <div className={styles.buttonsContainer}>
+              <div>
+                <ActionButton
+                  disabled={isMoodboardEmpty}
+                  onClick={_HandleOnPublishClick}
+                >
+                  Publish
+                </ActionButton>
 
-            <TextButton
-              disabled={isMoodboardClean}
-              onClick={_HandleOnSaveDraftClick}
-            >
-              <span ref={_saveDraftSpanRef}>Save Draft</span>
-            </TextButton>
-          </div>
+                <TextButton
+                  disabled={isMoodboardClean}
+                  onClick={_HandleOnSaveDraftClick}
+                >
+                  <span ref={_saveDraftSpanRef}>Save Draft</span>
+                </TextButton>
+              </div>
+
+              {(
+                (moodboardModel && moodboardModel._id) &&
+                  <div>
+                    <TextButton
+                      className={styles.deleteButton}
+                      disabled={isMoodboardClean}
+                      onClick={_HandleDeleteClick}
+                    >
+                      <span>Delete</span>
+                    </TextButton>
+                  </div>
+              )}
+
+            </div>
         )}
 
         <Link onClick={_HandleOnProfileClick}>
@@ -200,7 +243,7 @@ function _Content({moodboardController})
             className={styles.canvasContainer}
             flowState={currentFlowState}
             xxx_OnCanvasHasChanged={() => {
-              const is_empty = moodboardController.IsEmpty();
+              const is_empty = editorController.canvasController.IsEmpty();
 
               setIsMoodboardClean(false);
               setIsMoodboardEmpty(is_empty);
@@ -214,7 +257,7 @@ function _Content({moodboardController})
                   _saveDraftSpanRef.current.innerText = "Save Draft *";
                 }
               }
-              moodboardController.SetSaved(false);
+              editorController.canvasController.SetSaved(false);
             }}
           />
           {currentFlowElement}
@@ -225,21 +268,50 @@ function _Content({moodboardController})
 }
 
 // -----------------------------------------------------------------------------
-function _Container({moodboardController}) {
-  const _moodboardController = useMoodboardEditorContext();
+function _Container({moodboardId})
+{
+  // ---------------------------------------------------------------------------
+  const loggedUser = useLoggedUserContext();
+  const [ moodboardModel, setMoodboardModel ] = useState();
+  const { NavigateTo } = usePageRouter();
 
-  if(moodboardController) {
-    return (<_Content moodboardController/>);
+  useEffect(() => {
+    const _FetchMoodboard = async ()=>{
+      const result = await MoodboardService.GetMoodboardEditData(
+        loggedUser._id,
+        moodboardId
+      );
+
+      if(result.IsError()) {
+        ToastUtils.ResultError(result);
+        NavigateTo(PageUrls.UserOwnProfile);
+
+        return;
+      }
+
+      const value = result.value;
+      setMoodboardModel(value);
+    }
+
+    if(moodboardId && loggedUser) {
+      _FetchMoodboard()
+    }
+  }, [loggedUser]);
+
+  // ---------------------------------------------------------------------------
+  if(!loggedUser) {
+    return;
   }
-  return (<_Content _moodboardController/>);
+
+  return (<_Content moodboardModel={moodboardModel}/>);
 }
 
 // -----------------------------------------------------------------------------
-function MoodboardEditor()
+function MoodboardEditor({moodboardId})
 {
   return (
     <MoodboardEditorContextProvider>
-      <_Container/>
+      <_Container moodboardId={moodboardId}/>
     </MoodboardEditorContextProvider>
   );
 }

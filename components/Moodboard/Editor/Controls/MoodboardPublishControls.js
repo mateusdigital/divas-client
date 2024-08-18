@@ -25,7 +25,7 @@ import React from "react";
 // -----------------------------------------------------------------------------
 import {useRef} from "react";
 // -----------------------------------------------------------------------------
-import {useMoodboardEditorContext} from "@/contexts/Moodboard/Editor/MoodboardEditorContext.js";
+import {useMoodboardEditorController} from "@/contexts/Moodboard/Editor/MoodboardEditorContext.js";
 // -----------------------------------------------------------------------------
 import {PageUrls, usePageRouter} from "@/utils/PageUtils.js";
 import ToastUtils from "@/utils/Toast";
@@ -44,27 +44,23 @@ import styles from "./MoodboardEditingControls.module.css";
 function MoodboardPublishControls({className})
 {
   //
+  const _moodboardEditorController = useMoodboardEditorController();
+  if(!_moodboardEditorController) {
+    return;
+  }
+
   const _titleRef       = useRef();
   const _descriptionRef = useRef();
 
-  const _moodboardController = useMoodboardEditorContext();
-  const {NavigateTo}         = usePageRouter();
-
+  const {NavigateTo}               = usePageRouter();
 
   // ---------------------------------------------------------------------------
   const _HandlePublish = async () => {
-    _moodboardController.title       = _titleRef.current.value;
-    _moodboardController.description = _descriptionRef.current.value;
+    _moodboardEditorController.moodboardModel.title       = _titleRef.current.value;
+    _moodboardEditorController.moodboardModel.description = _descriptionRef.current.value;
 
-    const info_data  = _moodboardController.PrepareSaveInfoForUpload();
-    const save_data  = _moodboardController.PrepareSaveDataForUpload();
-    const save_photo = _moodboardController.PrepareSavePhotoForUpload();
-
-    const result = await MoodboardService.PublishMoodboardItem(
-      info_data,
-      save_data,
-      save_photo
-    );
+    const serialize_data = _moodboardEditorController.Serialize();
+    const result = await MoodboardService.PublishMoodboard(serialize_data);
 
     if (result.IsError()) {
       ToastUtils.ResultError(result);
@@ -77,28 +73,21 @@ function MoodboardPublishControls({className})
 
   // ---------------------------------------------------------------------------
   const _HandleSave = async () => {
-    if (!_moodboardController) {
+    _moodboardEditorController.moodboardModel.title       = _titleRef.current.value;
+    _moodboardEditorController.moodboardModel.description = _descriptionRef.current.value;
+
+    const serialize_data = _moodboardEditorController.Serialize();
+    const result = await MoodboardService.SaveDraftMoodboard(serialize_data);
+
+    if (result.IsError()) {
+      ToastUtils.ResultError(result);
+      // @Incomplete: Save the moodboard somewhere and retry later so user doesn't lose the work...
       return;
     }
 
-    const info_data  = _moodboardController.PrepareSaveInfoForUpload();
-    const save_data  = _moodboardController.PrepareSaveDataForUpload();
-    const save_photo = _moodboardController.PrepareSavePhotoForUpload();
-
-    const result = await MoodboardService.SaveDraftMoodboardItem(
-      info_data,
-      save_data,
-      save_photo
-    );
-
-    console.log("------------------------");
-    if (result.IsError()) {
-      ToastUtils.ResultError(result);
-    } else {
-      ToastUtils.Success("Moodboard saved...");
-      _moodboardController._id = result.value._id;
-      _moodboardController.SetSaved();
-    }
+    ToastUtils.Success("Moodboard saved...");
+    _moodboardEditorController.moodboardModel._id = result.value._id;
+    _moodboardEditorController.canvasController.SetSaved();
   };
 
 

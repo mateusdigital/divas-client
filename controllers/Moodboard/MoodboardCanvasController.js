@@ -6,6 +6,7 @@ import MoodboardItemModel from "@/models/Moodboard/MoodboardItem.js";
 // -----------------------------------------------------------------------------
 const Arr = require("@/libs/mdjs/mdjs/Array");
 
+let value = 0;
 
 // -----------------------------------------------------------------------------
 class MoodboardCanvasController
@@ -13,9 +14,8 @@ class MoodboardCanvasController
   // ---------------------------------------------------------------------------
   constructor()
   {
-    this._id         = null;
-    this.title       = null;
-    this.description = null;
+
+    this.value = ++value;
 
     this._items = [];
 
@@ -112,7 +112,17 @@ class MoodboardCanvasController
   //
 
   // ---------------------------------------------------------------------------
-  PrepareSaveInfoForUpload()
+  Serialize()
+  {
+    return {
+        info: this._PrepareSaveInfoForUpload(),
+        data: this._PrepareSaveDataForUpload(),
+        photo: this._PrepareSavePhotoForUpload()
+    };
+  }
+
+  // ---------------------------------------------------------------------------
+  _PrepareSaveInfoForUpload()
   {
     return {
       _id: this._id,
@@ -122,7 +132,7 @@ class MoodboardCanvasController
   }
 
   // ---------------------------------------------------------------------------
-  PrepareSaveDataForUpload()
+  _PrepareSaveDataForUpload()
   {
     const objects = this.fabric_canvas.getObjects();
     const arr     = [];
@@ -139,7 +149,7 @@ class MoodboardCanvasController
   }
 
   // ---------------------------------------------------------------------------
-  PrepareSavePhotoForUpload()
+  _PrepareSavePhotoForUpload()
   {
     const data_url = this.fabric_canvas.toDataURL({format: "png"});
     const blob     = Utils.DataURLToBlob(data_url);

@@ -26,29 +26,32 @@ import {useState} from "react";
 // -----------------------------------------------------------------------------
 import NET from "@/app/NET";
 import CachedImage from "@/components/UI/Images/CachedImage";
-import {useMoodboardEditorContext} from "@/contexts/Moodboard/Editor/MoodboardEditorContext.js";
+import {useMoodboardEditorController} from "@/contexts/Moodboard/Editor/MoodboardEditorContext.js";
 // -----------------------------------------------------------------------------
 import styles from "./Item.module.css";
-
 
 // -----------------------------------------------------------------------------
 function ItemComponent({itemModel})
 {
-  //
+  const moodboardEditorController = useMoodboardEditorController();
+  if(!moodboardEditorController) {
+    return;
+  }
+
+
+  // ---------------------------------------------------------------------------
   const [loaded, setLoaded]  = useState(false);
-  const moodboard_controller = useMoodboardEditorContext();
 
-  //
+  // ---------------------------------------------------------------------------
   const _HandleDragStart = (event) => {
-    console.log("dragging");
-
     event.dataTransfer.clearData();
     event.dataTransfer.setData("text/plain", JSON.stringify(itemModel));
   };
 
-  const XXX_image_url = NET.Make_External_Image_Url("items/" + itemModel.imageUrl)
 
-  //
+  // ---------------------------------------------------------------------------
+  const XXX_image_url = NET.Make_External_Image_Url("items/" + itemModel.imageUrl);
+
   return (
     <div className={styles.contentContainer}>
       {/* Placeholder */}
@@ -69,7 +72,7 @@ function ItemComponent({itemModel})
         onDragStart={_HandleDragStart}
 
         onDoubleClick={(event)=>{
-          moodboard_controller.XXX_AddExternalImage(
+          moodboardEditorController.canvasController.XXX_AddExternalImage(
             itemModel,
             {
               mouseX: -1,

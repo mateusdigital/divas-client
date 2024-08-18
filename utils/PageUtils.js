@@ -33,6 +33,7 @@ export class PageUrls
 
   // Moodboard
   static MoodboardCreate  = "/moodboard/create";
+  static MoodboardEdit    = "/moodboard/edit/:id";
   static MoodboardDetails = "/moodboard/:id";
 
   // Sidebar

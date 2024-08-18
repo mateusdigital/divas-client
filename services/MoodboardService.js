@@ -25,7 +25,7 @@ class MoodboardService
   {
     Assert.NotNullOrEmpty(userId);
 
-    const api_url = NET.Make_API_Url(Endpoints.Moodboard.GetAll, userId);
+    const api_url = NET.Make_API_Url(Endpoints.Moodboard.GetAllFromUser, userId);
 
     const response = await NET.GET(api_url, { owner: userId });
     if(response.status != StatusCodes.OK) {
@@ -67,25 +67,6 @@ class MoodboardService
     return Result.Valid(data);
   }
 
-
-  // ---------------------------------------------------------------------------
-  static async GetMultipleMoodboardWithIds(idList)
-  {
-    Assert.NotNullOrEmpty(idList);
-
-    const api_url = NET.Make_API_Url(Endpoints.Moodboard.GetMultiple, idList);
-
-    const response = await NET.POST_JSON(api_url, { ids: idList });
-    if(response.status != StatusCodes.OK) {
-      return await Result.ResponseError(response);
-    }
-
-    // @TODO(mateusdigital): Create model for moodboard.
-    const data = await response.json();
-    return Result.Valid(data);
-  }
-
-
   // ---------------------------------------------------------------------------
   static async GetMoodboardWithId(id)
   {
@@ -104,40 +85,45 @@ class MoodboardService
   }
 
   // ---------------------------------------------------------------------------
-  static async SaveDraftMoodboardItem(infoData, itemsData)
+  static async DeleteMoodboardWithId(id)
   {
-    const result = await LoginService.GetCurrentLoggedUser();
-    if (!result.IsValid()) {
-      return result;
+    Assert.NotNull(id, "id can't be null");
+
+    const api_url = NET.Make_API_Url(Endpoints.Moodboard.DeleteById, id);
+
+    const response = await NET.DELETE(api_url);
+    if(response.status != StatusCodes.OK) {
+      return Result.Invalid();
     }
 
-    //
-    const user_model     = result.value;
-    const full_save_data = {
-      info:  infoData,
-      items: itemsData,
-      user:  {
-        _id: user_model._id
-      }
-    }
+    const data = await response.json();
+    return Result.Valid(data);
+  }
 
-    //
-    {
-      const api_url  = NET.Make_API_Url(Endpoints.Moodboard.SaveDraft);
-      const response = await NET.POST_JSON(api_url, full_save_data);
 
-      if(response.status != StatusCodes.CREATED) {
-        return await Result.ResponseError(response);
-      }
 
-      const json = await response.json();
-      return Result.Valid(json);
-    }
+  //
+  // Publish and Save Draft
+  //
+
+  // ---------------------------------------------------------------------------
+  static async SaveDraftMoodboard(serializeData)
+  {
+    return this._PublishSaveDraftHelper(serializeData, true);
   }
 
   // ---------------------------------------------------------------------------
-  static async PublishMoodboardItem(infoData, itemsData, photo)
+  static async PublishMoodboard(serializeData)
   {
+    return this._PublishSaveDraftHelper(serializeData, false);
+  }
+
+  // ---------------------------------------------------------------------------
+  static async _PublishSaveDraftHelper(serializeData, isDraft)
+  {
+    const { info, data, photo } = serializeData;
+
+    //
     const result = await LoginService.GetCurrentLoggedUser();
     if(!result.IsValid()) {
       return result;
@@ -146,8 +132,8 @@ class MoodboardService
     //
     const user_model = result.value;
     const full_save_data = {
-      info:  infoData,
-      items: itemsData,
+      info:  info,
+      items: data,
       user: {
         _id: user_model._id
       }
@@ -155,10 +141,14 @@ class MoodboardService
 
     //
     {
+      const upload_photo_url = (isDraft)
+        ? Endpoints.Moodboard.UploadMoodboardPhotoDraft
+        : Endpoints.Moodboard.UploadMoodboardPhoto;
+
       const form_data = new FormData();
       form_data.append("photo", photo, "photo-blob.png");
 
-      const api_url  = NET.Make_API_Url(Endpoints.Moodboard.UploadMoodboardPhoto);
+      const api_url  = NET.Make_API_Url(upload_photo_url);
       const response = await NET.POST_DATA(api_url, form_data);
 
       if(response.status != StatusCodes.CREATED) {
@@ -171,7 +161,11 @@ class MoodboardService
 
     //
     {
-      const api_url  = NET.Make_API_Url(Endpoints.Moodboard.Create);
+      const upload_info_url = (isDraft)
+        ? Endpoints.Moodboard.SaveDraft
+        : Endpoints.Moodboard.Create;
+
+      const api_url  = NET.Make_API_Url(upload_info_url);
       const response = await NET.POST_JSON(api_url, full_save_data);
 
       if(response.status != StatusCodes.CREATED) {
@@ -182,6 +176,23 @@ class MoodboardService
       return Result.Valid(json);
     }
   }
+
+  // ---------------------------------------------------------------------------
+  static async GetMoodboardEditData(ownerId, moodboardId)
+  {
+    Assert.NotNullOrEmpty(moodboardId);
+
+    const api_url = NET.Make_API_Url(Endpoints.Moodboard.GetEditData, moodboardId);
+
+    const response = await NET.GET(api_url);
+    if(response.status != StatusCodes.OK) {
+      return await Result.ResponseError(response);
+    }
+
+    const data = await response.json();
+    return Result.Valid(data);
+  }
+
 
   //
   // Moodboard Items
@@ -208,6 +219,7 @@ class MoodboardService
     return MoodboardService._moodboardItemsController.GetItemsForCategory(category);
   }
 
+
   //
   // Comments
   //
@@ -228,7 +240,7 @@ class MoodboardService
 
 
   // ---------------------------------------------------------------------------
-  static async GetCommentsForMoodboardWithId(moodboardId)
+  static async GetCommentsForMoodboardWithId(ownerId, moodboardId)
   {
     Assert.NotNull(moodboardId);
 
@@ -243,6 +255,7 @@ class MoodboardService
     const data = await response.json();
     return Result.Valid(data);
   }
+
 
   //
   // Likes
@@ -263,4 +276,5 @@ class MoodboardService
   }
 }
 
+// -----------------------------------------------------------------------------
 export default MoodboardService;

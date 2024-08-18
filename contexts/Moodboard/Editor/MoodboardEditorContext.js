@@ -1,14 +1,14 @@
 // -----------------------------------------------------------------------------
+import React from "react";
 import {createContext, useContext, useState} from "react";
 // -----------------------------------------------------------------------------
-import MoodboardCanvasController from "@/controllers/Moodboard/MoodboardCanvasController";
-
+import MoodboardEditorController from "@/controllers/Moodboard/MoodboardEditorController.js"
 // -----------------------------------------------------------------------------
 const _EditorContext = createContext(null);
 
 
 // -----------------------------------------------------------------------------
-export function useMoodboardEditorContext()
+export function useMoodboardEditorController()
 {
   return useContext(_EditorContext);
 }
@@ -17,7 +17,7 @@ export function useMoodboardEditorContext()
 export function MoodboardEditorContextProvider({children})
 {
   const [controller, setController] = useState(
-    new MoodboardCanvasController()
+    new MoodboardEditorController()
   );
 
   return (

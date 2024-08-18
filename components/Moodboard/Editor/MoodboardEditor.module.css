@@ -52,6 +52,20 @@
   border: var(--layout-border-color) var(--layout-border-size) var(--layout-border-style);
 }
 
+.buttonsContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+
+  /* background-color: red; */
+}
+
+.deleteButton {
+  /* @TODO: Check the correct color */
+  color: rgb(211, 46, 54);
+}
+
 .photoContainer {
   max-width: 2.5rem;
   height: fit-content;

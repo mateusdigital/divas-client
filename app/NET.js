@@ -23,6 +23,7 @@
 // -----------------------------------------------------------------------------
 import Constants from "./Constants";
 import Debug from "../libs/mdjs/mdjs/Debug.js";
+import Assert from "@/utils/Assert";
 
 async function safe_fetch(url, options)
 {
@@ -31,7 +32,8 @@ async function safe_fetch(url, options)
   }
   catch (error) {
     Debug.Exception(`Failed to perform safe_fetch: (${url})`, error);
-    debugger;
+    throw error;
+
     return { status: 999 };
   }
 }
@@ -48,6 +50,9 @@ class NET
 
   static _ReplaceArgs(url, ...args)
   {
+    Assert.NotNullOrEmpty(url);
+
+
     try {
       const components = url.split("/");
       const replaced   = [];
@@ -151,6 +156,22 @@ class NET
     return safe_fetch(url, full_options);
   }
 
+
+  // ---------------------------------------------------------------------------
+  static async POST(url, options)
+  {
+    const base_options = {method: "POST",};
+    const full_options = {...base_options, ...options};
+
+    return safe_fetch(url, full_options);
+  }
+
+
+  //
+  // Patch
+  //
+
+  // ---------------------------------------------------------------------------
   static async PATCH_JSON(url, jsonObject, options)
   {
     const base_options = {
@@ -165,14 +186,22 @@ class NET
     return safe_fetch(url, full_options);
   }
 
-  // ---------------------------------------------------------------------------
-  static async POST(url, options)
-  {
-    const base_options = {method: "POST",};
-    const full_options = {...base_options, ...options};
 
+  //
+  // Delete
+  //
+
+  // ---------------------------------------------------------------------------
+  static async DELETE(url, ...options)
+  {
+    const base_options = {
+      method: "DELETE",
+    };
+
+    const full_options = {...base_options, ...options};
     return safe_fetch(url, full_options);
   }
+
 }
 
 // -----------------------------------------------------------------------------

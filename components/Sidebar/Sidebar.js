@@ -64,7 +64,7 @@ function _SidebarLink({href, children})
 // -----------------------------------------------------------------------------
 function _SidebarItem({icon, children})
 {
-        
+
   return (
     <MaterialIcon
       className={styles.sideBarItemContainer}
@@ -83,16 +83,16 @@ function _SidebarItem({icon, children})
 function _Content({pageName})
 {
   const loggedUser = useLoggedUserContext();
-  if(!loggedUser) {
-    return null;
-  }
-  
+
   //
   const [ currentPageName, setCurrentPageName ] = useState(pageName);
   _PageName = currentPageName;
 
   const { NavigateTo } = usePageRouter();
 
+  if(!loggedUser) {
+    return null;
+  }
 
   //
   return (

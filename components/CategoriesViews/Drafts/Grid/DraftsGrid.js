@@ -25,7 +25,7 @@ import React from 'react';
 // -----------------------------------------------------------------------------
 import NET from "@/app/NET.js";
 import ToastUtils from '@/utils/Toast';
-import {usePageRouter} from "@/utils/PageUtils.js";
+import {PageUrls, usePageRouter} from "@/utils/PageUtils.js";
 // -----------------------------------------------------------------------------
 import MoodboardGrid from '@/components/Moodboard/Grid/MoodboardGrid';
 import MoodboardService from "@/services/MoodboardService";
@@ -51,7 +51,7 @@ function DraftsGrid({ userModel })
 
 
   const _HandleOnClick = (href, event, moodboardModel) => {
-    const url = NET.Make_Navigation_Url(Endpoints.Moodboard.Edit, moodboardModel._id);
+    const url = NET.Make_Navigation_Url(PageUrls.MoodboardEdit, moodboardModel._id);
     NavigateTo(url);
   };
 
