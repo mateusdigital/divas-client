@@ -31,11 +31,11 @@ const _CATEGORIES_BAR_NAMES = [
 function _GetComponentForCategoryName(name, userModel)
 {
   switch (name) {
-    case "Moodboards":  return <MoodboardGrid userModel={userModel}/>;
-    case "Likes":       return <LikesGrid     userModel={userModel}/>;
-    case "Drafts":      return <DraftsGrid    userModel={userModel}/>;
-    case "Followers":   return <FollowersGrid userModel={userModel}/>;
-    case "Following":   return <FollowingGrid userModel={userModel}/>;
+    case "Moodboards":  return ;
+    case "Liked":       return ;
+    case "Drafts":      return ;
+    case "Followers":   return ;
+    case "Following":   return ;
     default:
       return null;
   }
@@ -56,8 +56,11 @@ function UserProfile({userModel})
   const [categoryComponent, setCategoryComponent] = useState(null);
 
   useEffect(()=>{
-    const component = _GetComponentForCategoryName(selectedCategoryTitle, userModel)
-    setCategoryComponent(component)
+    for(let i = 0; i < categories_info.length; ++i) {
+      if(categories_info[i].title == selectedCategoryTitle) {
+        setCategoryComponent(categories_info[i].element);
+      }
+    }
   }, [selectedCategoryTitle])
 
 
@@ -67,12 +70,12 @@ function UserProfile({userModel})
     return <div>Loading...</div>;
   }
 
-  const titles = [
-    { title: "Moodboards", pred: ()=>{return true; } },
-    { title: "Drafts",     pred: ()=>{return loggedUser && loggedUser._id == userModel._id; } },
-    { title: "Liked",      pred: ()=>{return true; } },
-    { title: "Following",  pred: ()=>{return true; } },
-    { title: "Followers",  pred: ()=>{return true; } },
+  const categories_info = [
+    { title: "Moodboards", element: (<MoodboardGrid userModel={userModel}/>), pred: ()=>{return true; } },
+    { title: "Drafts",     element: (<LikesGrid     userModel={userModel}/>), pred: ()=>{return loggedUser && loggedUser._id == userModel._id; } },
+    { title: "Liked",      element: (<DraftsGrid    userModel={userModel}/>), pred: ()=>{return true; } },
+    { title: "Following",  element: (<FollowersGrid userModel={userModel}/>), pred: ()=>{return true; } },
+    { title: "Followers",  element: (<FollowingGrid userModel={userModel}/>), pred: ()=>{return true; } },
   ];
 
   // Ready...
@@ -80,7 +83,7 @@ function UserProfile({userModel})
     <UserInfo userModel={userModel}/>
 
     <CategoriesBar>
-      {titles.map((category) => {
+      {categories_info.map((category) => {
         if(category.pred && !category.pred()) {
           return null;
         }

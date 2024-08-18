@@ -32,15 +32,17 @@ import MoodboardService from "@/services/MoodboardService";
 // -----------------------------------------------------------------------------
 function LikesGrid({ userModel })
 {
-    const _FetchMoodboards = async (userModel, setMoodboardsFunc) => {
-      const result = await MoodboardService.GetAllLikedByUser(userModel._id);
-      if(result.IsError()) {
-        ToastUtils.ResultError(result);
-        return;
-      }
+  // ---------------------------------------------------------------------------
+  const _FetchMoodboards = async (userModel, setMoodboardsFunc) => {
+    const result = await MoodboardService.GetAllLikedByUser(userModel._id);
+    if(result.IsError()) {
+      ToastUtils.ResultError(result);
+      return;
+    }
 
-      setMoodboardsFunc(result.value);
-    };
+    setMoodboardsFunc(result.value);
+  };
+
   // ---------------------------------------------------------------------------
   return (<>
     <MoodboardGrid
