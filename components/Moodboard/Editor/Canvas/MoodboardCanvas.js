@@ -80,7 +80,23 @@ function MoodboardCanvas({flowState, xxx_OnCanvasHasChanged})
 
     window.addEventListener("resize", _ResizeCanvas);
 
+    if(_moodboardModel.fabricItems) {
+      fabric_canvas.loadFromJSON(_moodboardModel.fabricItems, function() {
+        // Iterate over all objects on the canvas to ensure they are selectable
+        fabric_canvas.getObjects().forEach(function(o) {
+            o.set('selectable', true);
+        });
+      });
 
+      fabric_canvas.selection = true;
+      fabric_canvas.interactive = true;
+
+      for(let i = 0; i < _moodboardModel.fabricItems.length; ++i) {
+        const item = _moodboardModel.fabricItems[i];
+        const a = 10;
+        const b = 20;
+      }
+    }
 
     // Return
     return () => {
@@ -96,7 +112,7 @@ function MoodboardCanvas({flowState, xxx_OnCanvasHasChanged})
 
       _canvasController.xxx_OnCanvasHasChanged = null;
     };
-  }, []);
+  }, [_moodboardModel]);
 
 
   //

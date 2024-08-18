@@ -33,7 +33,7 @@ class Constants
   static APP_PORT = 3000;
 
   // ---------------------------------------------------------------------------
-  static EXTERNAL_IMAGES_URL = "http://localhost:5000/data";
+  static EXTERNAL_IMAGES_URL = "http://localhost:5000";
   static IMAGES_URL          = "http://localhost:3000";
 }
 

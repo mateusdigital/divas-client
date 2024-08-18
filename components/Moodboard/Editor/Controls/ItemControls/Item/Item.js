@@ -50,7 +50,9 @@ function ItemComponent({itemModel})
 
 
   // ---------------------------------------------------------------------------
-  const XXX_image_url = NET.Make_External_Image_Url("items/" + itemModel.imageUrl);
+  //  @XXX: the itemmodel is not saving the path as the other external things...
+  // so here we need to prepend it...
+  const XXX_image_url = NET.Make_External_Image_Url("data/items/" + itemModel.imageUrl);
 
   return (
     <div className={styles.contentContainer}>

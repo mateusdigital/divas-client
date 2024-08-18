@@ -36,6 +36,7 @@ class MoodboardService
     return Result.Valid(data);
   }
 
+  // ---------------------------------------------------------------------------
   static async GetAllDraftsByUser(userId)
   {
     Assert.NotNullOrEmpty(userId);
@@ -121,7 +122,11 @@ class MoodboardService
   // ---------------------------------------------------------------------------
   static async _PublishSaveDraftHelper(serializeData, isDraft)
   {
-    const { info, data, photo } = serializeData;
+    const { info, data, fabric, photo } = serializeData;
+    Assert.NotNull(info);
+    Assert.NotNull(data);
+    Assert.NotNull(photo);
+    Assert.NotNull(fabric);
 
     //
     const result = await LoginService.GetCurrentLoggedUser();
@@ -134,6 +139,7 @@ class MoodboardService
     const full_save_data = {
       info:  info,
       items: data,
+      fabric: fabric,
       user: {
         _id: user_model._id
       }

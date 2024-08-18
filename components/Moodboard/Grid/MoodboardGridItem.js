@@ -44,8 +44,6 @@ function MoodboardGridItem({moodboardModel, onClick})
   //
   return (
     <div className={styles.container}>
-
-
       <_Link
         href={details_url}
         onClick={(href, event, )=>{ onClick(href, event, moodboardModel); }}

@@ -115,9 +115,10 @@ class MoodboardCanvasController
   Serialize()
   {
     return {
-        info: this._PrepareSaveInfoForUpload(),
-        data: this._PrepareSaveDataForUpload(),
-        photo: this._PrepareSavePhotoForUpload()
+        info:   this._PrepareSaveInfoForUpload(),
+        data:   this._PrepareSaveDataForUpload(),
+        photo:  this._PrepareSavePhotoForUpload(),
+        fabric: this.fabric_canvas.toJSON(),
     };
   }
 
@@ -134,15 +135,11 @@ class MoodboardCanvasController
   // ---------------------------------------------------------------------------
   _PrepareSaveDataForUpload()
   {
-    const objects = this.fabric_canvas.getObjects();
-    const arr     = [];
-    for (let fabric_item of objects) {
-      const data_item = {
-        fabric: fabric_item,
-        model:  fabric_item.itemModel
-      };
+    const arr = [];
 
-      arr.push(data_item);
+    const objects = this.fabric_canvas.getObjects();
+    for (let fabric_item of objects) {
+      arr.push(fabric_item.itemModel);
     }
 
     return arr;
@@ -163,7 +160,9 @@ class MoodboardCanvasController
     const e = event;
 
     // Get the image.
-    const XXX_image_url = ("items/" + itemModel.imageUrl);
+    //  @XXX: the itemmodel is not saving the path as the other external things...
+    // so here we need to prepend it...
+    const XXX_image_url = ("data/items/" + itemModel.imageUrl);
     const img_url    = NET.Make_External_Image_Url(XXX_image_url);
     const cached_img = App.GetCachedImageForUrl(img_url);
 
