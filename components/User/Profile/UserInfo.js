@@ -22,14 +22,13 @@
 
 // -----------------------------------------------------------------------------
 import React from "react";
+import Link from "next/link";
 // -----------------------------------------------------------------------------
+import { PageUrls } from "@/utils/PageUtils";
 import ProfileImage from "@/components/UI/Images/ProfileImage";
+import { useLoggedUserContext } from "@/contexts/User/UserLoggedContext";
 // -----------------------------------------------------------------------------
 import styles from "./UserInfo.module.css";
-import TextButton from "@/components/UI/Buttons/TextButton";
-import { useLoggedUserContext } from "@/contexts/User/UserLoggedContext";
-import Link from "next/link";
-import { PageUrls } from "@/utils/PageUtils";
 
 // -----------------------------------------------------------------------------
 function UserInfo({ userModel })
@@ -85,7 +84,7 @@ function UserInfo({ userModel })
           </div>
           {/* Likes */}
           <div className={styles.statContainer}>
-            <span className={styles.statValue}>{userModel.likes ? userModel.likes : 0}</span>
+            <span className={styles.statValue}>{userModel.likesCount ? userModel.likesCount : 0}</span>
             <span className={styles.statText}>Likes</span>
           </div>
         </div>

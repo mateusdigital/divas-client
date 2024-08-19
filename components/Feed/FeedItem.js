@@ -10,7 +10,6 @@ import CachedImage from '@/components/UI/Images/CachedImage';
 import ImageDefaults from '@/components/UI/Images/ImageDefaults';
 // -----------------------------------------------------------------------------
 import styles from "./Feed.module.css";
-import MoodboardGridItem from "../Moodboard/Grid/MoodboardGridItem";
 import ProfileImage from '../UI/Images/ProfileImage';
 
 // -----------------------------------------------------------------------------

@@ -36,42 +36,11 @@ class UserModel
   }
 
   // ---------------------------------------------------------------------------
-  // @Notice: Not meant to be constructed by hand.
-  constructor({
-    _id,
-    fullname,
-    description,
-    profilePhotoUrl,
-    username,
-    email,
-    password,
-    followers,
-    following,
-    likes,
-    moodboards,
-  }) {
-    // Info
-    this._id = _id;
-
-    this.fullname    = fullname;
-    this.description = description;
-
-    // Photo
-    this.profilePhotoUrl     = profilePhotoUrl;
-    this.profilePhotoTinyUrl = this._MakeTinyUrl(profilePhotoUrl);
-
-    // Login
-    this.username = username;
-    this.email    = email;
-    this.password = password; // @XXX:remove this password...
-
-    // Social
-    this.followers = followers;
-    this.following = following;
-    this.likes     = likes;
-
-    // Moodboard
-    this.moodboards = moodboards;
+  constructor(data)
+  {
+    Object.keys(data).forEach(key => {
+      this[key] = data[key];
+    });
   }
 
   NeedsFetch()

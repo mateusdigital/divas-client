@@ -44,10 +44,7 @@ function MoodboardGridItem({moodboardModel, onClick})
   //
   return (
     <div className={styles.container}>
-      <_Link
-        href={details_url}
-        onClick={(href, event, )=>{ onClick(href, event, moodboardModel); }}
-      >
+      <_Link href={details_url}>
         <CachedImage
           imageUrl={photo_url}
           imagePlaceholderUrl={ImageDefaults.PLACEHOLDER_URL_MOODBOARD_GRID_ITEM}
