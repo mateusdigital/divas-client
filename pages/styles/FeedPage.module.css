@@ -1,0 +1,10 @@
+/* FeedPage.module.css */
+.container {
+  overflow: auto;
+  overflow-y: scroll;
+  background: red; /* For debugging purposes */
+}
+
+.infiniteScroll {
+  /* Add any necessary styles here */
+}

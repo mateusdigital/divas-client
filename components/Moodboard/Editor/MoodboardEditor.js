@@ -134,7 +134,7 @@ function _Content({moodboardModel})
   // ---------------------------------------------------------------------------
   const _HandleOnSaveDraftClick = async () => {
     // @duplicate: on moodboardpublishcontrols.js
-    const save_data = editorController.canvasController.Serialize();
+    const save_data = editorController.Serialize();
     const result = await MoodboardService.SaveDraftMoodboard(save_data);
     if (result.IsError()) {
       ToastUtils.ResultError(result);

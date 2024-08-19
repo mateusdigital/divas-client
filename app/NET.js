@@ -31,6 +31,7 @@ async function safe_fetch(url, options)
     return await fetch(url, options);
   }
   catch (error) {
+    debugger;
     Debug.Exception(`Failed to perform safe_fetch: (${url})`, error);
     throw error;
 

@@ -101,7 +101,7 @@ function _Content({moodboardModel})
   }
 
 
-  //
+  // ---------------------------------------------------------------------------
   return (
     <>
       <div className={styles.container}>

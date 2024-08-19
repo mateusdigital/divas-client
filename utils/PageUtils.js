@@ -22,8 +22,8 @@ export class PageUrls
   static EditProfile = "/edit-profile";
 
   // Feed
-  static FeedUser           = "/feed/user";
-  static FeedMain           = "/feed/main";
+  static FeedUser           = "/feed"
+  static Discover           = "/discover"
 
   // Docs
   static DocsHelp      = "/doc/help";

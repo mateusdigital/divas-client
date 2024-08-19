@@ -112,7 +112,7 @@ function MoodboardUserInfo({moodboardModel})
         {
           (
             (ownerUserModel && ownerUserModel._id) &&
-            (loggedUser && loggedUser._id) &&
+            (loggedUser     && loggedUser._id)     &&
             (loggedUser._id != ownerUserModel._id)
           ) &&
           (

@@ -122,7 +122,7 @@ function _Content({pageName})
         </_SidebarLink>
 
         {/* Discover */}
-        <_SidebarLink href={PageUrls.FeedMain}>
+        <_SidebarLink href={PageUrls.Discover}>
           <_SidebarItem icon="explore"> Discover </_SidebarItem>
         </_SidebarLink>
 

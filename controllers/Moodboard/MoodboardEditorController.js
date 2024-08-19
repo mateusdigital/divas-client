@@ -12,7 +12,7 @@ class MoodboardEditorController
   }
 
 
-
+  // ---------------------------------------------------------------------------
   EditNew()
   {
     this.moodboardModel   = {}
@@ -21,6 +21,22 @@ class MoodboardEditorController
   EditExisting(moodboardModel)
   {
     this.moodboardModel   = moodboardModel;
+  }
+
+
+    //
+  // Serialization
+  //
+
+  // ---------------------------------------------------------------------------
+  Serialize()
+  {
+    return {
+        info:   this.moodboardModel,
+        data:   this.canvasController.PrepareSaveDataForUpload(),
+        photo:  this.canvasController.PrepareSavePhotoForUpload(),
+        fabric: this.canvasController.fabric_canvas.toJSON(),
+    };
   }
 }
 

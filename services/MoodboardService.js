@@ -246,7 +246,7 @@ class MoodboardService
 
 
   // ---------------------------------------------------------------------------
-  static async GetCommentsForMoodboardWithId(ownerId, moodboardId)
+  static async GetCommentsForMoodboardWithId(moodboardId)
   {
     Assert.NotNull(moodboardId);
 

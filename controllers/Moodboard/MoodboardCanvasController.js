@@ -107,33 +107,9 @@ class MoodboardCanvasController
   }
 
 
-  //
-  // Serialization
-  //
 
   // ---------------------------------------------------------------------------
-  Serialize()
-  {
-    return {
-        info:   this._PrepareSaveInfoForUpload(),
-        data:   this._PrepareSaveDataForUpload(),
-        photo:  this._PrepareSavePhotoForUpload(),
-        fabric: this.fabric_canvas.toJSON(),
-    };
-  }
-
-  // ---------------------------------------------------------------------------
-  _PrepareSaveInfoForUpload()
-  {
-    return {
-      _id: this._id,
-      title: this.title,
-      description: this.description
-    };
-  }
-
-  // ---------------------------------------------------------------------------
-  _PrepareSaveDataForUpload()
+  PrepareSaveDataForUpload()
   {
     const arr = [];
 
@@ -146,7 +122,7 @@ class MoodboardCanvasController
   }
 
   // ---------------------------------------------------------------------------
-  _PrepareSavePhotoForUpload()
+  PrepareSavePhotoForUpload()
   {
     const data_url = this.fabric_canvas.toDataURL({format: "png"});
     const blob     = Utils.DataURLToBlob(data_url);
@@ -155,6 +131,7 @@ class MoodboardCanvasController
   }
 
 
+  // ---------------------------------------------------------------------------
   XXX_AddExternalImage(itemModel, event)
   {
     const e = event;
