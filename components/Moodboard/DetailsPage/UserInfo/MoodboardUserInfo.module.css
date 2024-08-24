@@ -41,3 +41,8 @@
   font-size: 110%;
   font-weight: bold;
 }
+
+.profileImage {
+  width: 2rem;
+  height: 2rem;
+}

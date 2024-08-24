@@ -23,6 +23,8 @@
 // -----------------------------------------------------------------------------
 import React, { useRef, useState } from "react";
 // -----------------------------------------------------------------------------
+import NET from "@/app/NET"
+// -----------------------------------------------------------------------------
 import { PageUrls } from "@/utils/PageUtils";
 import ToastUtils from "@/utils/Toast";
 // -----------------------------------------------------------------------------
@@ -100,6 +102,9 @@ function _Content({moodboardModel})
     setCommentsCount(count);
   }
 
+  // ---------------------------------------------------------------------------
+  const moodboard_photo_url = NET.Make_External_Image_Url(moodboardModel.photoUrl);
+
 
   // ---------------------------------------------------------------------------
   return (
@@ -108,7 +113,7 @@ function _Content({moodboardModel})
         {/* Moodboard Image */}
         <div className={styles.imageContainer}>
           <CachedImage
-            imageUrl={moodboardModel.photoUrl}
+            imageUrl={moodboard_photo_url}
             imagePlaceholderUrl={ImageDefaults.PLACEHOLDER_URL_MOODBOARD_DETAILS}
           />
         </div>

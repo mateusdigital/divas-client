@@ -35,7 +35,7 @@ import styles from "./MoodboardGridItem.module.css";
 
 
 // ------------------------------------------n-----------------------------------
-function MoodboardGridItem({moodboardModel, onClick})
+function MoodboardGridItem({moodboardModel})
 {
   //
   const details_url = NET.Make_Navigation_Url(PageUrls.MoodboardDetails, moodboardModel._id);
