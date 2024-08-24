@@ -1,73 +1,85 @@
+// -----------------------------------------------------------------------------
+import UserModel from "@/models/UserModel.js";
 import React from 'react';
-import NET from '@/app/NET';
-import {PageUrls} from "@/utils/PageUtils"
+// -----------------------------------------------------------------------------
 import _Link from '@/components/Link';
-
+import ProfileImage from "@/components/UI/Images/ProfileImage";
+// -----------------------------------------------------------------------------
 import styles from './UserBasicInfo.module.css';
 
+
+// -----------------------------------------------------------------------------
 const UserBasicInfo = ({userModel}) => {
   if(!userModel) {
     return;
   }
 
   // ---------------------------------------------------------------------------
-  const user_url = NET.Make_Navigation_Url(PageUrls.UserOtherProfile, userModel.username);
-
-  // ---------------------------------------------------------------------------
   return (<>
-    <_Link href={user_url}>
-      <UserBasicInfo.Container
+    <div className={styles.container}>
+      <UserBasicInfo.ProfilePhoto
+        className={styles.profilePhoto}
         userModel={userModel}
-        className="customContainerClass"
-      >
-        <div>
-          <UserBasicInfo.ProfilePhoto className={styles.profilePhoto} />
-        </div>
-        <div>
-          <UserBasicInfo.Name className={styles.name}/>
-          <UserBasicInfo.Username className={styles.username} />
-        </div>
-      </UserBasicInfo.Container>
-    </_Link>
+      />
+
+      <div className={styles.nameContainer}>
+        <UserBasicInfo.Name     userModel={userModel} />
+        <UserBasicInfo.Username userModel={userModel} />
+      </div>
+    </div>
   </>)
 };
 
-// -----------------------------------------------------------------------------
-UserBasicInfo.Container = ({ userModel, children, className }) => {
-  return (
-    <div className={`${styles.itemContainer} ${className}`}>
-      {React.Children.map(children, child => {
-        return React.cloneElement(child, { userModel });
-      })}
-    </div>
-  );
-};
 
 // -----------------------------------------------------------------------------
 UserBasicInfo.ProfilePhoto = ({ userModel, className }) => {
+  if(!userModel) {
+    return;
+  }
+
+  const user_url   = UserModel.ProfileUrl(userModel);
+  const class_name = `${styles.profilePhoto} ${className}`;
+
+  console.log(styles.profilePhoto);
   return (
-    <ProfileImage
-      className={`${styles.profilePhoto} ${className}`}
-      userModel={userModel}
-    />
+    <_Link href={user_url}>
+      <ProfileImage
+        className={class_name}
+        userModel={userModel}
+      />
+    </_Link>
   );
 };
 
 // -----------------------------------------------------------------------------
 UserBasicInfo.Name = ({ userModel, className, children }) => {
+  if(!userModel) {
+    return;
+  }
+
+  const user_url   = UserModel.ProfileUrl(userModel);
+  const class_name = `${styles.name} ` + ((className) ? className : "");
+
   return (
-    <div className={className}>
+    <_Link href={user_url} className={class_name}>
       {children || userModel.fullname}
-    </div>
+    </_Link>
   );
 };
 
 // -----------------------------------------------------------------------------
 UserBasicInfo.Username = ({ userModel, className }) => {
+  if(!userModel) {
+    return;
+  }
+
+  const user_url   = UserModel.ProfileUrl(userModel);
+  const class_name = `${styles.username} ` + ((className) ? className : "");
+
   return (
-    <div className={className}>
+    <_Link href={user_url} className={class_name}>
       @{userModel.username}
-    </div>
+    </_Link>
   );
 };
 

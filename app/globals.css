@@ -16,7 +16,7 @@
 
 /* -------------------------------------------------------------------------- */
 * {
-  outline: 1px solid magenta;
+  /* outline: 1px solid magenta; */
   /* all: unset; */
   margin: 0;
   padding: 0;
@@ -42,15 +42,6 @@ body {
   width: 100vw;
   height: 100vh;
   font-style: normal;
-}
-
-/* -------------------------------------------------------------------------- */
-a {
-  color: black;
-  text-decoration: underline dotted;
-}
-a:hover {
-  text-decoration: underline solid;
 }
 
 /* -------------------------------------------------------------------------- */

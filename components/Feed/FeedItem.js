@@ -12,6 +12,7 @@ import ImageDefaults from '@/components/UI/Images/ImageDefaults';
 import styles from "./Feed.module.css";
 import ProfileImage from '../UI/Images/ProfileImage';
 import UserBasicInfo from '../UI/User/UserBasicInfo';
+import Panel from '../UI/Containers/Panel';
 
 // -----------------------------------------------------------------------------
 function FeedItem({moodboardModel, onClick})
@@ -30,18 +31,20 @@ function FeedItem({moodboardModel, onClick})
 
   //
   return (
-    <div className={styles.itemContainer}>
-      <UserBasicInfo userModel={user}/>
+    <Panel>
+      <div className={styles.itemContainer}>
+        <UserBasicInfo userModel={user}/>
 
-      <div>
-        <_Link href={details_url}>
-          <CachedImage
-            imageUrl={photo_url}
-            imagePlaceholderUrl={ImageDefaults.PLACEHOLDER_URL_MOODBOARD_GRID_ITEM}
-          />
-        </_Link>
+        <div>
+          <_Link href={details_url}>
+            <CachedImage
+              imageUrl={photo_url + "l"}
+              imagePlaceholderUrl={ImageDefaults.PLACEHOLDER_URL_MOODBOARD_GRID_ITEM}
+            />
+          </_Link>
+        </div>
       </div>
-    </div>
+    </Panel>
   );
 };
 

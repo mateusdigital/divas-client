@@ -4,5 +4,7 @@
     <mapping directory="" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/divas-shared" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/libs/mdjs" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../divas-server" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../divas-server/divas-shared" vcs="Git" />
   </component>
 </project>

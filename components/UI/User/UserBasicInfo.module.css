@@ -1,0 +1,35 @@
+.container {
+  display: flex;
+  width: 100% ;
+  align-items: center;
+  gap: 1rem;
+}
+
+.profilePhoto {
+  width: 3rem;
+}
+
+.nameContainer {
+  display: flex;
+  width: 100%;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.name {
+  font-weight: bold;
+  font-size: 110%;
+  text-decoration: none;
+}
+.name:hover {
+  text-decoration: none;
+}
+
+.username {
+  font-size: 90%;
+  opacity: 0.8;
+  text-decoration: none;
+}
+.username:hover {
+  text-decoration: none;
+}

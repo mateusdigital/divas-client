@@ -1,4 +1,6 @@
 // -----------------------------------------------------------------------------
+import {User} from "@/divas-shared/shared/API/Endpoints.js";
+import UserModel from "@/models/UserModel.js";
 import React from "react";
 // -----------------------------------------------------------------------------
 import NET from "@/app/NET";
@@ -13,17 +15,19 @@ import styles from "./ProfileImage.module.css";
 // -----------------------------------------------------------------------------
 function ProfileImage({userModel, className})
 {
-  if(!userModel) {
-    userModel = useLoggedUserContext();
+
+  let actualUserModel = useLoggedUserContext();
+  if(userModel) {
+    actualUserModel = userModel;
   }
 
-  if(!userModel) {
+  if(!actualUserModel) {
     return;
   }
 
   const class_name = `${className}  ${styles.photoContainer}`;
-  const image_url  = NET.Make_External_Image_Url(userModel.profilePhotoUrl)
-  const image_alt  = `Profile image for: ${userModel.username}`;
+  const image_url  = UserModel.ProfileImageUrl(actualUserModel);
+  const image_alt  = `Profile image for: ${actualUserModel.username}`;
 
   //
   return (<>

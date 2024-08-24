@@ -8,4 +8,10 @@ export default [
   {languageOptions: { globals: {...globals.browser, ...globals.node} }},
   pluginJs.configs.recommended,
   pluginReact.configs.flat.recommended,
+  {rules: {
+    "react/display-name": "off",
+    "react/prop-types": "off"
+  }}
+
+
 ];
